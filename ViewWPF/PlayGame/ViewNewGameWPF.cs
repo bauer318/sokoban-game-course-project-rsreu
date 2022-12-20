@@ -12,11 +12,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using View.PlayGame;
 using CommandManager = ModelWPF.Game.Command.CommandManager;
 
 namespace ViewWPF.PlayGame
 {
-    public partial class ViewNewGameWPF : IMenuChosen
+    public partial class ViewNewGameWPF :  IMenuChosen
     {
         private readonly CommandManager commandManager = new CommandManager();
         private ResourceDictionary _resourceDictionary = Application.LoadComponent(
@@ -48,10 +49,11 @@ namespace ViewWPF.PlayGame
                 MessageBox.Show("Problem loading game. " + ex.Message);
             }
         }
-        
-        private void InitialiseLevel()
+
+       
+       public void InitialiseLevel()
         {
-            //commandManager.Clear();
+            commandManager.Clear();
 
             Border border = new Border();
             border.Padding = new Thickness(20, 0, 0, 0);
@@ -168,16 +170,16 @@ namespace ViewWPF.PlayGame
                 commandManager.Execute(command);
             }
         }
+       
         public void InitChosenMenu(MainWindow parMainWindow)
         {
             _mainWindow = parMainWindow;
             Application.Current.Resources.MergedDictionaries.Add(_resourceDictionary);
-
-            /*if (firstStartLevel)
+            if (firstStartLevel)
             {
                 TryToStartFirstLevel();
                 parMainWindow.KeyDown += new KeyEventHandler(Window_KeyDown);
-            }*/
+            }
             InitialiseLevel();
             parMainWindow.Content = _dockPanel;
         }

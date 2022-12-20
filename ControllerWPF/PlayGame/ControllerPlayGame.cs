@@ -9,8 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using ViewWPF;
-using ViewWPF.PlayGame;
+using View.PlayGame;
+//using ViewWPF;
+//using ViewWPF.PlayGame;
 using CommandManager = ModelWPF.Game.Command.CommandManager;
 
 namespace ControllerWPF.PlayGame
@@ -19,13 +20,13 @@ namespace ControllerWPF.PlayGame
     {
         public delegate CommandBase dCommand(Level parLevel, Direction parDirection);
         public event dCommand Comman;
-        private ViewNewGameWPF _viewNewGameWPF;
+        private ViewNewGameBase _viewNewGameWPF;
         public static GameLevel Game;
         public static readonly CommandManager commandManager = new CommandManager();
-        private MainWindow _mainWindow;
-        public delegate void dReinitChoseenMenu(MainWindow mainWindow);
+        private Window _mainWindow;
+        public delegate void dReinitChoseenMenu(Window mainWindow);
         public event dReinitChoseenMenu ReinitChoseenMenu;
-        public ControllerPlayGame(ViewNewGameWPF parViewNewGameWPF, MainWindow parMainWindow)
+        public ControllerPlayGame(ViewNewGameBase parViewNewGameWPF, Window parMainWindow)
         {
             _viewNewGameWPF = parViewNewGameWPF;
             Game = _viewNewGameWPF.Game;
@@ -93,9 +94,9 @@ namespace ControllerWPF.PlayGame
                             break;
                         case GameState.LevelCompleted:
                             Game.GotoNextLevel();
-                            _viewNewGameWPF.firstStartLevel = false;
+                            /*_viewNewGameWPF.firstStartLevel = false;
                             ReinitChoseenMenu += new dReinitChoseenMenu(_viewNewGameWPF.InitChosenMenu);
-                            ReinitChoseenMenu.Invoke(_mainWindow);
+                            ReinitChoseenMenu.Invoke(_mainWindow);*/
                             break;
                     }
                 }
