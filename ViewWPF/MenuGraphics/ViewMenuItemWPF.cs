@@ -44,6 +44,7 @@ namespace ViewWPF.MenuGraphics
 
         public void SetParentControl(FrameworkElement parControl)
         {
+           
             if (_parentControl == null)
             {
                 _parentControl = parControl;

@@ -10,5 +10,6 @@ namespace ViewWPF
     public interface IMenu
     {
         void SetParentControl(FrameworkElement parControl);
+       
     }
 }
