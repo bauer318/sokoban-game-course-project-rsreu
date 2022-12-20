@@ -12,30 +12,9 @@ namespace ModelWPF.Game.Levels
     /// Base implementaion for all content within
     /// the <see cref="Level"/> grid.
     /// </summary>
-    public abstract class LevelContentBase : INotifyPropertyChanged
-    {
-		private SynchronizationContext _context = SynchronizationContext.Current;
-		/// <summary>
-		/// Gets or sets the _context used to post 
-		/// to the main UI thread.
-		/// </summary>
-		/// <value>The _context used to post to the main
-		/// UI thread.</value>
-		public SynchronizationContext Context
-		{
-			get
-			{
-				if (_context == null)
-				{
-					_context = SynchronizationContext.Current;
-				}
-				return _context;
-			}
-			set
-			{
-				_context = value;
-			}
-		}
+    public abstract class LevelContentBase : Model.PlayGame.Levels.LevelContentBase,INotifyPropertyChanged
+	{
+		
 		private event PropertyChangedEventHandler _propertyChanged;
 
 		/// <summary>

@@ -29,12 +29,12 @@ namespace ControllerWPF.PlayGame
         public ControllerPlayGame(ViewNewGameBase parViewNewGameWPF, Window parMainWindow)
         {
             _viewNewGameWPF = parViewNewGameWPF;
-            Game = _viewNewGameWPF.Game;
+            //Game = _viewNewGameWPF.Game;
             _mainWindow = parMainWindow;
             commandManager.Clear();
             parMainWindow.KeyDown += new KeyEventHandler(Window_KeyDown);
             TryToStartFirstLevel();
-            _viewNewGameWPF.InitChosenMenu(_mainWindow);
+            //_viewNewGameWPF.InitChosenMenu(_mainWindow);
         }
 
         private void TryToStartFirstLevel()

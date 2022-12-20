@@ -18,7 +18,7 @@ namespace ModelWPF.Game.Levels
 	/// </summary>
     public class Level
     {
-		Cell[][] cells;
+		Cells.Cell[][] cells;
 		List<GoalCell> goals = new List<GoalCell>();
 
 		/// <summary>
@@ -57,7 +57,7 @@ namespace ModelWPF.Game.Levels
 		/// and column number.
 		/// </summary>
 		/// <value>The cell at the specified row number and column number.</value>
-		public Cell this[int rowNumber, int columnNumber]
+		public Cells.Cell this[int rowNumber, int columnNumber]
 		{
 			get
 			{
@@ -69,7 +69,7 @@ namespace ModelWPF.Game.Levels
 		/// Gets the <see cref="Orpius.Sokoban.Cell"/> with the specified location.
 		/// </summary>
 		/// <value>The cell at the specified location.</value>
-		public Cell this[CellLocation location]
+		public Cells.Cell this[CellLocation location]
 		{
 			get
 			{
@@ -127,7 +127,7 @@ namespace ModelWPF.Game.Levels
 				throw new ArgumentNullException("mapStream");
 			}
 
-			List<List<Cell>> rows = new List<List<Cell>>();
+			List<List<Cells.Cell>> rows = new List<List<Cells.Cell>>();
 
 			string gridRowText;
 			int rowCount = 0;
@@ -136,16 +136,16 @@ namespace ModelWPF.Game.Levels
 				rows.Add(BuildCells(gridRowText, rowCount++));
 			}
 
-			cells = new Cell[rowCount][];
+			cells = new Cells.Cell[rowCount][];
 			for (int i = 0; i < rowCount; i++)
 			{
 				cells[i] = rows[i].ToArray();
 			}
 		}
 
-		List<Cell> BuildCells(string rowText, int rowNumber)
+		List<Cells.Cell> BuildCells(string rowText, int rowNumber)
 		{
-			List<Cell> row = new List<Cell>(rowText.Length);
+			List<Cells.Cell> row = new List<Cells.Cell>(rowText.Length);
 
 			int columnNumber = 0;
 
