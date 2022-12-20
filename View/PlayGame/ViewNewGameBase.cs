@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace View.PlayGame
 {
-    public class ViewNewGame
+    public abstract class ViewNewGameBase
     {
-
+        public abstract void InitialiseLevel();
     }
 }
