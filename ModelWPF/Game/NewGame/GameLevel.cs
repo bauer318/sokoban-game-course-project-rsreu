@@ -112,7 +112,7 @@ namespace ModelWPF.Game.NewGame
 				}
 			}
 
-			OnPropertyChanged("Levels");
+			OnPropertyChanged("Level");
 			//context.Send(delegate
 			//{
 			StartLevel();
@@ -279,7 +279,7 @@ namespace ModelWPF.Game.NewGame
 				string[] files = Directory.GetFiles(levelDirectory, "*.skbn");
 				LevelCount = files.Length;
 			}
-			LoadLevel(0);
+			LoadLevel(51);
 		}
 
 		/// <summary>

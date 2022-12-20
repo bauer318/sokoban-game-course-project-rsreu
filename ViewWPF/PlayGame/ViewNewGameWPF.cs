@@ -18,25 +18,25 @@ namespace ViewWPF.PlayGame
     public partial class ViewNewGameWPF : IMenuChosen
     {
         private readonly ModelWPF.Game.Command.CommandManager commandManager = new ModelWPF.Game.Command.CommandManager();
-        ResourceDictionary res = Application.LoadComponent(
+        private ResourceDictionary _resourceDictionary = Application.LoadComponent(
             new Uri("/ViewWPF;component/PlayGame/ResourceDictionaries/Cell.xaml",
                UriKind.RelativeOrAbsolute)) as ResourceDictionary;
-        private DockPanel dockPanel;
-
+        private DockPanel _dockPanel;
+        private MainWindow _mainWindow;
+        public delegate void dReinitChoseenMenu(MainWindow mainWindow);
+        public static event dReinitChoseenMenu ReinitChoseenMenu;
+        private bool firstStartLevel = true;
 
         GameLevel Game
         {
             get
             {
-                return (GameLevel)res["sokobanGame"];
+                return (GameLevel)_resourceDictionary["sokobanGame"];
             }
         }
         
-
-        private void Window_Loaded()
+        private void TryToStartFirstLevel()
         {
-            Game.PropertyChanged += game_PropertyChanged;
-
             try
             {
                 /* Load and start the first level of the game. */
@@ -47,54 +47,7 @@ namespace ViewWPF.PlayGame
                 MessageBox.Show("Problem loading game. " + ex.Message);
             }
         }
-        void game_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case "GameState":
-                    UpdateGameDisplay();
-                    break;
-            }
-        }
-        /// <summary>
-		/// We set feedback messages and so one here,
-		/// using the game's <see cref="GameState"/>.
-		/// </summary>
-		void UpdateGameDisplay()
-        {
-            switch (Game.GameState)
-            {
-                case GameState.Loading:
-                    //FeedbackControl1.Message = new FeedbackMessage { Message = "Loading..." };
-                    //ContinuePromptVisible = false;
-                    break;
-                case GameState.GameOver:
-                    //FeedbackControl1.Message = new FeedbackMessage { Message = "Game Over" };
-                    //ContinuePromptVisible = true;
-                    break;
-                case GameState.Running:
-                    //ContinuePromptVisible = false;
-                    //FeedbackControl1.Message = new FeedbackMessage();
-                    // Uncomment when/if pause is implemented.
-                    //if (gameState == GameState.Loading)
-                    //{
-                    InitialiseLevel();
-                    //}
-                    break;
-                case GameState.LevelCompleted:
-                    Game.GotoNextLevel();
-                    //FeedbackControl1.Message = new FeedbackMessage { Message = "Level Completed!" };
-                    //MediaElement_LevelComplete.Position = TimeSpan.MinValue;
-                    //MediaElement_LevelComplete.Play();
-                    //ContinuePromptVisible = true;
-                    break;
-                case GameState.GameCompleted:
-                    /*FeedbackControl1.Message = new FeedbackMessage { Message = "Well done. \nGame completed! \nEmail dbvaughan \nAT g mail dot com" };
-                    MediaElement_GameComplete.Position = TimeSpan.MinValue;
-                    MediaElement_GameComplete.Play();*/
-                    break;
-            }
-        }
+        
         private void InitialiseLevel()
         {
             commandManager.Clear();
@@ -114,33 +67,33 @@ namespace ViewWPF.PlayGame
             grid_Main.RowDefinitions.Clear();
             grid_Main.ColumnDefinitions.Clear();
 
-            var n = Game.Level.RowCount;
-            var m = Game.Level.ColumnCount;
+            var rowCount = Game.Level.RowCount;
+            var columnCount = Game.Level.ColumnCount;
 
-            for (var i = 0; i < n; i++)
+            for (var i = 0; i < rowCount; i++)
             {
                 grid_Game.RowDefinitions.Add(new RowDefinition());
 
             }
-            for (var i = 0; i < m; i++)
+            for (var i = 0; i < columnCount; i++)
             {
                 grid_Game.ColumnDefinitions.Add(new ColumnDefinition());
 
             }
-            for (var row = 0; row < n; row++)
+            for (var row = 0; row < rowCount; row++)
             {
 
-                for (var column = 0; column < m; column++)
+                for (var column = 0; column < columnCount; column++)
                 {
                     Cell cell = Game.Level[row, column];
-                    Button b = new Button();
-                    b.Focusable = false;
-                    b.DataContext = cell;
-                    b.Padding = new Thickness(0, 0, 0, 0);
-                    b.Style = (Style)Application.Current.FindResource("Cell");
-                    Grid.SetRow(b, row);
-                    Grid.SetColumn(b, column);
-                    grid_Game.Children.Add(b);
+                    Button button = new Button();
+                    button.Focusable = false;
+                    button.DataContext = cell;
+                    button.Padding = new Thickness(0, 0, 0, 0);
+                    button.Style = (Style)Application.Current.FindResource("Cell");
+                    Grid.SetRow(button, row);
+                    Grid.SetColumn(button, column);
+                    grid_Game.Children.Add(button);
                 }
             }
             viewbox.Child = grid_Game;
@@ -149,8 +102,8 @@ namespace ViewWPF.PlayGame
             grid_Main.Children.Add(viewbox);
             grid_Main.DataContext = Game.Level;
             grid_Main.Focus();
-            dockPanel = new DockPanel();
-            dockPanel.Children.Add(grid_Main);
+            _dockPanel = new DockPanel();
+            _dockPanel.Children.Add(grid_Main);
         }
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -158,33 +111,52 @@ namespace ViewWPF.PlayGame
             Level level = Game.Level;
             if(Game != null)
             {
-                switch (e.Key)
+                if (Game.GameState == GameState.Running)
                 {
-                    case Key.Up:
-                        command = new MoveCommand(level, Direction.Up);
-                        break;
-                    case Key.Down:
-                        command = new MoveCommand(level, Direction.Down);
-                        break;
-                    case Key.Left:
-                        command = new MoveCommand(level, Direction.Left);
-                        break;
-                    case Key.Right:
-                        command = new MoveCommand(level, Direction.Right);
-                        break;
-                    case Key.Z:
-                        if (Keyboard.Modifiers == ModifierKeys.Control)
-                        {
-                            commandManager.Undo();
-                        }
-                        break;
-                    case Key.Y:
-                        if (Keyboard.Modifiers == ModifierKeys.Control)
-                        {
-                            commandManager.Redo();
-                        }
-                        break;
+                    switch (e.Key)
+                    {
+                        case Key.Up:
+                            command = new MoveCommand(level, Direction.Up);
+                            break;
+                        case Key.Down:
+                            command = new MoveCommand(level, Direction.Down);
+                            break;
+                        case Key.Left:
+                            command = new MoveCommand(level, Direction.Left);
+                            break;
+                        case Key.Right:
+                            command = new MoveCommand(level, Direction.Right);
+                            break;
+                        case Key.Z:
+                            if (Keyboard.Modifiers == ModifierKeys.Control)
+                            {
+                                commandManager.Undo();
+                            }
+                            break;
+                        case Key.Y:
+                            if (Keyboard.Modifiers == ModifierKeys.Control)
+                            {
+                                commandManager.Redo();
+                            }
+                            break;
+                    }
                 }
+                else
+                {
+                    switch (Game.GameState)
+                    {
+                        case GameState.GameOver:
+                            Game.Start();
+                            break;
+                        case GameState.LevelCompleted:
+                            MessageBox.Show(Game.Level.Actor.MoveCount.ToString());
+                            Game.GotoNextLevel();
+                            firstStartLevel = false;
+                            ReinitChoseenMenu += new dReinitChoseenMenu(InitChosenMenu);
+                            ReinitChoseenMenu.Invoke(_mainWindow);
+                            break;
+                    }
+                }  
             }
             if(command != null)
             {
@@ -193,11 +165,15 @@ namespace ViewWPF.PlayGame
         }
         public void InitChosenMenu(MainWindow parMainWindow)
         {
-            Application.Current.Resources.MergedDictionaries.Add(res);
-            Window_Loaded();
-            parMainWindow.KeyDown += new KeyEventHandler(Window_KeyDown);
+            _mainWindow = parMainWindow;
+            Application.Current.Resources.MergedDictionaries.Add(_resourceDictionary);
+            if (firstStartLevel)
+            {
+                TryToStartFirstLevel();
+                parMainWindow.KeyDown += new KeyEventHandler(Window_KeyDown);
+            }
             InitialiseLevel();
-            parMainWindow.Content = dockPanel;
+            parMainWindow.Content = _dockPanel;
         }
     }
 }

@@ -47,7 +47,8 @@
                     <!-- If the cell is an outer empty space cell. -->
                     <Condition Binding="{Binding Path=Name}" Value="Space" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="Fill" Value="Transparent"/>
+                <!--<Setter Property="Fill" Value="Transparent"/>-->
+                <Setter Property="Fill" Value="{DynamicResource FloorCellBrush}"/>
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>

@@ -12,14 +12,16 @@ namespace ModelWPF.Game.Command
 	/// </summary>
     public class CommandManager
     {
-		Stack<CommandBase> commandStack = new Stack<CommandBase>();
-		Stack<CommandBase> redoStack = new Stack<CommandBase>();
+		private Stack<CommandBase> _commandStack = new Stack<CommandBase>();
+		private Stack<CommandBase> _redoStack = new Stack<CommandBase>();
+		private bool _canUndo;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CommandManager"/> class.
 		/// </summary>
 		public CommandManager()
 		{
+			_canUndo = true;
 		}
 
 		/// <summary>
@@ -28,9 +30,10 @@ namespace ModelWPF.Game.Command
 		/// <param name="command">The command to execute.</param>
 		public void Execute(CommandBase command)
 		{
-			redoStack.Clear();
+			_redoStack.Clear();
 			command.Execute();
-			commandStack.Push(command);
+			_commandStack.Push(command);
+			_canUndo = true;
 		}
 
 		/// <summary>
@@ -38,13 +41,14 @@ namespace ModelWPF.Game.Command
 		/// </summary>
 		public void Undo()
 		{
-			if (commandStack.Count < 1)
+			if (_commandStack.Count < 1 || !_canUndo)
 			{
 				return;
 			}
-			CommandBase command = commandStack.Pop();
+			_canUndo = false;
+			CommandBase command = _commandStack.Pop();
 			command.Undo();
-			redoStack.Push(command);
+			_redoStack.Push(command);
 		}
 
 		/// <summary>
@@ -54,13 +58,13 @@ namespace ModelWPF.Game.Command
 		/// </summary>
 		public void Redo()
 		{
-			if (redoStack.Count < 1)
+			if (_redoStack.Count < 1)
 			{
 				return;
 			}
-			CommandBase command = redoStack.Pop();
+			CommandBase command = _redoStack.Pop();
 			command.Execute();
-			commandStack.Push(command);
+			_commandStack.Push(command);
 		}
 
 		/// <summary>
@@ -68,8 +72,8 @@ namespace ModelWPF.Game.Command
 		/// </summary>
 		public void Clear()
 		{
-			commandStack.Clear();
-			redoStack.Clear();
+			_commandStack.Clear();
+			_redoStack.Clear();
 		}
 	}
 }
