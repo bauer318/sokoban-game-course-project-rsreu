@@ -46,6 +46,7 @@ namespace ViewWPF.MenuGraphics
         {
             _isMenuMainActive = false;
             _menuChosen = new ViewNewGameWPF();
+            //new ControllerWPF.PlayGame.ControllerPlayGame()
             InitMenuChosen();
         }
         private void InitMenuChosen()

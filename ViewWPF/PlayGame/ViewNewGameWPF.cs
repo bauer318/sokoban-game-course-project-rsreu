@@ -12,22 +12,23 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using CommandManager = ModelWPF.Game.Command.CommandManager;
 
 namespace ViewWPF.PlayGame
 {
     public partial class ViewNewGameWPF : IMenuChosen
     {
-        private readonly ModelWPF.Game.Command.CommandManager commandManager = new ModelWPF.Game.Command.CommandManager();
+        private readonly CommandManager commandManager = new CommandManager();
         private ResourceDictionary _resourceDictionary = Application.LoadComponent(
             new Uri("/ViewWPF;component/PlayGame/ResourceDictionaries/Cell.xaml",
                UriKind.RelativeOrAbsolute)) as ResourceDictionary;
         private DockPanel _dockPanel;
         private MainWindow _mainWindow;
         public delegate void dReinitChoseenMenu(MainWindow mainWindow);
-        public static event dReinitChoseenMenu ReinitChoseenMenu;
-        private bool firstStartLevel = true;
+        public event dReinitChoseenMenu ReinitChoseenMenu;
+        public bool firstStartLevel = true;
 
-        GameLevel Game
+        public GameLevel Game
         {
             get
             {
@@ -50,13 +51,16 @@ namespace ViewWPF.PlayGame
         
         private void InitialiseLevel()
         {
-            commandManager.Clear();
+            //commandManager.Clear();
+
             Border border = new Border();
             border.Padding = new Thickness(20, 0, 0, 0);
             border.CornerRadius = new CornerRadius(12);
             border.BorderThickness = new Thickness(0, 0, 0, 0);
+
             Viewbox viewbox = new Viewbox();
             viewbox.Stretch = Stretch.Uniform;
+
             Grid grid_Game = new Grid();
             grid_Game.Children.Clear();
             grid_Game.RowDefinitions.Clear();
@@ -80,6 +84,7 @@ namespace ViewWPF.PlayGame
                 grid_Game.ColumnDefinitions.Add(new ColumnDefinition());
 
             }
+
             for (var row = 0; row < rowCount; row++)
             {
 
@@ -167,11 +172,12 @@ namespace ViewWPF.PlayGame
         {
             _mainWindow = parMainWindow;
             Application.Current.Resources.MergedDictionaries.Add(_resourceDictionary);
-            if (firstStartLevel)
+
+            /*if (firstStartLevel)
             {
                 TryToStartFirstLevel();
                 parMainWindow.KeyDown += new KeyEventHandler(Window_KeyDown);
-            }
+            }*/
             InitialiseLevel();
             parMainWindow.Content = _dockPanel;
         }
