@@ -17,7 +17,7 @@ using CommandManager = ModelWPF.Game.Command.CommandManager;
 
 namespace ViewWPF.PlayGame
 {
-    public partial class ViewNewGameWPF :  IMenuChosen
+    public partial class ViewNewGameWPF : IMenuChosen
     {
         private readonly CommandManager commandManager = new CommandManager();
         private ResourceDictionary _resourceDictionary = Application.LoadComponent(

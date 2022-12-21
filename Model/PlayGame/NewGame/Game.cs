@@ -26,26 +26,7 @@ namespace Model.PlayGame.NewGame
 			private set;
 		}
 
-		private GameState gameState;
-
-		/// <summary>
-		/// Gets the state of the game. That is, whether
-		/// it is running, loading etc.
-		/// <see cref="GameState"/>
-		/// </summary>
-		/// <value>The state of the game.</value>
-		public  GameState GameState
-		{
-			get
-			{
-				return gameState;
-			}
-			private set
-			{
-				gameState = value;
-			}
-		}
-
+	
 		/// <summary>
 		/// Gets the current Level of the game.
 		/// </summary>
@@ -53,7 +34,7 @@ namespace Model.PlayGame.NewGame
 		public Level Level
 		{
 			get;
-			private set;
+			set;
 		}
 
 		/// <summary>
@@ -87,20 +68,6 @@ namespace Model.PlayGame.NewGame
 		{
 			return Level.InBounds(location);
 		}
-
-		void Level_LevelCompleted(object sender, EventArgs e)
-		{
-			if (Level.LevelNumber < LevelCount - 1)
-			{
-				GameState = GameState.LevelCompleted;
-			}
-			else
-			{
-				/* Do finished game stuff. */
-				GameState = GameState.GameCompleted;
-			}
-		}
-
 		/// <summary>
 		/// Attempts to go to the next Level.
 		/// </summary>
@@ -112,10 +79,8 @@ namespace Model.PlayGame.NewGame
 			}
 		}
 
-		void StartLevel()
-		{
-			GameState = GameState.Running;
-		}
+		public abstract void StartLevel();
+		
 
 		/// <summary>
 		/// Starts the game by loading the first Level.

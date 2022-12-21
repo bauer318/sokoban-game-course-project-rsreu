@@ -14,7 +14,7 @@ namespace ModelWPF.Game.NewGame
 	/// <summary>
 	/// The main class for the game of Sokoban.
 	/// </summary>
-	public class GameLevel : INotifyPropertyChanged
+	public class GameLevel : Model.PlayGame.NewGame.Game, INotifyPropertyChanged
 	{
 		string levelDirectory = @"..\..\..\..\Levels\";
 		ISokobanService sokobanService;
@@ -25,11 +25,11 @@ namespace ModelWPF.Game.NewGame
 		/// to be played in a game.
 		/// </summary>
 		/// <value>The the number of levels in the game.</value>
-		public int LevelCount
+		/*public int LevelCount
 		{
 			get;
 			private set;
-		}
+		}*/
 
 		GameState gameState;
 
@@ -39,7 +39,7 @@ namespace ModelWPF.Game.NewGame
 		/// <see cref="GameState"/>
 		/// </summary>
 		/// <value>The state of the game.</value>
-		public GameState GameState
+		public  GameState GameState
 		{
 			get
 			{
@@ -56,11 +56,11 @@ namespace ModelWPF.Game.NewGame
 		/// Gets the current level of the game.
 		/// </summary>
 		/// <value>The current level. May be <code>null</code>.</value>
-		public Level Level
+		/*public Level Level
 		{
 			get;
 			private set;
-		}
+		}*/
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="GameLevel"/> class.
@@ -78,7 +78,7 @@ namespace ModelWPF.Game.NewGame
 		/// Loads the level specified with the specified level number.
 		/// </summary>
 		/// <param name="levelNumber">The level number of the level to load.</param>
-		void LoadLevel(int levelNumber)
+		public override void LoadLevel(int levelNumber)
 		{
 			GameState = GameState.Loading;
 

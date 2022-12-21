@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ModelWPF.Game.Cells
 {
-    /// <summary>
+	/// <summary>
 	/// Base class for all cells in a <see cref="Level"/>.
 	/// </summary>
-    public abstract class Cell:LevelContentBase
-    {
+	public abstract class Cell : LevelContentBase
+	{
 		/// <summary>
 		/// Gets or sets the name of this cell.
 		/// The name can be used to identify the type

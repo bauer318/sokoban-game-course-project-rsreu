@@ -12,7 +12,7 @@ namespace Model.PlayGame.Cell
     /// <summary>
 	/// Base class for all cells in a <see cref="Level"/>.
 	/// </summary>
-    public abstract class Cell: LevelContentBase
+    public abstract class Cell
     {
 		private string _name;
 		/// <summary>
@@ -69,7 +69,7 @@ namespace Model.PlayGame.Cell
 		public CellContents CellContents
 		{
 			get;
-			private set;
+			set;
 		}
 
 		/// <summary>
@@ -77,6 +77,15 @@ namespace Model.PlayGame.Cell
 		/// Sets the <see cref="CellContents"/> to null.
 		/// </summary>
 		public abstract void RemoveContents();
+
+
+		/// <summary>
+		/// Tries to the set the cell contents.
+		/// </summary>
+		/// <param name="contents">The contents to place in the cell.</param>
+		/// <returns><code>true</code> if the specified contents
+		/// was able to be placed in this cell; <code>false</code> otherwise.</returns>
+		public abstract bool TrySetContents(CellContents contents);
 
 		/// <summary>
 		/// Gets a value indicating whether cell contents can be put here.
@@ -121,13 +130,6 @@ namespace Model.PlayGame.Cell
 			contents.Cell = this;
 		}
 
-		/// <summary>
-		/// Tries to the set the cell contents.
-		/// </summary>
-		/// <param name="contents">The contents to place in the cell.</param>
-		/// <returns><code>true</code> if the specified contents
-		/// was able to be placed in this cell; <code>false</code> otherwise.</returns>
-		public abstract bool TrySetContents(CellContents contents);
 		
 		/// <summary>
 		/// Tries to push the current <see cref="CellContents"/>

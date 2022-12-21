@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Model.PlayGame.Cell
 {
-	public abstract class CellContents : LevelContentBase
+	public abstract class CellContents
 	{
 		/// <summary>
 		/// Gets or sets the name of this cell contents.

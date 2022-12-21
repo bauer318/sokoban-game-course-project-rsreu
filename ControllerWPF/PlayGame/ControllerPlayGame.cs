@@ -1,7 +1,6 @@
-﻿using ModelWPF.Game.Command;
-using ModelWPF.Game.Levels;
-using ModelWPF.Game.Locations;
-using ModelWPF.Game.NewGame;
+﻿using Model.PlayGame.Commands;
+using Model.PlayGame.Locations;
+using Model.PlayGame.NewGame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,31 +9,22 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using View.PlayGame;
-//using ViewWPF;
-//using ViewWPF.PlayGame;
 using CommandManager = ModelWPF.Game.Command.CommandManager;
 
 namespace ControllerWPF.PlayGame
 {
-    public class ControllerPlayGame
+    public class ControllerPlayGame:Controller.PlayGame.ControllerPlayGame
     {
-        public delegate CommandBase dCommand(Level parLevel, Direction parDirection);
-        public event dCommand Comman;
-        private ViewNewGameBase _viewNewGameWPF;
-        public static GameLevel Game;
-        public static readonly CommandManager commandManager = new CommandManager();
         private Window _mainWindow;
         public delegate void dReinitChoseenMenu(Window mainWindow);
         public event dReinitChoseenMenu ReinitChoseenMenu;
-        public ControllerPlayGame(ViewNewGameBase parViewNewGameWPF, Window parMainWindow)
+        public ControllerPlayGame(ViewNewGameBase parViewNewGameWPF, Window parMainWindow):base(parViewNewGameWPF)
         {
-            _viewNewGameWPF = parViewNewGameWPF;
-            //Game = _viewNewGameWPF.Game;
+           
             _mainWindow = parMainWindow;
-            commandManager.Clear();
             parMainWindow.KeyDown += new KeyEventHandler(Window_KeyDown);
             TryToStartFirstLevel();
-            //_viewNewGameWPF.InitChosenMenu(_mainWindow);
+            
         }
 
         private void TryToStartFirstLevel()
@@ -52,7 +42,7 @@ namespace ControllerWPF.PlayGame
         public  void Window_KeyDown(object sender, KeyEventArgs e)
         {
             CommandBase command = null;
-            Level level = Game.Level;
+            Model.PlayGame.Levels.Level level = Game.Level;
             if (Game != null)
             {
                 if (Game.GameState == GameState.Running)
@@ -74,13 +64,13 @@ namespace ControllerWPF.PlayGame
                         case Key.Z:
                             if (Keyboard.Modifiers == ModifierKeys.Control)
                             {
-                                commandManager.Undo();
+                                CommandManager.Undo();
                             }
                             break;
                         case Key.Y:
                             if (Keyboard.Modifiers == ModifierKeys.Control)
                             {
-                                commandManager.Redo();
+                                CommandManager.Redo();
                             }
                             break;
                     }
@@ -103,7 +93,7 @@ namespace ControllerWPF.PlayGame
             }
             if (command != null)
             {
-                commandManager.Execute(command);
+                CommandManager.Execute(command);
             }
         }
     }

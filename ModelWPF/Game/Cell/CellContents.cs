@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace ModelWPF.Game.Cells
 {
-    /// <summary>
+	/// <summary>
 	/// Represents the contents of a <see cref="Cell"/>.
 	/// This is provided as a base implementation
 	/// for other cell contents.
 	/// </summary>
-    public class CellContents:LevelContentBase
-    {
+	public class CellContents : LevelContentBase
+	{
 		/// <summary>
 		/// Gets or sets the name of this cell contents.
 		/// The name can be used to identify the type
