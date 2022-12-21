@@ -23,17 +23,9 @@ namespace ModelWPF.Game.Cells.Actors
 				return DoMoveAux(move);
 			}
 		}
-
-		public bool ActorMoved
-        {
-			get;
-			set;
-        }
-
 		internal bool DoMoveAux(Move move)
 		{
 			bool result = false;
-			ActorMoved = false;
 			Location moveLocation = Location.GetAdjacentLocation(move.Direction);
 			if (Level.InBounds(moveLocation))
 			{
@@ -51,7 +43,6 @@ namespace ModelWPF.Game.Cells.Actors
 							Move newMove = new Move(move.Direction.GetOppositeDirection()) { Undo = true };
 							moves.Push(newMove);
 							MoveCount++;
-							ActorMoved = true;
 						}
 					}
 					else if (move.PushedContents != null)
@@ -61,7 +52,6 @@ namespace ModelWPF.Game.Cells.Actors
 						if (result)
 						{
 							MoveCount--;
-							ActorMoved = true;
 						}
 					}
 					else
@@ -70,7 +60,6 @@ namespace ModelWPF.Game.Cells.Actors
 						if (result)
 						{
 							MoveCount--;
-							ActorMoved = true;
 						}
 					}
 				}
@@ -86,7 +75,6 @@ namespace ModelWPF.Game.Cells.Actors
 					if (result)
 					{
 						MoveCount++;
-						ActorMoved = true;
 					}
 				}
 			}

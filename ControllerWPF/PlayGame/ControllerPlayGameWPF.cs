@@ -118,13 +118,6 @@ namespace ControllerWPF.PlayGame
             if (command != null)
             {
                 commandManager.Execute(command);
-                Actor actor = level.Actor;
-                if (actor.ActorMoved)
-                {
-                    ViewNewGameBase.FirstStartLevel = false;
-                    T();
-                }
-
             }
         }
     }
