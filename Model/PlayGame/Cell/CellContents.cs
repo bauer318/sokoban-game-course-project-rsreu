@@ -35,9 +35,9 @@ namespace Model.PlayGame.Cell
 		}
 
 		/// <summary>
-		/// Gets or sets the level where this instance is located.
+		/// Gets or sets the Level where this instance is located.
 		/// </summary>
-		/// <value>The level where this instance is located.</value>
+		/// <value>The Level where this instance is located.</value>
 		public Level Level
 		{
 			get;
@@ -64,8 +64,8 @@ namespace Model.PlayGame.Cell
 		/// Initializes a new instance of the <see cref="CellContents"/> class.
 		/// </summary>
 		/// <param name="name">The name of this cell contents. <seealso cref="Name"/></param>
-		/// <param name="location">The location on the level. <seealso cref="Location"/></param>
-		/// <param name="level">The level where this instance is located. <seealso cref="Level"/></param>
+		/// <param name="location">The location on the Level. <seealso cref="Location"/></param>
+		/// <param name="level">The Level where this instance is located. <seealso cref="Level"/></param>
 		public CellContents(string name, Location location, Level level)
 		{
 			Name = name;

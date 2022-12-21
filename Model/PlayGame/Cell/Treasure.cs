@@ -14,7 +14,7 @@ namespace Model.PlayGame.Cell
 		/// Initializes a new instance of the <see cref="Treasure"/> class.
 		/// </summary>
 		/// <param name="location">The location where the treasure is.</param>
-		/// <param name="level">The level that the treasure is located.</param>
+		/// <param name="level">The Level that the treasure is located.</param>
 		public Treasure(Location location, Level level)
 			: base("Treasure", location, level)
 		{

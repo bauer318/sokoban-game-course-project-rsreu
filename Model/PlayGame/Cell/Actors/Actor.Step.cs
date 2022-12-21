@@ -19,7 +19,7 @@ namespace Model.PlayGame.Cell.Actors
 		/// successfully, <code>false</code> otherwise.</returns>
 		public bool DoMove(Move move)
 		{
-			lock (_moveLock)
+			lock (MoveLock)
 			{
 				return DoMoveAux(move);
 			}

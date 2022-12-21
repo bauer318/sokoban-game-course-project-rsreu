@@ -47,9 +47,9 @@ namespace Model.PlayGame.NewGame
 		}
 
 		/// <summary>
-		/// Gets the current level of the game.
+		/// Gets the current Level of the game.
 		/// </summary>
-		/// <value>The current level. May be <code>null</code>.</value>
+		/// <value>The current Level. May be <code>null</code>.</value>
 		public Level Level
 		{
 			get;
@@ -69,9 +69,9 @@ namespace Model.PlayGame.NewGame
 		}
 
 		/// <summary>
-		/// Loads the level specified with the specified level number.
+		/// Loads the Level specified with the specified Level number.
 		/// </summary>
-		/// <param name="levelNumber">The level number of the level to load.</param>
+		/// <param name="levelNumber">The Level number of the Level to load.</param>
 		public abstract void LoadLevel(int levelNumber);
 		
 		/// <summary>
@@ -79,7 +79,7 @@ namespace Model.PlayGame.NewGame
 		/// the Levels grid.
 		/// </summary>
 		/// <param name="location">The location to test
-		/// whether it is within the level grid.</param>
+		/// whether it is within the Level grid.</param>
 		/// <returns><code>true</code> if the location
 		/// is within the <see cref="Level"/>; 
 		/// <code>false</code> otherwise.</returns>
@@ -102,7 +102,7 @@ namespace Model.PlayGame.NewGame
 		}
 
 		/// <summary>
-		/// Attempts to go to the next level.
+		/// Attempts to go to the next Level.
 		/// </summary>
 		public void GotoNextLevel()
 		{
@@ -118,7 +118,7 @@ namespace Model.PlayGame.NewGame
 		}
 
 		/// <summary>
-		/// Starts the game by loading the first level.
+		/// Starts the game by loading the first Level.
 		/// </summary>
 		public void Start()
 		{
@@ -136,7 +136,7 @@ namespace Model.PlayGame.NewGame
 		}
 
 		/// <summary>
-		/// Reloads and then starts the current level
+		/// Reloads and then starts the current Level
 		/// from the beginning.
 		/// </summary>
 		public void RestartLevel()

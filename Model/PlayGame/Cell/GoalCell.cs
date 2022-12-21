@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Model.PlayGame.Cell
 {
 	/// <summary>
-	/// Represents a goal on the level grid
+	/// Represents a goal on the Level grid
 	/// where <see cref="Treasure"/>s must be pushed
 	/// in order to complete the <see cref="Level"/>.
 	/// </summary>
@@ -34,8 +34,8 @@ namespace Model.PlayGame.Cell
 		/// Initializes a new instance of the <see cref="GoalCell"/> class.
 		/// </summary>
 		/// <param name="location">The location of the goal
-		/// on the level grid.</param>
-		/// <param name="level">The level grid where this cell
+		/// on the Level grid.</param>
+		/// <param name="level">The Level grid where this cell
 		/// is located.</param>
 		public GoalCell(Location location, Level level)
 			: base(cellName, location, level)
@@ -46,8 +46,8 @@ namespace Model.PlayGame.Cell
 		/// Initializes a new instance of the <see cref="GoalCell"/> class.
 		/// </summary>
 		/// <param name="location">The location of the goal
-		/// on the level grid.</param>
-		/// <param name="level">The level grid where this cell
+		/// on the Level grid.</param>
+		/// <param name="level">The Level grid where this cell
 		/// is located.</param>
 		/// <param name="contents">The contents of this goal cell.</param>
 		public GoalCell(Location location, Level level, CellContents contents)
