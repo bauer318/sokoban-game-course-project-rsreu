@@ -13,13 +13,13 @@ namespace Model.PlayGame.Levels
 {
     public abstract class Level
     {
-		Cell.Cell[][] cells;
-		List<GoalCell> goals = new List<GoalCell>();
+		public Cell.Cell[][] cells;
+		public List<GoalCell> goals = new List<GoalCell>();
 
 		/// <summary>
-		/// Gets the level number.
+		/// Gets the Level number.
 		/// </summary>
-		/// <value>The level number.</value>
+		/// <value>The Level number.</value>
 		public int LevelNumber
 		{
 			get;
@@ -27,9 +27,9 @@ namespace Model.PlayGame.Levels
 		}
 
 		/// <summary>
-		/// Gets or sets the game that this level is located.
+		/// Gets or sets the game that this Level is located.
 		/// </summary>
-		/// <value>The game that this level is located.</value>
+		/// <value>The game that this Level is located.</value>
 		protected Game Game
 		{
 			get;
@@ -38,7 +38,7 @@ namespace Model.PlayGame.Levels
 
 		/// <summary>
 		/// Gets the single <see cref="Actor"/> instance
-		/// located on each level.
+		/// located on each Level.
 		/// </summary>
 		/// <value>The actor. (The user moveable guy) </value>
 		public Actor Actor
@@ -77,9 +77,9 @@ namespace Model.PlayGame.Levels
 		}
 
 		/// <summary>
-		/// Gets the number of rows in the level.
+		/// Gets the number of rows in the Level.
 		/// </summary>
-		/// <value>The number of rows in the level.</value>
+		/// <value>The number of rows in the Level.</value>
 		public int RowCount
 		{
 			get
@@ -89,9 +89,9 @@ namespace Model.PlayGame.Levels
 		}
 
 		/// <summary>
-		/// Gets the number of columns in the level.
+		/// Gets the number of columns in the Level.
 		/// </summary>
-		/// <value>The number of columns in the level.</value>
+		/// <value>The number of columns in the Level.</value>
 		public int ColumnCount
 		{
 			get
@@ -103,8 +103,8 @@ namespace Model.PlayGame.Levels
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Level"/> class.
 		/// </summary>
-		/// <param name="game">The game that the level belongs.</param>
-		/// <param name="levelNumber">The level number for this level.</param>
+		/// <param name="game">The game that the Level belongs.</param>
+		/// <param name="levelNumber">The Level number for this Level.</param>
 		public Level(Game game, int levelNumber)
 		{
 			Game = game;
@@ -112,9 +112,9 @@ namespace Model.PlayGame.Levels
 		}
 
 		/// <summary>
-		/// Loads the level data from the specified map stream.
+		/// Loads the Level data from the specified map stream.
 		/// </summary>
-		/// <param name="mapStream">The map stream to load the level.</param>
+		/// <param name="mapStream">The map stream to load the Level.</param>
 		public void Load(TextReader mapStream)
 		{
 			if (mapStream == null)
@@ -146,7 +146,7 @@ namespace Model.PlayGame.Levels
 		/// the Levels grid.
 		/// </summary>
 		/// <param name="location">The location to test
-		/// whether it is within the level grid.</param>
+		/// whether it is within the Level grid.</param>
 		/// <returns><code>true</code> if the location
 		/// is within the <see cref="Level"/>; 
 		/// <code>false</code> otherwise.</returns>
@@ -160,7 +160,7 @@ namespace Model.PlayGame.Levels
 		#region LevelCompleted event
 		public event EventHandler levelCompleted;
 		/// <summary>
-		/// Occurs when a level has been completed successfully.
+		/// Occurs when a Level has been completed successfully.
 		/// </summary>
 		public event EventHandler LevelCompleted
 		{

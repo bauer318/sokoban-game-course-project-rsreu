@@ -10,12 +10,16 @@ using System.Threading.Tasks;
 namespace Model.PlayGame.Commands
 {
     /// <summary>
-	/// Performs a move with the <see cref="Level"/>'s <see cref="Actor"/>
+	/// Performs a move with the <see cref="Levels.Level"/>'s <see cref="Actor"/>
 	/// instance. A move is a single step.
 	/// </summary>
     public class MoveCommand:CommandBase
     {
-		Level level;
+		public Level Level
+        {
+			get;
+			set;
+        }
 
 		/// <summary>
 		/// Gets or sets the direction for the <see cref="Move"/>.
@@ -30,16 +34,16 @@ namespace Model.PlayGame.Commands
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MoveCommand"/> class.
 		/// </summary>
-		/// <param name="level">The level where the move will take place.</param>
+		/// <param name="level">The Level where the move will take place.</param>
 		/// <param name="direction">The direction of the move.</param>
 		public MoveCommand(Level level, Direction direction)
 		{
 			if (level == null)
 			{
-				throw new ArgumentNullException("level");
+				throw new ArgumentNullException("Level");
 			}
 			Direction = direction;
-			this.level = level;
+			this.Level = level;
 		}
 
 		/// <summary>
@@ -50,7 +54,7 @@ namespace Model.PlayGame.Commands
 		public override void Execute()
 		{
 			Move move = new Move(Direction);
-			level.Actor.DoMove(move);
+			Level.Actor.DoMove(move);
 		}
 
 		/// <summary>
@@ -59,7 +63,7 @@ namespace Model.PlayGame.Commands
 		/// </summary>
 		public override void Undo()
 		{
-			level.Actor.UndoMove();
+			Level.Actor.UndoMove();
 		}
 
 		/// <summary>
