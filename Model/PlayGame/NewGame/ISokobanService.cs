@@ -8,7 +8,7 @@ namespace Model.PlayGame.NewGame
 {
 	/// <summary>
 	/// A Sokoban service provides a service for the game
-	/// of sokoban, including retrieval maps, and level counting.
+	/// of sokoban, including retrieval maps, and Level counting.
 	/// </summary>
 	public interface ISokobanService
 	{
@@ -23,9 +23,9 @@ namespace Model.PlayGame.NewGame
 
 		/// <summary>
 		/// Gets the string representing the map 
-		/// with the specified level number.
+		/// with the specified Level number.
 		/// </summary>
-		/// <param name="levelNumber">The level number of the map to retrieve.</param>
+		/// <param name="levelNumber">The Level number of the map to retrieve.</param>
 		/// <returns>The map in string format.
 		/// <example>!!!!!!!!!!!########
 		///!!!!!!!!!!!#  ....#

@@ -28,7 +28,7 @@ namespace Model.PlayGame.Cell
 		/// Initializes a new instance of the <see cref="WallCell"/> class.
 		/// </summary>
 		/// <param name="location">The location where this wall is located.</param>
-		/// <param name="level">The level where this cell is located.</param>
+		/// <param name="level">The Level where this cell is located.</param>
 		public WallCell(Location location, Level level)
 			: base("Wall", location, level)
 		{

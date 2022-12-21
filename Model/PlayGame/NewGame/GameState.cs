@@ -13,7 +13,7 @@ namespace Model.PlayGame.NewGame
 	public enum GameState
 	{
 		/// <summary>
-		/// Loading of a level.
+		/// Loading of a Level.
 		/// </summary>
 		Loading,
 		/// <summary>

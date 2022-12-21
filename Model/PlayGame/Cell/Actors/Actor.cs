@@ -14,7 +14,7 @@ namespace Model.PlayGame.Cell.Actors
 		private readonly Stack<MoveBase> _moves = new Stack<MoveBase>();
 		private int _moveCount;
 		/* lock object for the DoMove methods. */
-		private readonly object _moveLock = new object();
+		public readonly object MoveLock = new object();
 
 		/// <summary>
 		/// Gets the move count.
@@ -41,7 +41,7 @@ namespace Model.PlayGame.Cell.Actors
 		/// Initializes a new instance of the <see cref="Actor"/> class.
 		/// </summary>
 		/// <param name="location">The location.</param>
-		/// <param name="level">The level.</param>
+		/// <param name="level">The Level.</param>
 		public Actor(Location location, Level level)
 			: base("Actor", location, level)
 		{

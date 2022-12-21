@@ -14,6 +14,7 @@ namespace Model.PlayGame.Cell
 	/// </summary>
     public abstract class Cell: LevelContentBase
     {
+		private string _name;
 		/// <summary>
 		/// Gets or sets the name of this cell.
 		/// The name can be used to identify the type
@@ -24,28 +25,40 @@ namespace Model.PlayGame.Cell
 		/// such as <em>Wall</em> or <em>Floor</em></value>
 		public string Name
 		{
-			get;
-			protected set;
+            get
+            {
+				return _name;
+            }
+            set
+            {
+				_name = value;
+            }
 		}
 
+		private Location _location;
 		/// <summary>
 		/// Gets or sets the location on the <see cref="Level"/>.
 		/// </summary>
 		/// <value>The location of the cell on the <see cref="Level"/>.</value>
 		public Location Location
 		{
-			get;
-			private set;
+            get
+            {
+				return _location;
+            }
 		}
-
+		private Level _level;
 		/// <summary>
-		/// Gets or sets the level where this cell is located.
+		/// Gets or sets the Level where this cell is located.
 		/// </summary>
-		/// <value>The level where this cell is located.</value>
+		/// <value>The Level where this cell is located.</value>
 		public Level Level
 		{
-			get;
-			private set;
+            get
+            {
+				return _level;
+            }
+			
 		}
 
 		/// <summary>
@@ -84,12 +97,12 @@ namespace Model.PlayGame.Cell
 		/// </summary>
 		/// <param name="name">The name of the cell. <seealso cref="Name"/>.</param>
 		/// <param name="location">The location of the cell. <seealso cref="Location"/></param>
-		/// <param name="level">The level where the cell is located. <seealso cref="Level"/></param>
+		/// <param name="level">The Level where the cell is located. <seealso cref="Level"/></param>
 		public Cell(string name, Location location, Level level)
 		{
-			Name = name;
-			Location = location;
-			Level = level;
+			_name = name;
+			_location = location;
+			_level = level;
 		}
 
 		/// <summary>
@@ -97,7 +110,7 @@ namespace Model.PlayGame.Cell
 		/// </summary>
 		/// <param name="name">The name of the cell. <seealso cref="Name"/>.</param>
 		/// <param name="location">The location of the cell. <seealso cref="Location"/></param>
-		/// <param name="level">The level where the cell is located. <seealso cref="Level"/></param>
+		/// <param name="level">The Level where the cell is located. <seealso cref="Level"/></param>
 		/// <param name="contents">The contents of this cell. <seealso cref="CellContents"/>/param>
 		public Cell(string name, Location location, Level level, CellContents contents)
 			: this(name, location, level)
