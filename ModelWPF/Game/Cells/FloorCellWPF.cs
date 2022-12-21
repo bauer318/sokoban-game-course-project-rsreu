@@ -11,7 +11,7 @@ namespace ModelWPF.Game.Cells
 	/// <summary>
 	/// Represents a vacant floor cell in the level grid.
 	/// </summary>
-	public class FloorCell : Cell
+	public class FloorCellWPF : CellWPF
 	{
 		const string cellName = "Floor";
 
@@ -20,7 +20,7 @@ namespace ModelWPF.Game.Cells
 		/// </summary>
 		/// <param name="location">The location of the cell.</param>
 		/// <param name="level">The level on which the cell is located.</param>
-		public FloorCell(Location location, Level level)
+		public FloorCellWPF(Location location, Level level)
 			: base(cellName, location, level)
 		{
 		}
@@ -31,7 +31,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="location">The location of the cell.</param>
 		/// <param name="level">The level on which the cell is located.</param>
 		/// <param name="contents">The contents of this cell.</param>
-		public FloorCell(Location location, Level level, CellContents contents)
+		public FloorCellWPF(Location location, Level level, CellContentsWPF contents)
 			: base(cellName, location, level, contents)
 		{
 		}

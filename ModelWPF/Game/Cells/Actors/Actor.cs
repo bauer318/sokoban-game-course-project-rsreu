@@ -12,34 +12,12 @@ namespace ModelWPF.Game.Cells.Actors
 	/// <summary>
 	/// Represents the token manipulated by the user.
 	/// </summary>
-	public partial class Actor : CellContents
+	public partial class Actor : CellContentsWPF
 	{
 		readonly Stack<MoveBase> moves = new Stack<MoveBase>();
 		int moveCount;
 		/* lock object for the DoMove methods. */
 		readonly object moveLock = new object();
-
-		public int stepDelay = 100;
-
-		/// <summary>
-		/// Gets or sets the step delay for jumps.
-		/// </summary>
-		/// <value>The step delay in milleseconds imposed
-		/// during a jump. The step is executed asynchronously
-		/// and the thread is put to sleep for the specified
-		/// period.</value>
-		public int StepDelay
-		{
-			get
-			{
-				return stepDelay;
-			}
-			set
-			{
-				stepDelay = value;
-				OnPropertyChanged("StepDelay");
-			}
-		}
 
 		/// <summary>
 		/// Gets the move count.

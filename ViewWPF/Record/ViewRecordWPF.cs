@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using ViewWPF.MenuGraphics;
 
 namespace ViewWPF.Record
 {
     public class ViewRecordWPF : IMenuChosen
     {
-        public void InitChosenMenu(MainWindow parMainWindow)
+        public void InitChosenMenu()
         {
             Button button = new Button();
             button.Content = "here will be the record page.";
@@ -18,7 +19,7 @@ namespace ViewWPF.Record
             stackPanel.VerticalAlignment = VerticalAlignment.Center;
             stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             stackPanel.Children.Add(button);
-            parMainWindow.Content = stackPanel;
+            ViewMenuMainWPF.MainWindow.Content = stackPanel;
         }
     }
 }

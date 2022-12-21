@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using ViewWPF.MenuGraphics;
 
 namespace ViewWPF.Help
 {
     public class ViewHelpWPF : IMenuChosen
     {
-        public void InitChosenMenu(MainWindow parMainWindow)
+        public void InitChosenMenu()
         {
             Button button = new Button();
             button.Content = "here will be the help page.";
@@ -18,7 +19,7 @@ namespace ViewWPF.Help
             stackPanel.VerticalAlignment = VerticalAlignment.Center;
             stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             stackPanel.Children.Add(button);
-            parMainWindow.Content = stackPanel;
+            ViewMenuMainWPF.MainWindow.Content = stackPanel;
         }
     }
 }

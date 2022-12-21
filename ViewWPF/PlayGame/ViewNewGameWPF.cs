@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using View.PlayGame;
+using ViewWPF.MenuGraphics;
 using CommandManager = ModelWPF.Game.Commands.CommandManager;
 
 namespace ViewWPF.PlayGame
@@ -21,11 +22,11 @@ namespace ViewWPF.PlayGame
     {
         private readonly CommandManager commandManager = new CommandManager();
         private ResourceDictionary _resourceDictionary = Application.LoadComponent(
-            new Uri("/ViewWPF;component/PlayGame/ResourceDictionaries/Cell.xaml",
+            new Uri("/ViewWPF;component/PlayGame/ResourceDictionaries/CellWPF.xaml",
                UriKind.RelativeOrAbsolute)) as ResourceDictionary;
         private DockPanel _dockPanel;
         private MainWindow _mainWindow;
-        public delegate void dReinitChoseenMenu(MainWindow mainWindow);
+        public delegate void dReinitChoseenMenu();
         public event dReinitChoseenMenu ReinitChoseenMenu;
         public bool firstStartLevel = true;
 
@@ -92,7 +93,7 @@ namespace ViewWPF.PlayGame
 
                 for (var column = 0; column < columnCount; column++)
                 {
-                    Cell cell = Game.Level[row, column];
+                    CellWPF cell = Game.Level[row, column];
                     Button button = new Button();
                     button.Focusable = false;
                     button.DataContext = cell;
@@ -160,7 +161,7 @@ namespace ViewWPF.PlayGame
                             Game.GotoNextLevel();
                             firstStartLevel = false;
                             ReinitChoseenMenu += new dReinitChoseenMenu(InitChosenMenu);
-                            ReinitChoseenMenu.Invoke(_mainWindow);
+                            ReinitChoseenMenu.Invoke();
                             break;
                     }
                 }  
@@ -171,17 +172,16 @@ namespace ViewWPF.PlayGame
             }
         }
        
-        public void InitChosenMenu(MainWindow parMainWindow)
+        public void InitChosenMenu()
         {
-            _mainWindow = parMainWindow;
             Application.Current.Resources.MergedDictionaries.Add(_resourceDictionary);
             if (firstStartLevel)
             {
                 TryToStartFirstLevel();
-                parMainWindow.KeyDown += new KeyEventHandler(Window_KeyDown);
+                ViewMenuMainWPF.MainWindow.KeyDown += new KeyEventHandler(Window_KeyDown);
             }
             InitialiseLevel();
-            parMainWindow.Content = _dockPanel;
+            ViewMenuMainWPF.MainWindow.Content = _dockPanel;
         }
     }
 }

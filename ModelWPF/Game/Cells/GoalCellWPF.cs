@@ -13,7 +13,7 @@ namespace ModelWPF.Game.Cells
 	/// where <see cref="Treasure"/>s must be pushed
 	/// in order to complete the <see cref="Level"/>.
 	/// </summary>
-	public class GoalCell : Cell
+	public class GoalCellWPF : CellWPF
 	{
 		const string cellName = "Goal";
 
@@ -27,7 +27,7 @@ namespace ModelWPF.Game.Cells
 		{
 			get
 			{
-				return CellContents is Treasure;
+				return CellContents is TreasureWPF;
 			}
 		}
 
@@ -38,7 +38,7 @@ namespace ModelWPF.Game.Cells
 		/// on the level grid.</param>
 		/// <param name="level">The level grid where this cell
 		/// is located.</param>
-		public GoalCell(Location location, Level level)
+		public GoalCellWPF(Location location, Level level)
 			: base(cellName, location, level)
 		{
 		}
@@ -51,7 +51,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="level">The level grid where this cell
 		/// is located.</param>
 		/// <param name="contents">The contents of this goal cell.</param>
-		public GoalCell(Location location, Level level, CellContents contents)
+		public GoalCellWPF(Location location, Level level, CellContentsWPF contents)
 			: base(cellName, location, level, contents)
 		{
 		}
@@ -63,11 +63,11 @@ namespace ModelWPF.Game.Cells
 		/// <returns><code>true</code> if the contents 
 		/// was successfully placed on the goal, <code>false</code> otherwise.
 		/// </returns>
-		public override bool TrySetContents(CellContents contents)
+		public override bool TrySetContents(CellContentsWPF contents)
 		{
 			if (base.TrySetContents(contents))
 			{
-				if (contents is Treasure)
+				if (contents is TreasureWPF)
 				{
 					OnCompletedGoalChanged(EventArgs.Empty);
 				}
@@ -82,7 +82,7 @@ namespace ModelWPF.Game.Cells
 		public override void RemoveContents()
 		{
 			/* Check for the removal of a treasure from goal square. */
-			if (CellContents != null && CellContents is Treasure)
+			if (CellContents != null && CellContents is TreasureWPF)
 			{
 				OnCompletedGoalChanged(EventArgs.Empty);
 			}

@@ -11,7 +11,7 @@ namespace ModelWPF.Game.Cells
 	/// <summary>
 	/// Base class for all cells in a <see cref="Level"/>.
 	/// </summary>
-	public abstract class Cell : LevelContentBase
+	public abstract class CellWPF : LevelContentBase
 	{
 		/// <summary>
 		/// Gets or sets the name of this cell.
@@ -50,9 +50,9 @@ namespace ModelWPF.Game.Cells
 		/// <summary>
 		/// Gets or sets the cell contents of this cell.
 		/// </summary>
-		/// <value>The cell contents, such as a <em>Treasure</em>,
+		/// <value>The cell contents, such as a <em>TreasureWPF</em>,
 		/// or an <em>Actors</em>.</value>
-		public CellContents CellContents
+		public CellContentsWPF CellContents
 		{
 			get;
 			private set;
@@ -88,7 +88,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="name">The name of the cell. <seealso cref="Name"/>.</param>
 		/// <param name="location">The location of the cell. <seealso cref="Location"/></param>
 		/// <param name="level">The level where the cell is located. <seealso cref="Level"/></param>
-		public Cell(string name, Location location, Level level)
+		public CellWPF(string name, Location location, Level level)
 		{
 			Name = name;
 			Location = location;
@@ -102,7 +102,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="location">The location of the cell. <seealso cref="Location"/></param>
 		/// <param name="level">The level where the cell is located. <seealso cref="Level"/></param>
 		/// <param name="contents">The contents of this cell. <seealso cref="CellContents"/>/param>
-		public Cell(string name, Location location, Level level, CellContents contents)
+		public CellWPF(string name, Location location, Level level, CellContentsWPF contents)
 			: this(name, location, level)
 		{
 			/* Add to this cell. */
@@ -117,7 +117,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="contents">The contents to place in the cell.</param>
 		/// <returns><code>true</code> if the specified contents
 		/// was able to be placed in this cell; <code>false</code> otherwise.</returns>
-		public virtual bool TrySetContents(CellContents contents)
+		public virtual bool TrySetContents(CellContentsWPF contents)
 		{
 			if (CanEnter)
 			{
@@ -146,7 +146,7 @@ namespace ModelWPF.Game.Cells
 			{
 				return false;
 			}
-			Cell neighbour = Level[Location.GetAdjacentLocation(direction)];
+			CellWPF neighbour = Level[Location.GetAdjacentLocation(direction)];
 			neighbour.TrySetContents(CellContents);
 			return true;
 		}
@@ -168,7 +168,7 @@ namespace ModelWPF.Game.Cells
 			{
 				return false;
 			}
-			Cell neighbour = Level[Location.GetAdjacentLocation(direction)];
+			CellWPF neighbour = Level[Location.GetAdjacentLocation(direction)];
 			return neighbour != null && neighbour.CanEnter;
 		}
 

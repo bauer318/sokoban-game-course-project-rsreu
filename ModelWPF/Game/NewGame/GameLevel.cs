@@ -11,15 +11,11 @@ using System.Threading.Tasks;
 
 namespace ModelWPF.Game.NewGame
 {
-	/// <summary>
-	/// The main class for the game of Sokoban.
-	/// </summary>
-	public class GameLevel : INotifyPropertyChanged
-	{
-		string levelDirectory = @"..\..\..\..\Levels\";
-		ISokobanService sokobanService;
-		SynchronizationContext context = SynchronizationContext.Current;
-
+    public class GameLevel : INotifyPropertyChanged
+    {
+        string levelDirectory = @"..\..\..\..\Levels\";
+        ISokobanService sokobanService;
+        SynchronizationContext context = SynchronizationContext.Current;
 		/// <summary>
 		/// Gets the number of levels available
 		/// to be played in a game.
@@ -92,9 +88,6 @@ namespace ModelWPF.Game.NewGame
 			Level.LevelCompleted += new EventHandler(Level_LevelCompleted);
 			string levelMap;
 
-			//			ThreadPool.QueueUserWorkItem(
-			//				delegate
-			//					{
 			if (sokobanService != null)
 			{
 				levelMap = sokobanService.GetMap(levelNumber);
@@ -113,14 +106,8 @@ namespace ModelWPF.Game.NewGame
 			}
 
 			OnPropertyChanged("Level");
-			//context.Send(delegate
-			//{
 			StartLevel();
-			//}, null);
-			//					});
 		}
-
-		#region PropertyChangedEventHandler
 		event PropertyChangedEventHandler propertyChanged;
 
 		/// <summary>
@@ -181,7 +168,6 @@ namespace ModelWPF.Game.NewGame
 				}
 			}
 		}
-		#endregion
 
 		/// <summary>
 		/// Tests whether the specified location is within 

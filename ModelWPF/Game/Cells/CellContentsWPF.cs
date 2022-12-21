@@ -13,7 +13,7 @@ namespace ModelWPF.Game.Cells
 	/// This is provided as a base implementation
 	/// for other cell contents.
 	/// </summary>
-	public class CellContents : LevelContentBase
+	public class CellContentsWPF : LevelContentBase
 	{
 		/// <summary>
 		/// Gets or sets the name of this cell contents.
@@ -22,7 +22,7 @@ namespace ModelWPF.Game.Cells
 		/// </summary>
 		/// <value>The name of the cell contents. 
 		/// The conceptual type name of the cell contents, 
-		/// such as <em>Actors</em> or <em>Treasure</em></value>
+		/// such as <em>Actors</em> or <em>TreasureWPF</em></value>
 		public string Name
 		{
 			get;
@@ -53,7 +53,7 @@ namespace ModelWPF.Game.Cells
 		/// Gets or sets the cell where this instance is located.
 		/// </summary>
 		/// <value>The cell where this instance is located.</value>
-		public Cell Cell
+		public CellWPF Cell
 		{
 			get
 			{
@@ -62,8 +62,8 @@ namespace ModelWPF.Game.Cells
 			set
 			{
 				Location = value.Location;
-				OnPropertyChanged("Cells");
-				OnPropertyChanged("CellLocation");
+				OnPropertyChanged("Cell");
+				OnPropertyChanged("Location");
 			}
 		}
 
@@ -73,7 +73,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="name">The name of this cell contents. <seealso cref="Name"/></param>
 		/// <param name="location">The location on the level. <seealso cref="Location"/></param>
 		/// <param name="level">The level where this instance is located. <seealso cref="Level"/></param>
-		public CellContents(string name, Location location, Level level)
+		public CellContentsWPF(string name, Location location, Level level)
 		{
 			Name = name;
 			Location = location;

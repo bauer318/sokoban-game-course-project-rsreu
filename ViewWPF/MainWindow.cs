@@ -9,7 +9,7 @@ using System.Windows.Interop;
 
 namespace ViewWPF
 {
-    public partial class MainWindow:Window
+    public class MainWindow:Window
     {
         public MainWindow()
         {

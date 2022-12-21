@@ -30,7 +30,7 @@ namespace ModelWPF.Game.Moves
 		/// </summary>
 		/// <value>The contents that were pushed 
 		/// as part of the relocation.</value>
-		public CellContents PushedContents
+		public CellContentsWPF PushedContents
 		{
 			get;
 			set;

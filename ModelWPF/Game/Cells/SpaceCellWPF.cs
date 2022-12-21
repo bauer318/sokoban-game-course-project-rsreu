@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace ModelWPF.Game.Cells
 {
-    public class SpaceCell : Cell
+    public class SpaceCellWPF : CellWPF
     {
         /// <summary>
         /// Represents a cell containing nothing. 
         /// This is not a cell that is used to place <see cref="CellContents"/>.
         /// </summary>
-        public SpaceCell(Location location, Level level)
+        public SpaceCellWPF(Location location, Level level)
             : base("Space", location, level)
         {
         }

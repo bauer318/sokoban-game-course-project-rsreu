@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using ViewWPF.MenuGraphics;
 
 namespace ViewWPF.GameMap
 {
     public class ViewCreateGameMapWPF : IMenuChosen
     {
-        public void InitChosenMenu(MainWindow parMainWindow)
+        public void InitChosenMenu()
         {
             Button button = new Button();
             button.Content = "here will be map's editor page.";
@@ -18,7 +19,7 @@ namespace ViewWPF.GameMap
             stackPanel.VerticalAlignment = VerticalAlignment.Center;
             stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             stackPanel.Children.Add(button);
-            parMainWindow.Content = stackPanel;
+            ViewMenuMainWPF.MainWindow.Content = stackPanel;
         }
     }
 }

@@ -18,8 +18,8 @@ namespace ModelWPF.Game.Levels
 	/// </summary>
 	public class Level
 	{
-		Cell[][] cells;
-		List<GoalCell> goals = new List<GoalCell>();
+		CellWPF[][] cells;
+		List<GoalCellWPF> goals = new List<GoalCellWPF>();
 
 		/// <summary>
 		/// Gets the level number.
@@ -57,7 +57,7 @@ namespace ModelWPF.Game.Levels
 		/// and column number.
 		/// </summary>
 		/// <value>The cell at the specified row number and column number.</value>
-		public Cell this[int rowNumber, int columnNumber]
+		public CellWPF this[int rowNumber, int columnNumber]
 		{
 			get
 			{
@@ -69,7 +69,7 @@ namespace ModelWPF.Game.Levels
 		/// Gets the <see cref="Orpius.Sokoban.Cell"/> with the specified location.
 		/// </summary>
 		/// <value>The cell at the specified location.</value>
-		public Cell this[Location location]
+		public CellWPF this[Location location]
 		{
 			get
 			{
@@ -127,7 +127,7 @@ namespace ModelWPF.Game.Levels
 				throw new ArgumentNullException("mapStream");
 			}
 
-			List<List<Cell>> rows = new List<List<Cell>>();
+			List<List<CellWPF>> rows = new List<List<CellWPF>>();
 
 			string gridRowText;
 			int rowCount = 0;
@@ -136,16 +136,16 @@ namespace ModelWPF.Game.Levels
 				rows.Add(BuildCells(gridRowText, rowCount++));
 			}
 
-			cells = new Cell[rowCount][];
+			cells = new CellWPF[rowCount][];
 			for (int i = 0; i < rowCount; i++)
 			{
 				cells[i] = rows[i].ToArray();
 			}
 		}
 
-		List<Cell> BuildCells(string rowText, int rowNumber)
+		List<CellWPF> BuildCells(string rowText, int rowNumber)
 		{
-			List<Cell> row = new List<Cell>(rowText.Length);
+			List<CellWPF> row = new List<CellWPF>(rowText.Length);
 
 			int columnNumber = 0;
 
@@ -155,33 +155,33 @@ namespace ModelWPF.Game.Levels
 				switch (c)
 				{
 					case '#': /* Wall. */
-						row.Add(new WallCell(location, this));
+						row.Add(new WallCellWPF(location, this));
 						break;
 					case ' ': /* Empty. */
-						row.Add(new FloorCell(location, this));
+						row.Add(new FloorCellWPF(location, this));
 						break;
-					case '$': /* Treasure in a square. */
-						row.Add(new FloorCell(location, this, new Treasure(location, this)));
+					case '$': /* TreasureWPF in a square. */
+						row.Add(new FloorCellWPF(location, this, new TreasureWPF(location, this)));
 						break;
-					case '*': /* Treasure in a Goal. */
-						GoalCell goalCellWithTreasure = new GoalCell(location, this, new Treasure(location, this));
+					case '*': /* TreasureWPF in a Goal. */
+						GoalCellWPF goalCellWithTreasure = new GoalCellWPF(location, this, new TreasureWPF(location, this));
 						goalCellWithTreasure.CompletedGoalChanged += new EventHandler(GoalCell_CompletedGoalChanged);
 						goals.Add(goalCellWithTreasure);
 						row.Add(goalCellWithTreasure);
 						break;
 					case '.': /* Goal. */
-						GoalCell goalCell = new GoalCell(location, this);
+						GoalCellWPF goalCell = new GoalCellWPF(location, this);
 						goalCell.CompletedGoalChanged += new EventHandler(GoalCell_CompletedGoalChanged);
 						goals.Add(goalCell);
 						row.Add(goalCell);
 						break;
 					case '@': /* Actors in a floor cell. */
 						Actor actor = new Actor(location, this);
-						row.Add(new FloorCell(location, this, actor));
+						row.Add(new FloorCellWPF(location, this, actor));
 						Actor = actor;
 						break;
 					case '!': /* Space. */
-						row.Add(new SpaceCell(location, this));
+						row.Add(new SpaceCellWPF(location, this));
 						break;
 					default:
 						throw new FormatException("Invalid Levels symbol found: " + c);
@@ -192,7 +192,7 @@ namespace ModelWPF.Game.Levels
 
 		void GoalCell_CompletedGoalChanged(object sender, EventArgs e)
 		{
-			foreach (GoalCell goal in goals)
+			foreach (GoalCellWPF goal in goals)
 			{
 				if (!goal.HasTreasure)
 				{

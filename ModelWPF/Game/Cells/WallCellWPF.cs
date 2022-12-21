@@ -11,7 +11,7 @@ namespace ModelWPF.Game.Cells
 	/// <summary>
 	/// Represents a wall in the <see cref="Level"/> grid.
 	/// </summary>
-	public class WallCell : Cell
+	public class WallCellWPF : CellWPF
 	{
 		/// <summary>
 		/// Gets a value indicating whether the <see cref="Actor"/> 
@@ -32,7 +32,7 @@ namespace ModelWPF.Game.Cells
 		/// </summary>
 		/// <param name="location">The location where this wall is located.</param>
 		/// <param name="level">The level where this cell is located.</param>
-		public WallCell(Location location, Level level)
+		public WallCellWPF(Location location, Level level)
 			: base("Wall", location, level)
 		{
 		}

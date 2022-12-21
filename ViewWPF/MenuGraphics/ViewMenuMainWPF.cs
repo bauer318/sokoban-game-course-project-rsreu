@@ -16,7 +16,7 @@ namespace ViewWPF.MenuGraphics
 {
     public class ViewMenuMainWPF : ViewMenuWPF
     {
-        private MainWindow _window = null;
+        public static MainWindow MainWindow = null;
         private StackPanel _mainStackPanel = null;
         private bool _isMenuMainActive = true;
         private IMenuChosen _menuChosen = null;
@@ -26,21 +26,21 @@ namespace ViewWPF.MenuGraphics
         }
         public void Init()
         {
-            _window = new MainWindow();
+            MainWindow = new MainWindow();
 
             _mainStackPanel = new StackPanel();
             _mainStackPanel.VerticalAlignment = VerticalAlignment.Center;
             _mainStackPanel.HorizontalAlignment = HorizontalAlignment.Center;
-            _window.Content = _mainStackPanel;
+            MainWindow.Content = _mainStackPanel;
 
             SetParentControl(_mainStackPanel);
             Draw();
-            _window.PreviewKeyDown += new KeyEventHandler(HandleEsc);
-            _window.Show();
+            MainWindow.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+            MainWindow.Show();
         }
         public void Close()
         {
-            _window.Close();
+            MainWindow.Close();
         }
         public void NewGame()
         {
@@ -51,7 +51,7 @@ namespace ViewWPF.MenuGraphics
         }
         private void InitMenuChosen()
         {
-            _menuChosen.InitChosenMenu(_window);
+            _menuChosen.InitChosenMenu();
         }
 
         public void Help()
@@ -81,7 +81,7 @@ namespace ViewWPF.MenuGraphics
         {
             if (e.Key == Key.Escape && !_isMenuMainActive)
             {
-                _window.Content = _mainStackPanel;
+                MainWindow.Content = _mainStackPanel;
             }
         }
         public override void Draw()

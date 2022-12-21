@@ -8,6 +8,6 @@ namespace ViewWPF
 {
     public interface IMenuChosen
     {
-        void InitChosenMenu(MainWindow parMainWindow);
+        void InitChosenMenu();
     }
 }

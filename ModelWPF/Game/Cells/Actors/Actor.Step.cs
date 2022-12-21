@@ -30,9 +30,9 @@ namespace ModelWPF.Game.Cells.Actors
 			Location moveLocation = Location.GetAdjacentLocation(move.Direction);
 			if (Level.InBounds(moveLocation))
 			{
-				Cell toCell = Level[moveLocation];
-				Cell fromCell = Level[Location];
-				CellContents toCellContents = toCell.CellContents;
+				CellWPF toCell = Level[moveLocation];
+				CellWPF fromCell = Level[Location];
+				CellContentsWPF toCellContents = toCell.CellContents;
 
 				if (toCell.CanEnter)
 				{   /* Empty cell. */
