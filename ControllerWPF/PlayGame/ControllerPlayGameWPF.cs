@@ -20,29 +20,34 @@ namespace ControllerWPF.PlayGame
 {
     public class ControllerPlayGameWPF:ControllerPlayGame
     {
-        private readonly CommandManager commandManager = new CommandManager();
+        private readonly CommandManager _commandManager = new CommandManager();
         private ResourceDictionary _resourceDictionary = Application.LoadComponent(
             new Uri("/ViewWPF;component/PlayGame/ResourceDictionaries/CellWPF.xaml",
                UriKind.RelativeOrAbsolute)) as ResourceDictionary;
         private ViewNewGameWPF _viewNewGameWPF = null;
-        public ControllerPlayGameWPF(ViewNewGameBase parViewNewGameBase) : base(parViewNewGameBase) 
-        {
-            _viewNewGameWPF = parViewNewGameBase as ViewNewGameWPF;
-            T();
-        }
-
         public GameLevel Game
         {
             get
             {
                 return (GameLevel)_resourceDictionary["sokobanGame"];
             }
+            set
+            {
+                Game = value;
+            }
         }
+        public ControllerPlayGameWPF(ViewNewGameBase parViewNewGameBase) : base(parViewNewGameBase)
+        {
+            _viewNewGameWPF = parViewNewGameBase as ViewNewGameWPF;
+            ProcessDrawGameLevel();
+        }
+        /// <summary>
+        /// Try to load and start the first level of the game.
+        /// </summary>
         private void TryToStartFirstLevel()
         {
             try
             {
-                /* Load and start the first level of the game. */
                 Game.Start();
             }
             catch (Exception ex)
@@ -51,9 +56,9 @@ namespace ControllerWPF.PlayGame
             }
         }
 
-        public void T()
+        public void ProcessDrawGameLevel()
         {
-            commandManager.Clear();
+            _commandManager.Clear();
             if (ViewNewGameBase.FirstStartLevel)
             {
                 TryToStartFirstLevel();
@@ -89,13 +94,13 @@ namespace ControllerWPF.PlayGame
                         case Key.Z:
                             if (Keyboard.Modifiers == ModifierKeys.Control)
                             {
-                                commandManager.Undo();
+                                _commandManager.Undo();
                             }
                             break;
                         case Key.Y:
                             if (Keyboard.Modifiers == ModifierKeys.Control)
                             {
-                                commandManager.Redo();
+                                _commandManager.Redo();
                             }
                             break;
                     }
@@ -105,19 +110,28 @@ namespace ControllerWPF.PlayGame
                     switch (Game.GameState)
                     {
                         case GameState.GameOver:
-                            Game.Start();
+                            ViewNewGameBase.PrintExceptionMessage("GameOver");
                             break;
                         case GameState.LevelCompleted:
-                            Game.GotoNextLevel();
-                            ViewNewGameBase.FirstStartLevel = false;
-                            T();
+                            if(e.Key != Key.Escape)
+                            {
+                                Game.GotoNextLevel();
+                                ViewNewGameBase.FirstStartLevel = false;
+                                ProcessDrawGameLevel();
+                            }
                             break;
                     }
+                }
+                if (e.Key == Key.Escape)
+                {
+                    ViewNewGameBase.FirstStartLevel = true;
+                    command = null;
+                    ViewMenuMainWPF.MainWindow.KeyDown -= new KeyEventHandler(Controll_KeyDown);  
                 }
             }
             if (command != null)
             {
-                commandManager.Execute(command);
+                _commandManager.Execute(command);
             }
         }
     }

@@ -11,5 +11,6 @@ namespace View.PlayGame
     {
         public bool FirstStartLevel = true;
         public abstract void PrintExceptionMessage(string parMessage);
+
     }
 }
