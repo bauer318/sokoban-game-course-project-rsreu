@@ -1,5 +1,5 @@
 ﻿using ModelWPF.Game.Cells;
-using ModelWPF.Game.Command;
+using ModelWPF.Game.Commands;
 using ModelWPF.Game.Levels;
 using ModelWPF.Game.Locations;
 using ModelWPF.Game.NewGame;
@@ -13,7 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using View.PlayGame;
-using CommandManager = ModelWPF.Game.Command.CommandManager;
+using CommandManager = ModelWPF.Game.Commands.CommandManager;
 
 namespace ViewWPF.PlayGame
 {

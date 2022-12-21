@@ -27,7 +27,7 @@ namespace ModelWPF.Game.Cells.Actors
 		internal bool DoMoveAux(Move move)
 		{
 			bool result = false;
-			CellLocation moveLocation = Location.GetAdjacentLocation(move.Direction);
+			Location moveLocation = Location.GetAdjacentLocation(move.Direction);
 			if (Level.InBounds(moveLocation))
 			{
 				Cell toCell = Level[moveLocation];

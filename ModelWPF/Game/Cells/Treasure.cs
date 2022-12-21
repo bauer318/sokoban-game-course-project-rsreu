@@ -18,7 +18,7 @@ namespace ModelWPF.Game.Cells
 		/// </summary>
 		/// <param name="location">The location where the treasure is.</param>
 		/// <param name="level">The level that the treasure is located.</param>
-		public Treasure(CellLocation location, Level level)
+		public Treasure(Location location, Level level)
 			: base("Treasure", location, level)
 		{
 		}

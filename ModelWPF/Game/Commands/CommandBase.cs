@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelWPF.Game.Command
+namespace ModelWPF.Game.Commands
 {
-    /// <summary>
+	/// <summary>
 	/// A command represents an application
 	/// action, that can be executed, undone, and redone.
 	/// </summary>
-    public abstract class CommandBase
-    {
+	public abstract class CommandBase
+	{
 		/// <summary>
 		/// Executes this command.
 		/// </summary>

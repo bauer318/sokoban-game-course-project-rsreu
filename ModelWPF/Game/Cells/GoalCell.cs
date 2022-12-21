@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace ModelWPF.Game.Cells
 {
-    /// <summary>
+	/// <summary>
 	/// Represents a goal on the level grid
 	/// where <see cref="Treasure"/>s must be pushed
 	/// in order to complete the <see cref="Level"/>.
 	/// </summary>
-    public class GoalCell:Cell
-    {
+	public class GoalCell : Cell
+	{
 		const string cellName = "Goal";
 
 		/// <summary>
@@ -38,7 +38,7 @@ namespace ModelWPF.Game.Cells
 		/// on the level grid.</param>
 		/// <param name="level">The level grid where this cell
 		/// is located.</param>
-		public GoalCell(CellLocation location, Level level)
+		public GoalCell(Location location, Level level)
 			: base(cellName, location, level)
 		{
 		}
@@ -51,7 +51,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="level">The level grid where this cell
 		/// is located.</param>
 		/// <param name="contents">The contents of this goal cell.</param>
-		public GoalCell(CellLocation location, Level level, CellContents contents)
+		public GoalCell(Location location, Level level, CellContents contents)
 			: base(cellName, location, level, contents)
 		{
 		}

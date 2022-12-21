@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace ModelWPF.Game.Locations
 {
-	/// <summary>
-	/// Adds some static auxiliary methods
-	/// for the <see cref="Direction"/> enum.
-	/// </summary>
-	public static class MoveDirectionAux
-	{
+    public static class DirectionMethods
+    {
 		/// <summary>
 		/// Gets the opposite direction for the direction.
 		/// </summary>

@@ -69,7 +69,7 @@ namespace ModelWPF.Game.Levels
 		/// Gets the <see cref="Orpius.Sokoban.Cell"/> with the specified location.
 		/// </summary>
 		/// <value>The cell at the specified location.</value>
-		public Cell this[CellLocation location]
+		public Cell this[Location location]
 		{
 			get
 			{
@@ -151,7 +151,7 @@ namespace ModelWPF.Game.Levels
 
 			foreach (char c in rowText)
 			{
-				CellLocation location = new CellLocation(rowNumber, columnNumber++);
+				Location location = new Location(rowNumber, columnNumber++);
 				switch (c)
 				{
 					case '#': /* Wall. */
@@ -211,7 +211,7 @@ namespace ModelWPF.Game.Levels
 		/// <returns><code>true</code> if the location
 		/// is within the <see cref="Level"/>; 
 		/// <code>false</code> otherwise.</returns>
-		public bool InBounds(CellLocation location)
+		public bool InBounds(Location location)
 		{
 			return (location.RowNumber >= 0
 				&& location.RowNumber < RowCount

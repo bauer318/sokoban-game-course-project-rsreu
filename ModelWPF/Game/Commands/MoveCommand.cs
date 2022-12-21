@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelWPF.Game.Command
+namespace ModelWPF.Game.Commands
 {
 	/// <summary>
 	/// Performs a move with the <see cref="Level"/>'s <see cref="Actor"/>

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ModelWPF.Game.Exception
 {
-    public class SokobanException: ApplicationException
-    {
+	public class SokobanException : ApplicationException
+	{
 		public SokobanException()
 		{
 		}

@@ -33,7 +33,7 @@ namespace ModelWPF.Game.Cells
 		/// Gets or sets the location on the <see cref="Level"/>.
 		/// </summary>
 		/// <value>The location of the cell on the <see cref="Level"/>.</value>
-		public CellLocation Location
+		public Location Location
 		{
 			get;
 			private set;
@@ -73,7 +73,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="name">The name of this cell contents. <seealso cref="Name"/></param>
 		/// <param name="location">The location on the level. <seealso cref="Location"/></param>
 		/// <param name="level">The level where this instance is located. <seealso cref="Level"/></param>
-		public CellContents(string name, CellLocation location, Level level)
+		public CellContents(string name, Location location, Level level)
 		{
 			Name = name;
 			Location = location;

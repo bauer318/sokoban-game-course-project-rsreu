@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelWPF.Game.Command
+namespace ModelWPF.Game.Commands
 {
-    /// <summary>
+	/// <summary>
 	/// Provides for execution, undoing, and redoing
 	/// of <see cref="CommandBase"/> instances.
 	/// </summary>
-    public class CommandManager
-    {
+	public class CommandManager
+	{
 		private Stack<CommandBase> _commandStack = new Stack<CommandBase>();
 		private Stack<CommandBase> _redoStack = new Stack<CommandBase>();
 		private bool _canUndo;

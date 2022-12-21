@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ModelWPF.Game.Locations
 {
-    public class CellLocation
+    public class Location
     {
 		/// <summary>
 		/// Gets the row number.
@@ -33,7 +33,7 @@ namespace ModelWPF.Game.Locations
 		/// </summary>
 		/// <param name="rowNumber">The row number.</param>
 		/// <param name="columnNumber">The column number.</param>
-		public CellLocation(int rowNumber, int columnNumber)
+		public Location(int rowNumber, int columnNumber)
 		{
 			RowNumber = rowNumber;
 			ColumnNumber = columnNumber;
@@ -44,18 +44,18 @@ namespace ModelWPF.Game.Locations
 		/// </summary>
 		/// <param name="direction">The direction of the adjacent location.</param>
 		/// <returns></returns>
-		public CellLocation GetAdjacentLocation(Direction direction)
+		public Location GetAdjacentLocation(Direction direction)
 		{
 			switch (direction)
 			{
 				case Direction.Up:
-					return new CellLocation(RowNumber - 1, ColumnNumber);
+					return new Location(RowNumber - 1, ColumnNumber);
 				case Direction.Down:
-					return new CellLocation(RowNumber + 1, ColumnNumber);
+					return new Location(RowNumber + 1, ColumnNumber);
 				case Direction.Left:
-					return new CellLocation(RowNumber, ColumnNumber - 1);
+					return new Location(RowNumber, ColumnNumber - 1);
 				case Direction.Right:
-					return new CellLocation(RowNumber, ColumnNumber + 1);
+					return new Location(RowNumber, ColumnNumber + 1);
 				default:
 					throw new SokobanException("Unkown direction. " + direction.ToString("G"));
 			}
@@ -69,7 +69,7 @@ namespace ModelWPF.Game.Locations
 		/// <returns>
 		/// 	<c>true</c> if the specified location is adjacent; otherwise, <c>false</c>.
 		/// </returns>
-		public bool IsAdjacentLocation(CellLocation location)
+		public bool IsAdjacentLocation(Location location)
 		{
 			return !location.Equals(this)
 				   && ((ColumnNumber == location.ColumnNumber
@@ -90,7 +90,7 @@ namespace ModelWPF.Game.Locations
 		/// <returns></returns>
 		/// <exception cref="SokobanException">If the location is
 		/// not adjacent to the current instance.</exception>
-		public Direction GetDirection(CellLocation location)
+		public Direction GetDirection(Location location)
 		{
 			if (!IsAdjacentLocation(location))
 			{
@@ -129,7 +129,7 @@ namespace ModelWPF.Game.Locations
 			{
 				return false;
 			}
-			CellLocation loc = obj as CellLocation;
+			Location loc = obj as Location;
 			if (loc == null)
 			{
 				return false;
@@ -158,5 +158,4 @@ namespace ModelWPF.Game.Locations
 			return string.Format("Column {0}, Row {1}", ColumnNumber, RowNumber);
 		}
 	}
-
 }

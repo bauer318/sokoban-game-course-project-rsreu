@@ -11,7 +11,7 @@ namespace ModelWPF.Game.NewGame
 	/// may be in.
 	/// </summary>
 	public enum GameState
-    {
+	{
 		/// <summary>
 		/// Loading of a level.
 		/// </summary>

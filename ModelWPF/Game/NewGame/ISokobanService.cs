@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ModelWPF.Game.NewGame
 {
-    /// <summary>
+	/// <summary>
 	/// A Sokoban service provides a service for the game
 	/// of sokoban, including retrieval maps, and level counting.
 	/// </summary>
-    public interface ISokobanService
-    {
+	public interface ISokobanService
+	{
 		/// <summary>
 		/// Gets the number of levels in the game.
 		/// </summary>

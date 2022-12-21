@@ -14,7 +14,7 @@ namespace ModelWPF.Game.NewGame
 	/// <summary>
 	/// The main class for the game of Sokoban.
 	/// </summary>
-	public class GameLevel : Model.PlayGame.NewGame.Game, INotifyPropertyChanged
+	public class GameLevel : INotifyPropertyChanged
 	{
 		string levelDirectory = @"..\..\..\..\Levels\";
 		ISokobanService sokobanService;
@@ -25,11 +25,11 @@ namespace ModelWPF.Game.NewGame
 		/// to be played in a game.
 		/// </summary>
 		/// <value>The the number of levels in the game.</value>
-		/*public int LevelCount
+		public int LevelCount
 		{
 			get;
 			private set;
-		}*/
+		}
 
 		GameState gameState;
 
@@ -39,7 +39,7 @@ namespace ModelWPF.Game.NewGame
 		/// <see cref="GameState"/>
 		/// </summary>
 		/// <value>The state of the game.</value>
-		public  GameState GameState
+		public GameState GameState
 		{
 			get
 			{
@@ -56,11 +56,11 @@ namespace ModelWPF.Game.NewGame
 		/// Gets the current level of the game.
 		/// </summary>
 		/// <value>The current level. May be <code>null</code>.</value>
-		/*public Level Level
+		public Level Level
 		{
 			get;
 			private set;
-		}*/
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="GameLevel"/> class.
@@ -78,7 +78,7 @@ namespace ModelWPF.Game.NewGame
 		/// Loads the level specified with the specified level number.
 		/// </summary>
 		/// <param name="levelNumber">The level number of the level to load.</param>
-		public override void LoadLevel(int levelNumber)
+		void LoadLevel(int levelNumber)
 		{
 			GameState = GameState.Loading;
 
@@ -119,44 +119,6 @@ namespace ModelWPF.Game.NewGame
 			//}, null);
 			//					});
 		}
-
-		#region Level Codes
-		/// <summary>
-		/// Tries the goto to level specified by the level code. <seealso cref="LevelCode"/>
-		/// </summary>
-		/// <param name="levelCode">The level code of the level to load.</param>
-		/// <returns></returns>
-		public bool TryGotoToLevel(string levelCode)
-		{
-			if (levelCode == null)
-			{
-				throw new ArgumentNullException("levelCode");
-			}
-			int levelNumber = Game.Levels.LevelCode.GetLevelNumber(levelCode.Trim().ToUpper());
-			if (levelNumber < 0)
-			{
-				return false;
-			}
-			LoadLevel(levelNumber);
-			return true;
-		}
-
-		/// <summary>
-		/// Gets the level code for the current <see cref="Level"/>.
-		/// </summary>
-		/// <value>The level code of the current level.</value>
-		public string LevelCode
-		{
-			get
-			{
-				if (Level == null)
-				{
-					return string.Empty;
-				}
-				return Game.Levels.LevelCode.GetLevelCode(Level.LevelNumber);
-			}
-		}
-		#endregion
 
 		#region PropertyChangedEventHandler
 		event PropertyChangedEventHandler propertyChanged;
@@ -230,7 +192,7 @@ namespace ModelWPF.Game.NewGame
 		/// <returns><code>true</code> if the location
 		/// is within the <see cref="Level"/>; 
 		/// <code>false</code> otherwise.</returns>
-		public bool InBounds(CellLocation location)
+		public bool InBounds(Location location)
 		{
 			return Level.InBounds(location);
 		}
@@ -269,7 +231,7 @@ namespace ModelWPF.Game.NewGame
 		/// </summary>
 		public void Start()
 		{
-			
+
 			if (sokobanService != null)
 			{
 				LevelCount = sokobanService.LevelCount;
