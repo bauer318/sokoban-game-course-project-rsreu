@@ -18,44 +18,18 @@ using CommandManager = ModelWPF.Game.Commands.CommandManager;
 
 namespace ViewWPF.PlayGame
 {
-    public partial class ViewNewGameWPF : IMenuChosen
+    public partial class ViewNewGameWPF : ViewNewGameBase
     {
-        private readonly CommandManager commandManager = new CommandManager();
-        private ResourceDictionary _resourceDictionary = Application.LoadComponent(
-            new Uri("/ViewWPF;component/PlayGame/ResourceDictionaries/CellWPF.xaml",
-               UriKind.RelativeOrAbsolute)) as ResourceDictionary;
         private DockPanel _dockPanel;
-        private MainWindow _mainWindow;
-        public delegate void dReinitChoseenMenu();
-        public event dReinitChoseenMenu ReinitChoseenMenu;
-        public bool firstStartLevel = true;
-
-        public GameLevel Game
+        public DockPanel DockPanel
         {
             get
             {
-                return (GameLevel)_resourceDictionary["sokobanGame"];
+                return _dockPanel;
             }
         }
-        
-        private void TryToStartFirstLevel()
+        public void DrawGameLevel(GameLevel parGameLevel)
         {
-            try
-            {
-                /* Load and start the first level of the game. */
-                Game.Start();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Problem loading game. " + ex.Message);
-            }
-        }
-
-       
-       public void InitialiseLevel()
-        {
-            commandManager.Clear();
-
             Border border = new Border();
             border.Padding = new Thickness(20, 0, 0, 0);
             border.CornerRadius = new CornerRadius(12);
@@ -74,9 +48,8 @@ namespace ViewWPF.PlayGame
             grid_Main.RowDefinitions.Clear();
             grid_Main.ColumnDefinitions.Clear();
 
-            var rowCount = Game.Level.RowCount;
-            var columnCount = Game.Level.ColumnCount;
-
+            var rowCount = parGameLevel.Level.RowCount;
+            var columnCount = parGameLevel.Level.ColumnCount;
             for (var i = 0; i < rowCount; i++)
             {
                 grid_Game.RowDefinitions.Add(new RowDefinition());
@@ -93,7 +66,7 @@ namespace ViewWPF.PlayGame
 
                 for (var column = 0; column < columnCount; column++)
                 {
-                    CellWPF cell = Game.Level[row, column];
+                    CellWPF cell = parGameLevel.Level[row, column];
                     Button button = new Button();
                     button.Focusable = false;
                     button.DataContext = cell;
@@ -108,80 +81,19 @@ namespace ViewWPF.PlayGame
             grid_Main.RowDefinitions.Add(new RowDefinition());
             grid_Main.ColumnDefinitions.Add(new ColumnDefinition());
             grid_Main.Children.Add(viewbox);
-            grid_Main.DataContext = Game.Level;
+            grid_Main.DataContext = parGameLevel.Level;
             grid_Main.Focus();
             _dockPanel = new DockPanel();
             _dockPanel.Children.Add(grid_Main);
         }
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        public void SetApplicationResourceDictionary(ResourceDictionary parResourceDictionary)
         {
-            CommandBase command = null;
-            Level level = Game.Level;
-            if(Game != null)
-            {
-                if (Game.GameState == GameState.Running)
-                {
-                    switch (e.Key)
-                    {
-                        case Key.Up:
-                            command = new MoveCommand(level, Direction.Up);
-                            break;
-                        case Key.Down:
-                            command = new MoveCommand(level, Direction.Down);
-                            break;
-                        case Key.Left:
-                            command = new MoveCommand(level, Direction.Left);
-                            break;
-                        case Key.Right:
-                            command = new MoveCommand(level, Direction.Right);
-                            break;
-                        case Key.Z:
-                            if (Keyboard.Modifiers == ModifierKeys.Control)
-                            {
-                                commandManager.Undo();
-                            }
-                            break;
-                        case Key.Y:
-                            if (Keyboard.Modifiers == ModifierKeys.Control)
-                            {
-                                commandManager.Redo();
-                            }
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (Game.GameState)
-                    {
-                        case GameState.GameOver:
-                            Game.Start();
-                            break;
-                        case GameState.LevelCompleted:
-                            MessageBox.Show(Game.Level.Actor.MoveCount.ToString());
-                            Game.GotoNextLevel();
-                            firstStartLevel = false;
-                            ReinitChoseenMenu += new dReinitChoseenMenu(InitChosenMenu);
-                            ReinitChoseenMenu.Invoke();
-                            break;
-                    }
-                }  
-            }
-            if(command != null)
-            {
-                commandManager.Execute(command);
-            }
+            Application.Current.Resources.MergedDictionaries.Add(parResourceDictionary);
         }
-       
-        public void InitChosenMenu()
+
+        public override void PrintExceptionMessage(string parMessage)
         {
-            Application.Current.Resources.MergedDictionaries.Add(_resourceDictionary);
-            if (firstStartLevel)
-            {
-                TryToStartFirstLevel();
-                ViewMenuMainWPF.MainWindow.KeyDown += new KeyEventHandler(Window_KeyDown);
-            }
-            InitialiseLevel();
-            ViewMenuMainWPF.MainWindow.Content = _dockPanel;
+            MessageBox.Show(parMessage);
         }
     }
 }

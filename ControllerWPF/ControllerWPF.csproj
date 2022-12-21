@@ -11,8 +11,4 @@
     <ProjectReference Include="..\ViewWPF\ViewWPF.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="PlayGame\" />
-  </ItemGroup>
-
 </Project>

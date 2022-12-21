@@ -1,8 +1,10 @@
-﻿using System;
+﻿using ControllerWPF.PlayGame;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViewWPF.PlayGame;
 
 namespace ControllerWPF.Menu
 {
@@ -14,10 +16,15 @@ namespace ControllerWPF.Menu
             Menu = new Model.Menu.MenuMain();
             _viewMenu = new ViewWPF.MenuGraphics.ViewMenuMainWPF(Menu);
             Menu[(int)Model.Menu.MenuItemCodes.Exit].Selected += () => { _viewMenu.Close(); };
-            Menu[(int)Model.Menu.MenuItemCodes.New].Selected += () => { _viewMenu.NewGame(); };
+            //Menu[(int)Model.Menu.MenuItemCodes.New].Selected += () => { _viewMenu.NewGame(); };
+            Menu[(int)Model.Menu.MenuItemCodes.New].Selected += () => 
+            {
+                _viewMenu.NewGame();
+                new ControllerPlayGameWPF(new ViewNewGameWPF());
+            };
             Menu[(int)Model.Menu.MenuItemCodes.Help].Selected += () => { _viewMenu.Help(); };
             Menu[(int)Model.Menu.MenuItemCodes.Map].Selected += () => { _viewMenu.CreateGameMap(); };
-            Menu[(int)Model.Menu.MenuItemCodes.Record].Selected += () => { _viewMenu.Record(); };
+           // Menu[(int)Model.Menu.MenuItemCodes.Record].Selected += () => { _viewMenu.Record(); };
             _viewMenu.Init();
             foreach (Model.Menu.MenuItem elMenuItem in Menu.Items)
             {

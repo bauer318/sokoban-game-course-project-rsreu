@@ -13,7 +13,12 @@ namespace Controller.PlayGame
 {
     public abstract class ControllerPlayGame
     {
-        public delegate CommandBase dCommand(Level parLevel, Direction parDirection);
+        public ViewNewGameBase ViewNewGameBase;
+        public ControllerPlayGame(ViewNewGameBase parViewNewGameBase)
+        {
+            ViewNewGameBase = parViewNewGameBase;
+        }
+       /* public delegate CommandBase dCommand(Level parLevel, Direction parDirection);
         public event dCommand Command;
         public readonly CommandManager CommandManager = new CommandManager();
         private Game _game;
@@ -46,6 +51,6 @@ namespace Controller.PlayGame
             _viewNewGameBase = parViewNewGameBase;
             _game = _viewNewGameBase.Game;
             CommandManager.Clear();
-        }
+        }*/
     }
 }

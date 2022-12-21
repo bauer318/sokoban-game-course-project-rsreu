@@ -27,6 +27,12 @@ namespace ModelWPF.Game.Cells
 			protected set;
 		}
 
+		public bool CellContentChanged
+        {
+			get;
+			set;
+        }
+
 		/// <summary>
 		/// Gets or sets the location on the <see cref="Level"/>.
 		/// </summary>
@@ -129,6 +135,7 @@ namespace ModelWPF.Game.Cells
 				OnPropertyChanged("CellContents");
 				return true;
 			}
+			CellContentChanged = false;
 			return false;
 		}
 

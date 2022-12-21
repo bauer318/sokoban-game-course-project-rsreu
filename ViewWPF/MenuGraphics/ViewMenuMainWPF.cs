@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using View.PlayGame;
 using ViewWPF.GameMap;
 using ViewWPF.Help;
 using ViewWPF.PlayGame;
@@ -19,7 +20,7 @@ namespace ViewWPF.MenuGraphics
         public static MainWindow MainWindow = null;
         private StackPanel _mainStackPanel = null;
         private bool _isMenuMainActive = true;
-        private IMenuChosen _menuChosen = null;
+        private ViewNewGameBase _menuChosen = null;
         public ViewMenuMainWPF(Model.Menu.Menu parSubMenuItem) : base(parSubMenuItem)
         {
             //Draw();
@@ -45,37 +46,38 @@ namespace ViewWPF.MenuGraphics
         public void NewGame()
         {
             _isMenuMainActive = false;
-            _menuChosen = new ViewNewGameWPF();
+            //_menuChosen = new ViewNewGameWPF();
+            //_menuChosen.Draw();
             //new ControllerWPF.PlayGame.ControllerPlayGame()
-            InitMenuChosen();
+            //InitMenuChosen();
         }
-        private void InitMenuChosen()
+       /* private void InitMenuChosen()
         {
             _menuChosen.InitChosenMenu();
-        }
+        }*/
 
         public void Help()
         {
             _isMenuMainActive = false;
-            _menuChosen = new ViewHelpWPF();
-            InitMenuChosen();
+            //_menuChosen = new ViewHelpWPF();
+            //InitMenuChosen();
 
         }
 
         public void CreateGameMap()
         {
             _isMenuMainActive = false;
-            _menuChosen = new ViewCreateGameMapWPF();
-            InitMenuChosen();
+           /* _menuChosen = new ViewCreateGameMapWPF();
+            InitMenuChosen();*/
 
         }
 
-        public void Record()
+        /*public void Record()
         {
             _isMenuMainActive = false;
             _menuChosen = new ViewRecordWPF();
             InitMenuChosen();
-        }
+        }*/
 
         private void HandleEsc(object sender, KeyEventArgs e)
         {
