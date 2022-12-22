@@ -41,7 +41,6 @@ namespace ControllerWPF.PlayGame
         {
             _viewNewGameWPF = parViewNewGameBase as ViewNewGameWPF;
             ProcessDrawGameLevel();
-            SetCellClickToCellButton();
         }
         /// <summary>
         /// Try to load and start the first level of the game.
@@ -67,32 +66,25 @@ namespace ControllerWPF.PlayGame
                 ViewMenuMainWPF.MainWindow.KeyDown += new KeyEventHandler(Controll_KeyDown);
                 _viewNewGameWPF.SetApplicationResourceDictionary(_resourceDictionary);
             }
-            _viewNewGameWPF.DrawGameLevel(Game);
+            _viewNewGameWPF.DrawGameLevel(Game.Level.RowCount, Game.Level.ColumnCount);
+            SetDataContextToCellButtons();
             ViewMenuMainWPF.MainWindow.Content = _viewNewGameWPF.DockPanel;
         }
-
+        private void SetDataContextToCellButtons()
+        {
+            _viewNewGameWPF.CellButtons.ForEach(cellButton => 
+            {
+                CellWPF cell = Game.Level[cellButton.X, cellButton.Y];
+                cellButton.DataContext = cell;
+                cellButton.Style = (Style)Application.Current.FindResource("Cell");
+            });
+            _viewNewGameWPF.GridMain.DataContext = Game.Level;
+        }
         private void RemoveKeyDownEventHandler()
         {
             ViewMenuMainWPF.MainWindow.KeyDown -= new KeyEventHandler(Controll_KeyDown);
         }
-        private void SetCellClickToCellButton()
-        {
-            _viewNewGameWPF.CellButtonList.ForEach(button => button.Click += Cell_Click);
-        }
-        private void Cell_Click(object sender, RoutedEventArgs e)
-        {
-            /* When the user clicks a cell, we want to 
-			 have the actor move there. */
-            CellWPF cell = (CellWPF)_viewNewGameWPF.GetCellButtonAssociatedToSource(e).DataContext;
-            CommandBase command;
-            /*if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-            {*/
-                //_viewNewGameWPF.PrintExceptionMessage(cell.Name);
-                command = new PushCommand(Game.Level, cell.Location);
-                _commandManager.Execute(command);
-            //}
-        }
-
+        
         private void Controll_KeyDown(object sender, KeyEventArgs e)
         {
             CommandBase command = null;
