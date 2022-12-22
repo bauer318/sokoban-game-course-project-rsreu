@@ -1,5 +1,5 @@
-﻿using ModelWPF.Game.Cells;
-using ModelWPF.Game.Locations;
+﻿using Model.PlayGame.Locations;
+using ModelWPF.Game.Cells;
 using System;
 using System.Collections.Generic;
 using System.Linq;

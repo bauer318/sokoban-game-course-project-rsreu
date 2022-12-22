@@ -1,6 +1,6 @@
-﻿using ModelWPF.Game.Cells;
+﻿using Model.PlayGame.Locations;
+using ModelWPF.Game.Cells;
 using ModelWPF.Game.Cells.Actors;
-using ModelWPF.Game.Locations;
 using ModelWPF.Game.NewGame;
 using System;
 using System.Collections.Generic;

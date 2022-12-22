@@ -1,8 +1,8 @@
 ﻿using Controller.PlayGame;
+using Model.PlayGame.Locations;
 using ModelWPF.Game.Cells;
 using ModelWPF.Game.Commands;
 using ModelWPF.Game.Levels;
-using ModelWPF.Game.Locations;
 using ModelWPF.Game.NewGame;
 using System;
 using System.Windows;

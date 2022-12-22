@@ -1,4 +1,4 @@
-﻿using ModelWPF.Game.Locations;
+﻿using Model.PlayGame.Locations;
 using ModelWPF.Game.Moves;
 using System;
 using System.Collections.Generic;

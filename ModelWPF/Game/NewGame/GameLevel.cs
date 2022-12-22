@@ -1,5 +1,5 @@
-﻿using ModelWPF.Game.Levels;
-using ModelWPF.Game.Locations;
+﻿using Model.PlayGame.Locations;
+using ModelWPF.Game.Levels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
