@@ -1,4 +1,5 @@
 ﻿using Controller.PlayGame;
+using ModelWPF.Game.Cells;
 using ModelWPF.Game.Cells.Actors;
 using ModelWPF.Game.Commands;
 using ModelWPF.Game.Levels;
@@ -40,6 +41,7 @@ namespace ControllerWPF.PlayGame
         {
             _viewNewGameWPF = parViewNewGameBase as ViewNewGameWPF;
             ProcessDrawGameLevel();
+            SetCellClickToCellButton();
         }
         /// <summary>
         /// Try to load and start the first level of the game.
@@ -73,8 +75,25 @@ namespace ControllerWPF.PlayGame
         {
             ViewMenuMainWPF.MainWindow.KeyDown -= new KeyEventHandler(Controll_KeyDown);
         }
+        private void SetCellClickToCellButton()
+        {
+            _viewNewGameWPF.CellButtonList.ForEach(button => button.Click += Cell_Click);
+        }
+        private void Cell_Click(object sender, RoutedEventArgs e)
+        {
+            /* When the user clicks a cell, we want to 
+			 have the actor move there. */
+            CellWPF cell = (CellWPF)_viewNewGameWPF.GetCellButtonAssociatedToSource(e).DataContext;
+            CommandBase command;
+            /*if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+            {*/
+                //_viewNewGameWPF.PrintExceptionMessage(cell.Name);
+                command = new PushCommand(Game.Level, cell.Location);
+                _commandManager.Execute(command);
+            //}
+        }
 
-        public void Controll_KeyDown(object sender, KeyEventArgs e)
+        private void Controll_KeyDown(object sender, KeyEventArgs e)
         {
             CommandBase command = null;
             Level level = Game.Level;

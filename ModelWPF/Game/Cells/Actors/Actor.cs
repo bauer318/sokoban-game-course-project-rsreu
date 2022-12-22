@@ -19,6 +19,28 @@ namespace ModelWPF.Game.Cells.Actors
 		/* lock object for the DoMove methods. */
 		readonly object moveLock = new object();
 
+		public int stepDelay = 100;
+
+		/// <summary>
+		/// Gets or sets the step delay for jumps.
+		/// </summary>
+		/// <value>The step delay in milleseconds imposed
+		/// during a jump. The step is executed asynchronously
+		/// and the thread is put to sleep for the specified
+		/// period.</value>
+		public int StepDelay
+		{
+			get
+			{
+				return stepDelay;
+			}
+			set
+			{
+				stepDelay = value;
+				OnPropertyChanged("StepDelay");
+			}
+		}
+
 		/// <summary>
 		/// Gets the move count.
 		/// </summary>
@@ -68,6 +90,11 @@ namespace ModelWPF.Game.Cells.Actors
 			if (move != null)
 			{
 				return DoMove(move);
+			}
+			Push push = moveBase as Push;
+			if (push != null)
+			{
+				return DoMove(push);
 			}
 			return false;
 		}

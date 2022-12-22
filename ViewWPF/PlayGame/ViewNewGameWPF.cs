@@ -1,5 +1,7 @@
 ﻿using ModelWPF.Game.Cells;
 using ModelWPF.Game.NewGame;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,11 +13,23 @@ namespace ViewWPF.PlayGame
     public partial class ViewNewGameWPF : ViewNewGameBase
     {
         private DockPanel _dockPanel;
+        private List<Button> _cellButtonList = new List<Button>();
+        public void dEl(object sender, RoutedEventArgs e)
+        {
+
+        }
         public DockPanel DockPanel
         {
             get
             {
                 return _dockPanel;
+            }
+        }
+        public List<Button> CellButtonList
+        {
+            get
+            {
+                return _cellButtonList;
             }
         }
         public void DrawGameLevel(GameLevel parGameLevel)
@@ -65,6 +79,10 @@ namespace ViewWPF.PlayGame
                     Grid.SetRow(button, row);
                     Grid.SetColumn(button, column);
                     grid_Game.Children.Add(button);
+                    if (!cell.Name.Equals("Wall"))
+                    {
+                        _cellButtonList.Add(button);
+                    }
                 }
             }
             viewbox.Child = grid_Game;
@@ -75,6 +93,11 @@ namespace ViewWPF.PlayGame
             grid_Main.Focus();
             _dockPanel = new DockPanel();
             _dockPanel.Children.Add(grid_Main);
+        }
+        
+        public Button GetCellButtonAssociatedToSource(RoutedEventArgs e)
+        {
+            return (Button)e.Source;
         }
         public void SetApplicationResourceDictionary(ResourceDictionary parResourceDictionary)
         {
