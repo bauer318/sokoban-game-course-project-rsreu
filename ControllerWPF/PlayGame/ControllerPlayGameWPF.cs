@@ -1,5 +1,6 @@
 ﻿using Controller.PlayGame;
 using Model.PlayGame.Locations;
+using Model.PlayGame.NewGame;
 using ModelWPF.Game.Cells;
 using ModelWPF.Game.Commands;
 using ModelWPF.Game.Levels;
