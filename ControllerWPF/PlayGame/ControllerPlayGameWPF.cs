@@ -1,15 +1,10 @@
 ﻿using Controller.PlayGame;
 using ModelWPF.Game.Cells;
-using ModelWPF.Game.Cells.Actors;
 using ModelWPF.Game.Commands;
 using ModelWPF.Game.Levels;
 using ModelWPF.Game.Locations;
 using ModelWPF.Game.NewGame;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using View.PlayGame;
