@@ -246,6 +246,7 @@ namespace ModelWPF.Game.Levels
 			if (levelCompleted != null)
 			{
 				levelCompleted(this, e);
+
 			}
 		}
 		#endregion

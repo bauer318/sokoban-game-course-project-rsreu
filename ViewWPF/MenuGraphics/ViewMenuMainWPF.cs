@@ -18,8 +18,9 @@ namespace ViewWPF.MenuGraphics
     public class ViewMenuMainWPF : ViewMenuWPF
     {
         public static MainWindow MainWindow = null;
-        private StackPanel _mainStackPanel = null;
+        private static  StackPanel _mainStackPanel = null;
         private bool _isMenuMainActive = true;
+       
         public ViewMenuMainWPF(Model.Menu.Menu parSubMenuItem) : base(parSubMenuItem)
         {
             //Draw();
@@ -70,9 +71,12 @@ namespace ViewWPF.MenuGraphics
         {
             if (e.Key == Key.Escape && !_isMenuMainActive)
             {
-                //Application.Current.Resources.MergedDictionaries.Clear();
-                MainWindow.Content = _mainStackPanel;
+                ReturnToMainMenu();
             }
+        }
+        public static void ReturnToMainMenu()
+        {
+            MainWindow.Content = _mainStackPanel;
         }
         public override void Draw()
         {

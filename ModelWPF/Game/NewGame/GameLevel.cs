@@ -192,7 +192,7 @@ namespace ModelWPF.Game.NewGame
 			else
 			{
 				/* Do finished game stuff. */
-				GameState = GameState.GameCompleted;
+				GameState = GameState.GameOver;
 			}
 		}
 
@@ -227,7 +227,7 @@ namespace ModelWPF.Game.NewGame
 				string[] files = Directory.GetFiles(levelDirectory, "*.skbn");
 				LevelCount = files.Length;
 			}
-			LoadLevel(51);
+			LoadLevel(52);
 		}
 
 		/// <summary>

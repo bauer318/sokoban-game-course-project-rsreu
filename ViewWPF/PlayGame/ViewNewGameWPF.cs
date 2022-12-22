@@ -1,5 +1,6 @@
 ﻿using ModelWPF.Game.Cells;
 using ModelWPF.Game.NewGame;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;

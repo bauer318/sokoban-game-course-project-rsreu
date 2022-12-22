@@ -69,6 +69,11 @@ namespace ControllerWPF.PlayGame
             ViewMenuMainWPF.MainWindow.Content = _viewNewGameWPF.DockPanel;
         }
 
+        private void RemoveKeyDownEventHandler()
+        {
+            ViewMenuMainWPF.MainWindow.KeyDown -= new KeyEventHandler(Controll_KeyDown);
+        }
+
         public void Controll_KeyDown(object sender, KeyEventArgs e)
         {
             CommandBase command = null;
@@ -110,7 +115,9 @@ namespace ControllerWPF.PlayGame
                     switch (Game.GameState)
                     {
                         case GameState.GameOver:
-                            ViewNewGameBase.PrintExceptionMessage("GameOver");
+                            ViewNewGameBase.FirstStartLevel = true;
+                            RemoveKeyDownEventHandler();
+                            ViewMenuMainWPF.ReturnToMainMenu();
                             break;
                         case GameState.LevelCompleted:
                             if(e.Key != Key.Escape)
@@ -125,8 +132,7 @@ namespace ControllerWPF.PlayGame
                 if (e.Key == Key.Escape)
                 {
                     ViewNewGameBase.FirstStartLevel = true;
-                    command = null;
-                    ViewMenuMainWPF.MainWindow.KeyDown -= new KeyEventHandler(Controll_KeyDown);  
+                    RemoveKeyDownEventHandler();
                 }
             }
             if (command != null)
