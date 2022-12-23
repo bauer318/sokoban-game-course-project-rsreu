@@ -11,37 +11,13 @@ namespace ModelWPF.Game.Cells
 	/// <summary>
 	/// Base class for all cells in a <see cref="Level"/>.
 	/// </summary>
-	public abstract class CellWPF : LevelContentBase
+	public abstract class CellWPF : CellBaseWPF
 	{
-		/// <summary>
-		/// Gets or sets the name of this cell.
-		/// The name can be used to identify the type
-		/// of the cell without using GetType().
-		/// </summary>
-		/// <value>The name of the cell. 
-		/// The conceptual type name of the cell, 
-		/// such as <em>Wall</em> or <em>Floor</em></value>
-		public string Name
-		{
-			get;
-			protected set;
-		}
-
 		public bool CellContentChanged
         {
 			get;
 			set;
         }
-
-		/// <summary>
-		/// Gets or sets the location on the <see cref="Level"/>.
-		/// </summary>
-		/// <value>The location of the cell on the <see cref="Level"/>.</value>
-		public Location Location
-		{
-			get;
-			private set;
-		}
 
 		/// <summary>
 		/// Gets or sets the level where this cell is located.
@@ -94,10 +70,8 @@ namespace ModelWPF.Game.Cells
 		/// <param name="name">The name of the cell. <seealso cref="Name"/>.</param>
 		/// <param name="location">The location of the cell. <seealso cref="Location"/></param>
 		/// <param name="level">The level where the cell is located. <seealso cref="Level"/></param>
-		public CellWPF(string name, Location location, Level level)
+		public CellWPF(string name, Location location, Level level):base(name,location)
 		{
-			Name = name;
-			Location = location;
 			Level = level;
 		}
 
@@ -135,7 +109,6 @@ namespace ModelWPF.Game.Cells
 				OnPropertyChanged("CellContents");
 				return true;
 			}
-			CellContentChanged = false;
 			return false;
 		}
 
