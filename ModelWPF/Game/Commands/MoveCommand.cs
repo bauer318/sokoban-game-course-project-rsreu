@@ -1,4 +1,5 @@
 ﻿using Model.PlayGame.Locations;
+using Model.PlayGame.Moves;
 using ModelWPF.Game.Levels;
 using ModelWPF.Game.Moves;
 using System;
@@ -49,7 +50,7 @@ namespace ModelWPF.Game.Commands
 		/// </summary>
 		public override void Execute()
 		{
-			Move move = new Move(Direction);
+			MoveWPF move = new MoveWPF(Direction);
 			level.Actor.DoMove(move);
 		}
 

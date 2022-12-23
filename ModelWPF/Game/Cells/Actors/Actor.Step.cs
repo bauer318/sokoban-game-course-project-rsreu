@@ -1,4 +1,5 @@
 ﻿using Model.PlayGame.Locations;
+using Model.PlayGame.Moves;
 using ModelWPF.Game.Moves;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,14 @@ namespace ModelWPF.Game.Cells.Actors
 		/// <param name="move">The move indicating where to go.</param>
 		/// <returns><code>true</code> if the move completed
 		/// successfully, <code>false</code> otherwise.</returns>
-		internal bool DoMove(Move move)
+		internal bool DoMove(MoveWPF move)
 		{
 			lock (moveLock)
 			{
 				return DoMoveAux(move);
 			}
 		}
-		internal bool DoMoveAux(Move move)
+		internal bool DoMoveAux(MoveWPF move)
 		{
 			bool result = false;
 			Location moveLocation = Location.GetAdjacentLocation(move.Direction);
@@ -40,7 +41,7 @@ namespace ModelWPF.Game.Cells.Actors
 						result = toCell.TrySetContents(this);
 						if (result)
 						{
-							Move newMove = new Move(move.Direction.GetOppositeDirection()) { Undo = true };
+							MoveWPF newMove = new MoveWPF(move.Direction.GetOppositeDirection()) { Undo = true };
 							moves.Push(newMove);
 							MoveCount++;
 						}
@@ -67,7 +68,7 @@ namespace ModelWPF.Game.Cells.Actors
 				{   /* Wasn't able to enter, but could push contents. */
 					if (!move.Undo)
 					{
-						Move newMove = new Move(move.Direction.GetOppositeDirection()) { Undo = true, PushedContents = toCellContents };
+						MoveWPF newMove = new MoveWPF(move.Direction.GetOppositeDirection()) { Undo = true, PushedContents = toCellContents };
 						moves.Push(newMove);
 					}
 

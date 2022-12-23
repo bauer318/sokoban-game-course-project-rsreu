@@ -1,4 +1,5 @@
 ﻿using Model.PlayGame.Locations;
+using Model.PlayGame.Moves;
 using ModelWPF.Game.Levels;
 using ModelWPF.Game.Moves;
 using System;
@@ -64,7 +65,7 @@ namespace ModelWPF.Game.Cells.Actors
 				return false;
 			}
 			MoveBase moveBase = moves.Pop();
-			Move move = moveBase as Move;
+			MoveWPF move = moveBase as MoveWPF;
 			if (move != null)
 			{
 				return DoMove(move);

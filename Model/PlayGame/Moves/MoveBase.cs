@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.PlayGame.Locations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,5 +23,19 @@ namespace Model.PlayGame.Moves
 			get;
 			set;
 		}
+		/// <summary>
+		/// Gets the direction in which to relocate.
+		/// </summary>
+		/// <value>The direction to relocate.</value>
+		public Direction Direction
+		{
+			get;
+			private set;
+		}
+
+		public MoveBase(Direction direction)
+        {
+			Direction = direction;
+        }
 	}
 }

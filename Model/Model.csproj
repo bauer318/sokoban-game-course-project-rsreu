@@ -19,4 +19,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="PlayGame\Cell\Actors\" />
+  </ItemGroup>
+
 </Project>
