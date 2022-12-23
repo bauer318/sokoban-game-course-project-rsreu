@@ -8,7 +8,7 @@ namespace Model.PlayGame.Commands
 {
 	/// <summary>
 	/// A command represents an application
-	/// action, that can be executed, undone, and redone.
+	/// action, that can be executed and undone
 	/// </summary>
 	public abstract class CommandBase
 	{
@@ -17,12 +17,8 @@ namespace Model.PlayGame.Commands
 		/// </summary>
 		public abstract void Execute();
 		/// <summary>
-		/// Undoes that which was performed with <see cref="E:Execute"/>.
+		/// Undoes that which was performed with
 		/// </summary>
 		public abstract void Undo();
-		/// <summary>
-		/// Redoes this command after it has been undone. <see cref="E:Undo"/>.
-		/// </summary>
-		public abstract void Redo();
 	}
 }

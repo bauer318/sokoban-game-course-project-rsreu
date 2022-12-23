@@ -7,16 +7,33 @@ using System.Threading.Tasks;
 
 namespace Model.PlayGame.Locations
 {
-    public class Location
-    {
+	/// <summary>
+	/// Cell's location on the game's map
+	/// </summary>
+	public class Location
+	{
+		/// <summary>
+		/// The row number.
+		/// </summary>
+		private int _rowNumber;
+		/// <summary>
+		/// The column number
+		/// </summary>
+		private int _columnNumber;
 		/// <summary>
 		/// Gets the row number.
 		/// </summary>
 		/// <value>The row number.</value>
 		public int RowNumber
 		{
-			get;
-			private set;
+			get
+			{
+				return _rowNumber;
+			}
+			private set
+			{
+				_rowNumber = value;
+			}
 		}
 
 		/// <summary>
@@ -25,39 +42,45 @@ namespace Model.PlayGame.Locations
 		/// <value>The column number.</value>
 		public int ColumnNumber
 		{
-			get;
-			private set;
+			get
+			{
+				return _columnNumber;
+			}
+			private set
+			{
+				_columnNumber = value;
+			}
 		}
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Location"/> class.
 		/// </summary>
-		/// <param name="rowNumber">The row number.</param>
-		/// <param name="columnNumber">The column number.</param>
-		public Location(int rowNumber, int columnNumber)
+		/// <param name="parRowNumber">The row number.</param>
+		/// <param name="parColumnNumber">The column number.</param>
+		public Location(int parRowNumber, int parColumnNumber)
 		{
-			RowNumber = rowNumber;
-			ColumnNumber = columnNumber;
+			_rowNumber = parRowNumber;
+			_columnNumber = parColumnNumber;
 		}
 		/// <summary>
 		/// Gets the location of an adjacent location 
 		/// that is in the specified direction.
 		/// </summary>
-		/// <param name="direction">The direction of the adjacent location.</param>
+		/// <param name="parDirection">The direction of the adjacent location.</param>
 		/// <returns></returns>
-		public Location GetAdjacentLocation(Direction direction)
+		public Location GetAdjacentLocation(Direction parDirection)
 		{
-			switch (direction)
+			switch (parDirection)
 			{
 				case Direction.Up:
-					return new Location(RowNumber - 1, ColumnNumber);
+					return new Location(_rowNumber - 1, _columnNumber);
 				case Direction.Down:
-					return new Location(RowNumber + 1, ColumnNumber);
+					return new Location(_rowNumber + 1, _columnNumber);
 				case Direction.Left:
-					return new Location(RowNumber, ColumnNumber - 1);
+					return new Location(_rowNumber, _columnNumber - 1);
 				case Direction.Right:
-					return new Location(RowNumber, ColumnNumber + 1);
+					return new Location(_rowNumber, _columnNumber + 1);
 				default:
-					throw new SokobanException("Unkown direction. " + direction.ToString("G"));
+					throw new SokobanException("Unkown direction. " + parDirection.ToString());
 			}
 		}
 
@@ -65,20 +88,20 @@ namespace Model.PlayGame.Locations
 		/// Determines whether the specified location is adjacent to this instance.
 		/// That is, whether it is located one point to the left, right, above, or below.
 		/// </summary>
-		/// <param name="location">The location.</param>
+		/// <param name="parLocation">The location.</param>
 		/// <returns>
 		/// 	<c>true</c> if the specified location is adjacent; otherwise, <c>false</c>.
 		/// </returns>
-		public bool IsAdjacentLocation(Location location)
+		public bool IsAdjacentLocation(Location parLocation)
 		{
-			return !location.Equals(this)
-				   && ((ColumnNumber == location.ColumnNumber
-						&& RowNumber <= location.RowNumber + 1
-						&& RowNumber >= location.RowNumber - 1)
+			return !parLocation.Equals(this)
+				   && ((_columnNumber == parLocation.ColumnNumber
+						&& _rowNumber <= parLocation.RowNumber + 1
+						&& _rowNumber >= parLocation.RowNumber - 1)
 					   ||
-					   (RowNumber == location.RowNumber
-						&& ColumnNumber <= location.ColumnNumber + 1
-						&& ColumnNumber >= location.ColumnNumber - 1)
+					   (_rowNumber == parLocation.RowNumber
+						&& _columnNumber <= parLocation.ColumnNumber + 1
+						&& _columnNumber >= parLocation.ColumnNumber - 1)
 					  );
 		}
 
@@ -86,26 +109,26 @@ namespace Model.PlayGame.Locations
 		/// Gets the direction of an adjancent location 
 		/// relative to the current instance.
 		/// </summary>
-		/// <param name="location">The location of an adjacent location.</param>
+		/// <param name="parLocation">The location of an adjacent location.</param>
 		/// <returns></returns>
 		/// <exception cref="SokobanException">If the location is
 		/// not adjacent to the current instance.</exception>
-		public Direction GetDirection(Location location)
+		public Direction GetDirection(Location parLocation)
 		{
-			if (!IsAdjacentLocation(location))
+			if (!IsAdjacentLocation(parLocation))
 			{
 				throw new SokobanException("location is not adjacent.");
 			}
 
-			if (location.ColumnNumber > ColumnNumber)
+			if (parLocation.ColumnNumber > _columnNumber)
 			{
 				return Direction.Right;
 			}
-			else if (location.ColumnNumber < ColumnNumber)
+			else if (parLocation.ColumnNumber < _columnNumber)
 			{
 				return Direction.Left;
 			}
-			else if (location.RowNumber > RowNumber)
+			else if (parLocation.RowNumber > _rowNumber)
 			{
 				return Direction.Down;
 			}
@@ -115,47 +138,38 @@ namespace Model.PlayGame.Locations
 
 		/// <summary>
 		/// Determines whether the specified <see cref="T:System.Object"/> 
-		/// is equal to the current <see cref="T:CellLocation"/>.
+		/// is equal to the current <see cref="T:Location"/>.
 		/// </summary>
-		/// <param name="obj">The <see cref="T:System.Object"/> 
-		/// to compare with the current <see cref="T:CellLocation"/>.</param>
+		/// <param name="parObject">The <see cref="T:System.Object"/> 
+		/// to compare with the current <see cref="T:Location"/>.</param>
 		/// <returns>
 		/// true if the specified <see cref="T:System.Object"/> 
-		/// is equal to the current <see cref="T:CellLocation"/>; otherwise, false.
+		/// is equal to the current <see cref="T:Location"/>; otherwise, false.
 		/// </returns>
-		public override bool Equals(object obj)
+		public override bool Equals(object parObject)
 		{
-			if (obj == null)
+			if (parObject == null)
 			{
 				return false;
 			}
-			Location loc = obj as Location;
-			if (loc == null)
+			Location location = parObject as Location;
+			if (location == null)
 			{
 				return false;
 			}
-			return loc.RowNumber == RowNumber && loc.ColumnNumber == ColumnNumber;
+			return location.RowNumber == _rowNumber && location.ColumnNumber == _columnNumber;
 		}
 
 		/// <summary>
 		/// Serves as a hash function for a particular type.
 		/// </summary>
 		/// <returns>
-		/// A hash code for the current <see cref="T:CellLocation"/>.
+		/// A hash code for the current <see cref="T:Location"/>.
 		/// The XOR of the <see cref="RowNumber"/> and <see cref="ColumnNumber"/>.
 		/// </returns>
 		public override int GetHashCode()
 		{
-			return RowNumber ^ ColumnNumber;
-		}
-
-		/// <summary>
-		/// Returns a string representation of the location.
-		/// </summary>
-		/// <returns>The string representation.</returns>
-		public override string ToString()
-		{
-			return string.Format("Column {0}, Row {1}", ColumnNumber, RowNumber);
+			return _rowNumber ^ _columnNumber;
 		}
 	}
 }
