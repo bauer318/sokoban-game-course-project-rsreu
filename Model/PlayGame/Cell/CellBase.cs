@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Model.PlayGame.Cell
 {
 	/// <summary>
-	/// Base class for all cells in a Level.
+	/// Base class for all cells in a Level
 	/// </summary>
 	public abstract class CellBase
 	{
