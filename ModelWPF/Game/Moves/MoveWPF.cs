@@ -1,6 +1,6 @@
-﻿using Model.PlayGame.Locations;
-using Model.PlayGame.Moves;
-using ModelWPF.Game.Cells;
+﻿//using Model.PlayGame.Locations;
+//using Model.PlayGame.Moves;
+//using ModelWPF.Game.Cells;
 using System;
 using System.Collections.Generic;
 using System.Linq;

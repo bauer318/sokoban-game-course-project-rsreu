@@ -1,6 +1,6 @@
-﻿using Model.PlayGame.Commands;
-using Model.PlayGame.Locations;
-using Model.PlayGame.Moves;
+﻿//using Model.PlayGame.Commands;
+//using Model.PlayGame.Locations;
+//using Model.PlayGame.Moves;
 using ModelWPF.Game.Levels;
 using ModelWPF.Game.Moves;
 using System;
