@@ -9,4 +9,8 @@
     <ProjectReference Include="..\View\View.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="PlayGame\" />
+  </ItemGroup>
+
 </Project>
