@@ -9,7 +9,7 @@ namespace View.PlayGame
 {
     public abstract class ViewNewGameBase
     {
-        public Game Game;
-        public abstract void InitialiseLevel();
+        public bool FirstStartLevel = true;
+        public abstract void PrintExceptionMessage(string parMessage);
     }
 }
