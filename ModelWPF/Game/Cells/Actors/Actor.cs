@@ -47,7 +47,7 @@ namespace ModelWPF.Game.Cells.Actors
 		/// </summary>
 		/// <param name="location">The location.</param>
 		/// <param name="level">The level.</param>
-		public Actor(Location location, Level level)
+		public Actor(Location location, LevelWPF level)
 			: base("Actor", location, level)
 		{
 		}

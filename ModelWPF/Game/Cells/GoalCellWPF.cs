@@ -38,7 +38,7 @@ namespace ModelWPF.Game.Cells
 		/// on the level grid.</param>
 		/// <param name="level">The level grid where this cell
 		/// is located.</param>
-		public GoalCellWPF(Location location, Level level)
+		public GoalCellWPF(Location location, LevelWPF level)
 			: base(cellName, location, level)
 		{
 		}
@@ -51,7 +51,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="level">The level grid where this cell
 		/// is located.</param>
 		/// <param name="contents">The contents of this goal cell.</param>
-		public GoalCellWPF(Location location, Level level, CellContentsWPF contents)
+		public GoalCellWPF(Location location, LevelWPF level, CellContentsWPF contents)
 			: base(cellName, location, level, contents)
 		{
 		}

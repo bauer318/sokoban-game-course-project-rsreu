@@ -1,4 +1,5 @@
-﻿using Model.PlayGame.Locations;
+﻿using Model.PlayGame.Commands;
+using Model.PlayGame.Locations;
 using Model.PlayGame.Moves;
 using ModelWPF.Game.Levels;
 using ModelWPF.Game.Moves;
@@ -14,9 +15,9 @@ namespace ModelWPF.Game.Commands
 	/// Performs a move with the <see cref="Level"/>'s <see cref="Actor"/>
 	/// instance. A move is a single step.
 	/// </summary>
-	public class MoveCommand : CommandBase
+	public class MoveCommandWPF : CommandBase
 	{
-		Level level;
+		LevelWPF level;
 
 		/// <summary>
 		/// Gets or sets the direction for the <see cref="Move"/>.
@@ -33,7 +34,7 @@ namespace ModelWPF.Game.Commands
 		/// </summary>
 		/// <param name="level">The level where the move will take place.</param>
 		/// <param name="direction">The direction of the move.</param>
-		public MoveCommand(Level level, Direction direction)
+		public MoveCommandWPF(LevelWPF level, Direction direction)
 		{
 			if (level == null)
 			{

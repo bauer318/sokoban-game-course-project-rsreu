@@ -32,7 +32,7 @@ namespace ModelWPF.Game.Cells
 		/// </summary>
 		/// <param name="location">The location where this wall is located.</param>
 		/// <param name="level">The level where this cell is located.</param>
-		public WallCellWPF(Location location, Level level)
+		public WallCellWPF(Location location, LevelWPF level)
 			: base("Wall", location, level)
 		{
 		}

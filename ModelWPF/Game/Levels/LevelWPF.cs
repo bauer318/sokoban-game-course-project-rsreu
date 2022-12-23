@@ -1,4 +1,5 @@
-﻿using Model.PlayGame.Locations;
+﻿using Model.PlayGame.Levels;
+using Model.PlayGame.Locations;
 using ModelWPF.Game.Cells;
 using ModelWPF.Game.Cells.Actors;
 using ModelWPF.Game.NewGame;
@@ -16,30 +17,10 @@ namespace ModelWPF.Game.Levels
 	/// A level instance is able to load itself
 	/// from a map resource.
 	/// </summary>
-	public class Level
+	public class LevelWPF:LevelBase
 	{
 		CellWPF[][] cells;
 		List<GoalCellWPF> goals = new List<GoalCellWPF>();
-
-		/// <summary>
-		/// Gets the level number.
-		/// </summary>
-		/// <value>The level number.</value>
-		public int LevelNumber
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// Gets or sets the game that this level is located.
-		/// </summary>
-		/// <value>The game that this level is located.</value>
-		protected GameLevel Game
-		{
-			get;
-			set;
-		}
 
 		/// <summary>
 		/// Gets the single <see cref="Actor"/> instance
@@ -110,10 +91,8 @@ namespace ModelWPF.Game.Levels
 		/// </summary>
 		/// <param name="game">The game that the level belongs.</param>
 		/// <param name="levelNumber">The level number for this level.</param>
-		public Level(GameLevel game, int levelNumber)
+		public LevelWPF(NewGameWPF game, int levelNumber):base(game,levelNumber)
 		{
-			Game = game;
-			LevelNumber = levelNumber;
 		}
 
 		/// <summary>
@@ -143,7 +122,7 @@ namespace ModelWPF.Game.Levels
 			}
 		}
 
-		List<CellWPF> BuildCells(string rowText, int rowNumber)
+		public List<CellWPF> BuildCells(string rowText, int rowNumber)
 		{
 			List<CellWPF> row = new List<CellWPF>(rowText.Length);
 

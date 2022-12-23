@@ -12,23 +12,11 @@ using System.Threading.Tasks;
 
 namespace ModelWPF.Game.NewGame
 {
-    public class GameLevel : INotifyPropertyChanged
+    public class NewGameWPF : NewGameBase, INotifyPropertyChanged
     {
-        string levelDirectory = @"..\..\..\..\Levels\";
-        ISokobanService sokobanService;
-        SynchronizationContext context = SynchronizationContext.Current;
-		/// <summary>
-		/// Gets the number of levels available
-		/// to be played in a game.
-		/// </summary>
-		/// <value>The the number of levels in the game.</value>
-		public int LevelCount
-		{
-			get;
-			private set;
-		}
-
-		GameState gameState;
+        private SynchronizationContext context = SynchronizationContext.Current;
+		
+		private GameState gameState;
 
 		/// <summary>
 		/// Gets the state of the game. That is, whether
@@ -53,7 +41,7 @@ namespace ModelWPF.Game.NewGame
 		/// Gets the current level of the game.
 		/// </summary>
 		/// <value>The current level. May be <code>null</code>.</value>
-		public Level Level
+		public LevelWPF Level
 		{
 			get;
 			private set;
@@ -62,20 +50,16 @@ namespace ModelWPF.Game.NewGame
 		/// <summary>
 		/// Initializes a new instance of the <see cref="GameLevel"/> class.
 		/// </summary>
-		public GameLevel()
+		public NewGameWPF():base()
 		{
 		}
 
-		public GameLevel(ISokobanService sokobanService)
-		{
-			this.sokobanService = sokobanService;
-		}
 
 		/// <summary>
 		/// Loads the level specified with the specified level number.
 		/// </summary>
 		/// <param name="levelNumber">The level number of the level to load.</param>
-		void LoadLevel(int levelNumber)
+		public override void LoadLevel(int levelNumber)
 		{
 			GameState = GameState.Loading;
 
@@ -85,26 +69,14 @@ namespace ModelWPF.Game.NewGame
 				Level.LevelCompleted -= new EventHandler(Level_LevelCompleted);
 			}
 
-			Level = new Level(this, levelNumber);
+			Level = new LevelWPF(this, levelNumber);
 			Level.LevelCompleted += new EventHandler(Level_LevelCompleted);
-			string levelMap;
-
-			if (sokobanService != null)
+			
+			string fileName = string.Format(@"{0}Level{1:000}.skbn", levelDirectory, levelNumber);
+			using (StreamReader reader = File.OpenText(fileName))
 			{
-				levelMap = sokobanService.GetMap(levelNumber);
-				using (StringReader reader = new StringReader(levelMap))
-				{
-					Level.Load(reader);
-				}
-			}
-			else
-			{
-				string fileName = string.Format(@"{0}Level{1:000}.skbn", levelDirectory, levelNumber);
-				using (StreamReader reader = File.OpenText(fileName))
-				{
-					Level.Load(reader);
-				}
-			}
+				Level.Load(reader);
+			}	
 
 			OnPropertyChanged("Level");
 			StartLevel();
@@ -179,12 +151,12 @@ namespace ModelWPF.Game.NewGame
 		/// <returns><code>true</code> if the location
 		/// is within the <see cref="Level"/>; 
 		/// <code>false</code> otherwise.</returns>
-		public bool InBounds(Location location)
+		public override bool InBounds(Location location)
 		{
 			return Level.InBounds(location);
 		}
 
-		void Level_LevelCompleted(object sender, EventArgs e)
+		public override void Level_LevelCompleted(object sender, EventArgs e)
 		{
 			if (Level.LevelNumber < LevelCount - 1)
 			{
@@ -200,7 +172,7 @@ namespace ModelWPF.Game.NewGame
 		/// <summary>
 		/// Attempts to go to the next level.
 		/// </summary>
-		public void GotoNextLevel()
+		public override void GotoNextLevel()
 		{
 			if (Level.LevelNumber < LevelCount)
 			{
@@ -208,34 +180,16 @@ namespace ModelWPF.Game.NewGame
 			}
 		}
 
-		void StartLevel()
+		public override void StartLevel()
 		{
 			GameState = GameState.Running;
-		}
-
-		/// <summary>
-		/// Starts the game by loading the first level.
-		/// </summary>
-		public void Start()
-		{
-
-			if (sokobanService != null)
-			{
-				LevelCount = sokobanService.LevelCount;
-			}
-			else
-			{   /* This should be refactored into the DefaultSokobanService. */
-				string[] files = Directory.GetFiles(levelDirectory, "*.skbn");
-				LevelCount = files.Length;
-			}
-			LoadLevel(52);
 		}
 
 		/// <summary>
 		/// Reloads and then starts the current level
 		/// from the beginning.
 		/// </summary>
-		public void RestartLevel()
+		public override void RestartLevel()
 		{
 			LoadLevel(Level != null ? Level.LevelNumber : 0);
 		}

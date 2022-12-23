@@ -14,7 +14,7 @@ namespace ModelWPF.Game.Cells
         /// Represents a cell containing nothing. 
         /// This is not a cell that is used to place <see cref="CellContents"/>.
         /// </summary>
-        public SpaceCellWPF(Location location, Level level)
+        public SpaceCellWPF(Location location, LevelWPF level)
             : base("Space", location, level)
         {
         }

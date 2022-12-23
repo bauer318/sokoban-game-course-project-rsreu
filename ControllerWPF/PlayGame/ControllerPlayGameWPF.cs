@@ -1,4 +1,5 @@
 ﻿using Controller.PlayGame;
+using Model.PlayGame.Commands;
 using Model.PlayGame.Locations;
 using Model.PlayGame.NewGame;
 using ModelWPF.Game.Cells;
@@ -11,7 +12,7 @@ using System.Windows.Input;
 using View.PlayGame;
 using ViewWPF.MenuGraphics;
 using ViewWPF.PlayGame;
-using CommandManager = ModelWPF.Game.Commands.CommandManager;
+using CommandManager = Model.PlayGame.Commands.CommandManager;
 
 namespace ControllerWPF.PlayGame
 {
@@ -22,11 +23,11 @@ namespace ControllerWPF.PlayGame
             new Uri("/ViewWPF;component/PlayGame/ResourceDictionaries/CellWPF.xaml",
                UriKind.RelativeOrAbsolute)) as ResourceDictionary;
         private ViewNewGameWPF _viewNewGameWPF = null;
-        public GameLevel Game
+        public NewGameWPF Game
         {
             get
             {
-                return (GameLevel)_resourceDictionary["sokobanGame"];
+                return (NewGameWPF)_resourceDictionary["sokobanGame"];
             }
             set
             {
@@ -84,7 +85,7 @@ namespace ControllerWPF.PlayGame
         private void Controll_KeyDown(object sender, KeyEventArgs e)
         {
             CommandBase command = null;
-            Level level = Game.Level;
+            LevelWPF level = Game.Level;
             if (Game != null)
             {
                 if (Game.GameState == GameState.Running)
@@ -92,16 +93,16 @@ namespace ControllerWPF.PlayGame
                     switch (e.Key)
                     {
                         case Key.Up:
-                            command = new MoveCommand(level, Direction.Up);
+                            command = new MoveCommandWPF(level, Direction.Up);
                             break;
                         case Key.Down:
-                            command = new MoveCommand(level, Direction.Down);
+                            command = new MoveCommandWPF(level, Direction.Down);
                             break;
                         case Key.Left:
-                            command = new MoveCommand(level, Direction.Left);
+                            command = new MoveCommandWPF(level, Direction.Left);
                             break;
                         case Key.Right:
-                            command = new MoveCommand(level, Direction.Right);
+                            command = new MoveCommandWPF(level, Direction.Right);
                             break;
                         case Key.Z:
                             if (Keyboard.Modifiers == ModifierKeys.Control)

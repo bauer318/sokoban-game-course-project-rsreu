@@ -23,7 +23,7 @@ namespace ModelWPF.Game.Cells
 		/// Gets or sets the level where this cell is located.
 		/// </summary>
 		/// <value>The level where this cell is located.</value>
-		public Level Level
+		public LevelWPF Level
 		{
 			get;
 			private set;
@@ -70,7 +70,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="name">The name of the cell. <seealso cref="Name"/>.</param>
 		/// <param name="location">The location of the cell. <seealso cref="Location"/></param>
 		/// <param name="level">The level where the cell is located. <seealso cref="Level"/></param>
-		public CellWPF(string name, Location location, Level level):base(name,location)
+		public CellWPF(string name, Location location, LevelWPF level):base(name,location)
 		{
 			Level = level;
 		}
@@ -82,7 +82,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="location">The location of the cell. <seealso cref="Location"/></param>
 		/// <param name="level">The level where the cell is located. <seealso cref="Level"/></param>
 		/// <param name="contents">The contents of this cell. <seealso cref="CellContents"/>/param>
-		public CellWPF(string name, Location location, Level level, CellContentsWPF contents)
+		public CellWPF(string name, Location location, LevelWPF level, CellContentsWPF contents)
 			: this(name, location, level)
 		{
 			/* Add to this cell. */
