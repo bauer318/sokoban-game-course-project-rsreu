@@ -1,5 +1,5 @@
-﻿//using Model.PlayGame.Locations;
-//using Model.PlayGame.NewGame;
+﻿using Model.PlayGame.Locations;
+using Model.PlayGame.NewGame;
 using ModelWPF.Game.Levels;
 using System;
 using System.Collections.Generic;

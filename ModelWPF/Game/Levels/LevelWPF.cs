@@ -1,5 +1,5 @@
-﻿//using Model.PlayGame.Levels;
-//using Model.PlayGame.Locations;
+﻿using Model.PlayGame.Levels;
+using Model.PlayGame.Locations;
 using ModelWPF.Game.Cells;
 using ModelWPF.Game.Cells.Actors;
 using ModelWPF.Game.NewGame;
