@@ -9,7 +9,9 @@ namespace Model.Menu
     public enum MenuItemCodes:int
     {
         New,//0
-        Settings, //1
-        Exit //2
+        Help, //1
+        Exit, //2
+        Map, //3
+        Record//4
     }
 }
