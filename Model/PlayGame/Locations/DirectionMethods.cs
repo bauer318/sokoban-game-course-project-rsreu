@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 namespace Model.PlayGame.Locations
 {
 	/// <summary>
-	/// Adds some static auxiliary methods
+	/// Extends Direction's enum with static method
 	/// </summary>
 	public static class DirectionMethods
 	{
 		/// <summary>
 		/// Gets the opposite direction for the direction.
 		/// </summary>
-		/// <param name="direction">The direction.</param>
+		/// <param name="parDirection">The direction.</param>
 		/// <returns></returns>
-		public static Direction GetOppositeDirection(this Direction direction)
+		public static Direction GetOppositeDirection(this Direction parDirection)
 		{
-			switch (direction)
+			switch (parDirection)
 			{
 				case Direction.Up:
 					return Direction.Down;
@@ -30,7 +30,7 @@ namespace Model.PlayGame.Locations
 				case Direction.Right:
 					return Direction.Left;
 				default:
-					throw new SokobanException("Invalid direction: " + direction.ToString("G"));
+					throw new SokobanException("Invalid direction: " + parDirection.ToString());
 			}
 		}
 	}

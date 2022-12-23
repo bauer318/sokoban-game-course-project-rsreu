@@ -1,4 +1,5 @@
-﻿using Model.PlayGame.Locations;
+﻿using Model.PlayGame.Commands;
+using Model.PlayGame.Locations;
 using Model.PlayGame.Moves;
 using ModelWPF.Game.Moves;
 using System;
@@ -43,6 +44,7 @@ namespace ModelWPF.Game.Cells.Actors
 						{
 							MoveWPF newMove = new MoveWPF(move.Direction.GetOppositeDirection()) { Undo = true };
 							moves.Push(newMove);
+							CommandManager.CanUndo = true;
 							MoveCount++;
 						}
 					}
@@ -75,6 +77,7 @@ namespace ModelWPF.Game.Cells.Actors
 					result = toCell.TrySetContents(this);
 					if (result)
 					{
+						CommandManager.CanUndo = true;
 						MoveCount++;
 					}
 				}

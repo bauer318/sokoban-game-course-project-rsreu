@@ -7,33 +7,41 @@ using System.Threading.Tasks;
 namespace Model.PlayGame.Commands
 {
     /// <summary>
-    /// Provides for execution, undoing, and redoing
+    /// Provides for execution and undoing
     /// of <see cref="CommandBase"/> instances.
     /// </summary>
     public class CommandManager
     {
+		/// <summary>
+		/// Command's stack
+		/// </summary>
 		private Stack<CommandBase> _commandStack = new Stack<CommandBase>();
+		/// <summary>
+		/// Redo command's stack
+		/// </summary>
 		private Stack<CommandBase> _redoStack = new Stack<CommandBase>();
-		private bool _canUndo;
+		/// <summary>
+		/// indicates if can undo
+		/// </summary>
+		public static bool CanUndo;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CommandManager"/> class.
 		/// </summary>
 		public CommandManager()
 		{
-			_canUndo = true;
+			CanUndo = true;
 		}
-
 		/// <summary>
 		/// Executes the specified command.
 		/// </summary>
-		/// <param name="command">The command to execute.</param>
-		public void Execute(CommandBase command)
+		/// <param name="parCommand">The command to execute.</param>
+		public void Execute(CommandBase parCommand)
 		{
 			_redoStack.Clear();
-			command.Execute();
-			_commandStack.Push(command);
-			_canUndo = true;
+			parCommand.Execute();
+			_commandStack.Push(parCommand);
+			//_canUndo = true;
 		}
 
 		/// <summary>
@@ -41,34 +49,17 @@ namespace Model.PlayGame.Commands
 		/// </summary>
 		public void Undo()
 		{
-			if (_commandStack.Count < 1 || !_canUndo)
+			if (_commandStack.Count < 1 || !CanUndo)
 			{
 				return;
 			}
-			_canUndo = false;
+			CanUndo = false;
 			CommandBase command = _commandStack.Pop();
 			command.Undo();
 			_redoStack.Push(command);
 		}
-
 		/// <summary>
-		/// Reperforms the execution of a <see cref="CommandBase"/>
-		/// instance that has been undone, then places it back
-		/// into the command stack.
-		/// </summary>
-		public void Redo()
-		{
-			if (_redoStack.Count < 1)
-			{
-				return;
-			}
-			CommandBase command = _redoStack.Pop();
-			command.Execute();
-			_commandStack.Push(command);
-		}
-
-		/// <summary>
-		/// Clears the undo and redo stacks.
+		/// Clears the command stacks.
 		/// </summary>
 		public void Clear()
 		{

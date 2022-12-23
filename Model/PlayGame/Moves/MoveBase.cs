@@ -9,10 +9,18 @@ namespace Model.PlayGame.Moves
 {
 	/// <summary>
 	/// Base implementation for _moves.
-	/// Moves describe an <see cref="Actor"/> relocation.
+	/// Moves describe an Actor relocation.
 	/// </summary>
 	public class MoveBase
 	{
+		/// <summary>
+		/// indicates whether this <see cref="MoveBase"/> is an undo
+		/// </summary>
+		private bool _undo;
+		/// <summary>
+		/// The direction to relocate
+		/// </summary>
+		private Direction _direction;
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="MoveBase"/> is an undo.
 		/// That is, it is a reversion of a previously executed move.
@@ -20,8 +28,14 @@ namespace Model.PlayGame.Moves
 		/// <value><c>true</c> if an undo; otherwise, <c>false</c>.</value>
 		public bool Undo
 		{
-			get;
-			set;
+            get
+            {
+				return _undo;
+            }
+            set
+            {
+				_undo = value;
+            }
 		}
 		/// <summary>
 		/// Gets the direction in which to relocate.
@@ -29,13 +43,22 @@ namespace Model.PlayGame.Moves
 		/// <value>The direction to relocate.</value>
 		public Direction Direction
 		{
-			get;
-			private set;
+            get
+            {
+				return _direction;
+            }
+			private set
+            {
+				_direction = value;
+            }
 		}
-
-		public MoveBase(Direction direction)
+		/// <summary>
+		/// MoveBase's contructor
+		/// </summary>
+		/// <param name="parDirection">The direction to relocate</param>
+		public MoveBase(Direction parDirection)
         {
-			Direction = direction;
+			_direction = parDirection;
         }
 	}
 }

@@ -8,36 +8,64 @@ using System.Threading.Tasks;
 
 namespace Model.PlayGame.Cell
 {
-    public abstract class CellBase
+	/// <summary>
+	/// Base class for all cells in a Level.
+	/// </summary>
+	public abstract class CellBase
     {
 		/// <summary>
-		/// Gets or sets the name of this cell.
-		/// The name can be used to identify the type
+		/// The parName can be used to identify the type
 		/// of the cell without using GetType().
 		/// </summary>
-		/// <value>The name of the cell. 
-		/// The conceptual type name of the cell, 
+		private string _name;
+		/// <summary>
+		/// the location on the Level.
+		/// </summary>
+		private Location _location;
+		/// <summary>
+		/// Gets or sets the parName of this cell.
+		/// The parName can be used to identify the type
+		/// of the cell without using GetType().
+		/// </summary>
+		/// <value>The parName of the cell. 
+		/// The conceptual type parName of the cell, 
 		/// such as <em>Wall</em> or <em>Floor</em></value>
 		public string Name
 		{
-			get;
-			set;
+            get
+            {
+				return _name;
+            }
+            set
+            {
+				_name = value;
+            }
 		}
 
 		/// <summary>
-		/// Gets or sets the location on the <see cref="Level"/>.
+		/// Gets or sets the location on the Level>.
 		/// </summary>
-		/// <value>The location of the cell on the <see cref="Level"/>.</value>
+		/// <value>The location of the cell on the Level</value>
 		public Location Location
 		{
-			get;
-			set;
+            get
+            {
+				return _location;
+            }
+            set
+            {
+				_location = value;
+            }
 		}
-
-		public CellBase(string name, Location location)
+		/// <summary>
+		/// CellBase's Constructor
+		/// </summary>
+		/// <param parName="name">Cell's Name</param>
+		/// <param parName="location">Cell's location</param>
+		public CellBase(string parName, Location parLocation)
         {
-			Name = name;
-			Location = location;
+			_name = parName;
+			_location = parLocation;
         }
 	}
 }

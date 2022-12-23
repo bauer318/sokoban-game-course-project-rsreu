@@ -63,13 +63,5 @@ namespace ModelWPF.Game.Commands
 		{
 			level.Actor.UndoMove();
 		}
-
-		/// <summary>
-		/// Redoes this command after it has been undone. <see cref="Undo"/>.
-		/// </summary>
-		public override void Redo()
-		{
-			Execute();
-		}
 	}
 }

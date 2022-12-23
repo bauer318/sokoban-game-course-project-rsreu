@@ -110,12 +110,6 @@ namespace ControllerWPF.PlayGame
                                 _commandManager.Undo();
                             }
                             break;
-                        case Key.Y:
-                            if (Keyboard.Modifiers == ModifierKeys.Control)
-                            {
-                                _commandManager.Redo();
-                            }
-                            break;
                     }
                 }
                 else

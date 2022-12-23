@@ -8,7 +8,6 @@ namespace Model.PlayGame.NewGame
 {
 	/// <summary>
 	/// All states that a game instance
-	/// may be in.
 	/// </summary>
 	public enum GameState
 	{
@@ -21,25 +20,15 @@ namespace Model.PlayGame.NewGame
 		/// </summary>
 		Running,
 		/// <summary>
-		/// An <see cref="Actor"/> has successfully
-		/// placed all <see cref="Treasure"/>s
-		/// on <see cref="GoalCell"/>s.
+		/// An Actor has successfully
+		/// placed all Treasure
+		/// on Goal's Cells.
 		/// </summary>
 		LevelCompleted,
-		/// <summary>
-		/// The game is not active.
-		/// </summary>
-		Paused,
 		/// <summary>
 		/// The game has ended, with the user
 		/// being unsuccessful.
 		/// </summary>
-		GameOver,
-		/// <summary>
-		/// The game has ended, with the user
-		/// being successfully. All levels
-		/// have been completed.
-		/// </summary>
-		GameCompleted
+		GameOver
 	}
 }

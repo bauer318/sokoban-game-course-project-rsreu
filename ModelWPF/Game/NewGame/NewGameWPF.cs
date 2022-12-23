@@ -17,7 +17,6 @@ namespace ModelWPF.Game.NewGame
         private SynchronizationContext context = SynchronizationContext.Current;
 		
 		private GameState gameState;
-
 		/// <summary>
 		/// Gets the state of the game. That is, whether
 		/// it is running, loading etc.
@@ -72,7 +71,7 @@ namespace ModelWPF.Game.NewGame
 			Level = new LevelWPF(this, levelNumber);
 			Level.LevelCompleted += new EventHandler(Level_LevelCompleted);
 			
-			string fileName = string.Format(@"{0}Level{1:000}.skbn", levelDirectory, levelNumber);
+			string fileName = string.Format(@"{0}Level{1:000}.skbn", LevelDirectory, levelNumber);
 			using (StreamReader reader = File.OpenText(fileName))
 			{
 				Level.Load(reader);

@@ -8,16 +8,35 @@ using System.Threading.Tasks;
 
 namespace Model.PlayGame.Levels
 {
-    public class LevelBase
+	/// <summary>
+	/// Represents a single stage within a game.
+	/// A level instance is able to load itself
+	/// from a map resource.
+	/// </summary>
+	public class LevelBase
     {
+		/// <summary>
+		/// The level number
+		/// </summary>
+		private int _levelNumber;
+		/// <summary>
+		/// The game that this level is located
+		/// </summary>
+		private NewGameBase _newGameBase;
 		/// <summary>
 		/// Gets the level number.
 		/// </summary>
 		/// <value>The level number.</value>
 		public int LevelNumber
 		{
-			get;
-			set;
+            get
+            {
+				return _levelNumber;
+            }
+            set
+            {
+				_levelNumber = value;
+            }
 		}
 
 		/// <summary>
@@ -26,14 +45,24 @@ namespace Model.PlayGame.Levels
 		/// <value>The game that this level is located.</value>
 		public NewGameBase Game
 		{
-			get;
-			set;
+            get
+            {
+				return _newGameBase;
+            }
+            set
+            {
+				_newGameBase = value;
+            }
 		}
-
-		public LevelBase(NewGameBase newGameBase, int levelNumber)
+		/// <summary>
+		/// LevelBase's contructor
+		/// </summary>
+		/// <param name="newGameBase">The game that this level is located</param>
+		/// <param name="levelNumber">The level number</param>
+		public LevelBase(NewGameBase parNewGameBase, int parLevelNumber)
         {
-			Game = newGameBase;
-			LevelNumber = levelNumber;
+			Game = parNewGameBase;
+			LevelNumber = parLevelNumber;
         }
 
 	}

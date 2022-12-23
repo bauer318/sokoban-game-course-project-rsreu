@@ -22,6 +22,9 @@ namespace ModelWPF.Game.Moves
 			get;
 			set;
 		}
-		public MoveWPF(Direction direction) : base(direction) { }
+		public MoveWPF(Direction direction) : base(direction) 
+		{
+			
+		}
 	}
 }
