@@ -73,7 +73,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="property">The name of the property that changed.</param>
 		protected void OnPropertyChanged(string property)
 		{
-			/* We use the SynchronizationContext _context
+			/* We use the SynchronizationContext context
 			 to ensure that we don't cause an InvalidOperationException
 			 if the property change triggers something occuring
 			 in the main UI thread. */

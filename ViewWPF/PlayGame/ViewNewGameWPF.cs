@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -8,8 +10,82 @@ using View.PlayGame;
 
 namespace ViewWPF.PlayGame
 {
-    public partial class ViewNewGameWPF : ViewNewGameBase
+    public partial class ViewNewGameWPF : ViewNewGameBase,INotifyPropertyChanged
     {
+        private SynchronizationContext _context = SynchronizationContext.Current;
+        /// <summary>
+        /// Gets or sets the _context used to post 
+        /// to the main UI thread.
+        /// </summary>
+        /// <value>The _context used to post to the main
+        /// UI thread.</value>
+        public SynchronizationContext Context
+        {
+            get
+            {
+                if (_context == null)
+                {
+                    _context = SynchronizationContext.Current;
+                }
+                return _context;
+            }
+            set
+            {
+                _context = value;
+            }
+        }
+        private event PropertyChangedEventHandler _propertyChanged;
+
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add
+            {
+                _propertyChanged += value;
+            }
+            remove
+            {
+                _propertyChanged -= value;
+            }
+        }
+
+        /// <summary>
+        /// Raises the PropertyChanged event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> 
+        /// instance containing the event data.</param>
+        void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            if (_propertyChanged != null)
+            {
+                _propertyChanged(this, e);
+            }
+        }
+
+        /// <summary>
+        /// Raises the PropertyChanged event.
+        /// </summary>
+        /// <param name="property">The name of the property that changed.</param>
+        protected void OnPropertyChanged(string property)
+        {
+            /* We use the SynchronizationContext context
+			 to ensure that we don't cause an InvalidOperationException
+			 if the property change triggers something occuring
+			 in the main UI thread. */
+            if (_context == null)
+            {
+                OnPropertyChanged(new PropertyChangedEventArgs(property));
+            }
+            else
+            {
+                _context.Send(delegate
+                {
+                    OnPropertyChanged(new PropertyChangedEventArgs(property));
+                }, null);
+            }
+        }
         private DockPanel _dockPanel;
         private List<ButtonCellLocation> _cellButtons = new List<ButtonCellLocation>();
         private Grid _gridMain;
@@ -78,7 +154,7 @@ namespace ViewWPF.PlayGame
 
                 for (var column = 0; column < columnCount; column++)
                 {
-                    ButtonCellLocation button = new ButtonCellLocation(row, column);
+                    ButtonCellLocation button = new ButtonCellLocation(row, column, row.ToString()+column.ToString());
                     button.Focusable = false;
                     button.Padding = new Thickness(0, 0, 0, 0);
                     Grid.SetRow(button, row);
@@ -105,6 +181,13 @@ namespace ViewWPF.PlayGame
         {
             MessageBox.Show(parMessage);
         }
+        public void Reedraw()
+        {
+            OnPropertyChanged("CellContents");
+            OnPropertyChanged("Cell");
+            OnPropertyChanged("Location");
+        }
+        
 
     }
 }

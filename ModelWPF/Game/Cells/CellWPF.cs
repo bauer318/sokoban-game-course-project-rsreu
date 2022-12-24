@@ -13,6 +13,9 @@ namespace ModelWPF.Game.Cells
 	/// </summary>
 	public abstract class CellWPF : CellBaseWPF
 	{
+		public static bool CellContentChanged = false;
+		public static CellWPF ToCell;
+		public static CellWPF FromCell;
 		/// <summary>
 		/// The level where this cell is located
 		/// </summary>
@@ -52,10 +55,14 @@ namespace ModelWPF.Game.Cells
 			private set
             {
 				_cellContents = value;
-
+				//OnPropertyChanged("CellContents");
+				let();
 			}
 		}
-
+		public void let()
+        {
+			//OnPropertyChanged("CellContents");
+		}
 		/// <summary>
 		/// Removes the contents of the cell.
 		/// Sets the CellContents to null.
@@ -63,7 +70,9 @@ namespace ModelWPF.Game.Cells
 		public virtual void RemoveContents()
 		{
 			_cellContents = null;
-			OnPropertyChanged("CellContents");
+			CellWPF.CellContentChanged = true;
+			//OnPropertyChanged("CellContents");
+			let();
 		}
 
 		/// <summary>
@@ -102,6 +111,7 @@ namespace ModelWPF.Game.Cells
 			: this(parName, parLocation, parLevel)
 		{
 			ChangeCellContents(parContents);
+			CellWPF.CellContentChanged = true;
 		}
 
 		/// <summary>
@@ -116,7 +126,9 @@ namespace ModelWPF.Game.Cells
 			{
 				parContents.Cell.RemoveContents();
 				ChangeCellContents(parContents);
-				OnPropertyChanged("CellContents");
+				//OnPropertyChanged("CellContents");
+				let();
+				CellWPF.CellContentChanged = true;
 				return true;
 			}
 			return false;

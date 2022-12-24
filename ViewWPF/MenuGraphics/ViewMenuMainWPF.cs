@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,7 +19,8 @@ namespace ViewWPF.MenuGraphics
 {
     public class ViewMenuMainWPF : ViewMenuWPF
     {
-        public static MainWindow MainWindow = null;
+		
+		public static MainWindow MainWindow = null;
         private static  StackPanel _mainStackPanel = null;
         private bool _isMenuMainActive = true;
        

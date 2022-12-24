@@ -52,6 +52,7 @@ namespace ModelWPF.Game.Cells
 				Location = value.Location;
 				OnPropertyChanged("Cell");
 				OnPropertyChanged("Location");
+				CellWPF.CellContentChanged = true;
 			}
 		}
 
