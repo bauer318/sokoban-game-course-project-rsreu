@@ -16,7 +16,7 @@ namespace ViewConsole.Menu
             ColorByState = new Dictionary<Model.Menu.States, ConsoleColor>();
             ColorByState[Model.Menu.States.Focused] = ConsoleColor.Yellow;
             ColorByState[Model.Menu.States.Normal] = ConsoleColor.Gray;
-            ColorByState[Model.Menu.States.Selected] = ConsoleColor.White;
+            ColorByState[Model.Menu.States.Selected] = ConsoleColor.Yellow;
             
         }
         public ViewMenuItemConsole(Model.Menu.MenuItem parItem) : base(parItem)

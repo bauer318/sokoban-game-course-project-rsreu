@@ -12,13 +12,17 @@ namespace ViewConsole.Menu
     {
         public int WIDTH = 60;
         public int HEIGHT = 30;
+        private bool _isMenuMainActive;
 
         public ViewMenuConsole(Model.Menu.Menu parSubMeuItem) : base(parSubMeuItem)
         {
             Init();
             Draw();
         }
-
+        public void NewGame()
+        {
+            _isMenuMainActive = false;
+        }
         public override void Draw()
         {
             Console.Clear();
@@ -36,6 +40,8 @@ namespace ViewConsole.Menu
                 return new ViewMenuItemConsole(parMenuItem);
             return null;
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         private void Init()
         {
             Console.WindowHeight = HEIGHT;

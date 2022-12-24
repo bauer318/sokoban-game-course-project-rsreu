@@ -6,7 +6,8 @@ namespace SokobanConsole
     {
         static void Main(string[] args)
         {
-            new ControllerConsole.Menu.ControllerMenuMainConsole().Start();
+            //new ControllerConsole.Menu.ControllerMenuMainConsole().Start();
+            TestConsole.main();
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using ControllerConsole.PlayGame;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViewConsole.PlayGame;
 
 namespace ControllerConsole.Menu
 {
@@ -17,6 +19,13 @@ namespace ControllerConsole.Menu
             _viewMenu = new ViewConsole.Menu.ViewMenuConsole(Menu);
 
             Menu[(int)Model.Menu.MenuItemCodes.Exit].Selected += () => { NeedExit = true; };
+            Menu[(int)Model.Menu.MenuItemCodes.New].Selected += () =>
+            {
+                _viewMenu.NewGame();
+                ViewNewGameConsole viewNewGameConsole = new ViewNewGameConsole();
+                viewNewGameConsole.ViewMenuConsole = _viewMenu;
+                new ControllerPlayGameConsole(viewNewGameConsole);
+            };
         }
         public override void Start()
         {
