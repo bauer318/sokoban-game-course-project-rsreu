@@ -14,12 +14,12 @@ namespace ModelWPF.Game.Cells
 	public class TreasureWPF : CellContentsWPF
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Treasure"/> class.
+		/// Initializes a new instance of the <see cref="TreasureWPF"/> class.
 		/// </summary>
-		/// <param name="location">The location where the treasure is.</param>
-		/// <param name="level">The level that the treasure is located.</param>
-		public TreasureWPF(Location location, LevelWPF level)
-			: base("Treasure", location, level)
+		/// <param name="parLocation">The location where the treasure is.</param>
+		/// <param name="parLevel">The level that the treasure is located.</param>
+		public TreasureWPF(Location parLocation, LevelWPF parLevel)
+			: base("Treasure", parLocation, parLevel)
 		{
 		}
 	}

@@ -19,22 +19,39 @@ namespace ModelWPF.Game.Levels
 	/// </summary>
 	public class LevelWPF:LevelBase
 	{
-		CellWPF[][] cells;
-		List<GoalCellWPF> goals = new List<GoalCellWPF>();
+		/// <summary>
+		/// All cells of the this level
+		/// </summary>
+		private CellWPF[][] _cells;
+		/// <summary>
+		/// All Goals cell of this level
+		/// </summary>
+		private List<GoalCellWPF> _goals = new List<GoalCellWPF>();
+		/// <summary>
+		/// The Level's Actor
+		/// </summary>
+		private Actor _actor;
 
 		/// <summary>
-		/// Gets the single <see cref="Actor"/> instance
+		/// Gets the single Actor instance
 		/// located on each level.
 		/// </summary>
 		/// <value>The actor. (The user moveable guy) </value>
 		public Actor Actor
 		{
-			get;
-			private set;
+            get
+            {
+				return _actor;
+
+			}
+			private set
+            {
+				_actor = value;
+            }
 		}
 
 		/// <summary>
-		/// Gets the <see cref="Orpius.Sokoban.Cell"/> with the specified row number
+		/// Gets the Cell with the specified row number
 		/// and column number.
 		/// </summary>
 		/// <value>The cell at the specified row number and column number.</value>
@@ -42,12 +59,12 @@ namespace ModelWPF.Game.Levels
 		{
 			get
 			{
-				return cells[rowNumber][columnNumber];
+				return _cells[rowNumber][columnNumber];
 			}
 		}
 
 		/// <summary>
-		/// Gets the <see cref="Orpius.Sokoban.Cell"/> with the specified location.
+		/// Gets the Cell with the specified location.
 		/// </summary>
 		/// <value>The cell at the specified location.</value>
 		public CellWPF this[Location location]
@@ -70,7 +87,7 @@ namespace ModelWPF.Game.Levels
 		{
 			get
 			{
-				return cells != null ? cells.Length : 0;
+				return _cells != null ? _cells.Length : 0;
 			}
 		}
 
@@ -82,26 +99,26 @@ namespace ModelWPF.Game.Levels
 		{
 			get
 			{
-				return cells != null && cells.Length > 0 ? cells[0].Length : 0;
+				return _cells != null && _cells.Length > 0 ? _cells[0].Length : 0;
 			}
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Level"/> class.
+		/// Initializes a new instance of the <see cref="LevelWPF"/> class.
 		/// </summary>
-		/// <param name="game">The game that the level belongs.</param>
-		/// <param name="levelNumber">The level number for this level.</param>
-		public LevelWPF(NewGameWPF game, int levelNumber):base(game,levelNumber)
+		/// <param name="parGame">The game that the level belongs.</param>
+		/// <param name="parLevelNumber">The level number for this level.</param>
+		public LevelWPF(NewGameWPF parGame, int parLevelNumber):base(parGame,parLevelNumber)
 		{
 		}
 
 		/// <summary>
 		/// Loads the level data from the specified map stream.
 		/// </summary>
-		/// <param name="mapStream">The map stream to load the level.</param>
-		public void Load(TextReader mapStream)
+		/// <param name="parMapStream">The map stream to load the level.</param>
+		public void Load(TextReader parMapStream)
 		{
-			if (mapStream == null)
+			if (parMapStream == null)
 			{
 				throw new ArgumentNullException("mapStream");
 			}
@@ -110,27 +127,32 @@ namespace ModelWPF.Game.Levels
 
 			string gridRowText;
 			int rowCount = 0;
-			while ((gridRowText = mapStream.ReadLine()) != null && gridRowText.Trim() != string.Empty)
+			while ((gridRowText = parMapStream.ReadLine()) != null && gridRowText.Trim() != string.Empty)
 			{
 				rows.Add(BuildCells(gridRowText, rowCount++));
 			}
 
-			cells = new CellWPF[rowCount][];
+			_cells = new CellWPF[rowCount][];
 			for (int i = 0; i < rowCount; i++)
 			{
-				cells[i] = rows[i].ToArray();
+				_cells[i] = rows[i].ToArray();
 			}
 		}
-
-		public List<CellWPF> BuildCells(string rowText, int rowNumber)
+		/// <summary>
+		/// Build the level's cells for text row
+		/// </summary>
+		/// <param name="parRowText">The row text in Level's file</param>
+		/// <param name="parRowNumber">The row number in Level's file</param>
+		/// <returns></returns>
+		private List<CellWPF> BuildCells(string parRowText, int parRowNumber)
 		{
-			List<CellWPF> row = new List<CellWPF>(rowText.Length);
+			List<CellWPF> row = new List<CellWPF>(parRowText.Length);
 
 			int columnNumber = 0;
 
-			foreach (char c in rowText)
+			foreach (char c in parRowText)
 			{
-				Location location = new Location(rowNumber, columnNumber++);
+				Location location = new Location(parRowNumber, columnNumber++);
 				switch (c)
 				{
 					case '#': /* Wall. */
@@ -145,19 +167,19 @@ namespace ModelWPF.Game.Levels
 					case '*': /* TreasureWPF in a Goal. */
 						GoalCellWPF goalCellWithTreasure = new GoalCellWPF(location, this, new TreasureWPF(location, this));
 						goalCellWithTreasure.CompletedGoalChanged += new EventHandler(GoalCell_CompletedGoalChanged);
-						goals.Add(goalCellWithTreasure);
+						_goals.Add(goalCellWithTreasure);
 						row.Add(goalCellWithTreasure);
 						break;
 					case '.': /* Goal. */
 						GoalCellWPF goalCell = new GoalCellWPF(location, this);
 						goalCell.CompletedGoalChanged += new EventHandler(GoalCell_CompletedGoalChanged);
-						goals.Add(goalCell);
+						_goals.Add(goalCell);
 						row.Add(goalCell);
 						break;
 					case '@': /* Actors in a floor cell. */
 						Actor actor = new Actor(location, this);
 						row.Add(new FloorCellWPF(location, this, actor));
-						Actor = actor;
+						_actor = actor;
 						break;
 					case '!': /* Space. */
 						row.Add(new SpaceCellWPF(location, this));
@@ -168,10 +190,13 @@ namespace ModelWPF.Game.Levels
 			}
 			return row;
 		}
-
-		void GoalCell_CompletedGoalChanged(object sender, EventArgs e)
+		/// <summary>
+		/// Occurs when the Goal's cell change and whether the level is Completed
+		/// </summary>
+		///<param name = "e" > The < see cref="System.EventArgs"/> instance containing the event data.</param>
+		private void GoalCell_CompletedGoalChanged(object sender, EventArgs e)
 		{
-			foreach (GoalCellWPF goal in goals)
+			foreach (GoalCellWPF goal in _goals)
 			{
 				if (!goal.HasTreasure)
 				{
@@ -188,7 +213,7 @@ namespace ModelWPF.Game.Levels
 		/// <param name="location">The location to test
 		/// whether it is within the level grid.</param>
 		/// <returns><code>true</code> if the location
-		/// is within the <see cref="Level"/>; 
+		/// is within the <see cref="LevelWPF"/>; 
 		/// <code>false</code> otherwise.</returns>
 		public bool InBounds(Location location)
 		{
@@ -199,7 +224,7 @@ namespace ModelWPF.Game.Levels
 		}
 		#region LevelCompleted event
 
-		event EventHandler levelCompleted;
+		private event EventHandler levelCompleted;
 
 		/// <summary>
 		/// Occurs when a level has been completed successfully.
@@ -217,7 +242,7 @@ namespace ModelWPF.Game.Levels
 		}
 
 		/// <summary>
-		/// Raises the <see cref="E:LevelCompleted"/> event.
+		/// Raises the LevelCompleted event.
 		/// </summary>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected void OnLevelCompleted(EventArgs e)

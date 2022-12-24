@@ -12,56 +12,69 @@ using System.Threading.Tasks;
 namespace ModelWPF.Game.Commands
 {
 	/// <summary>
-	/// Performs a move with the <see cref="Level"/>'s <see cref="Actor"/>
+	/// Performs a move with the <see cref="LevelWPF"/>'s Actor
 	/// instance. A move is a single step.
 	/// </summary>
 	public class MoveCommandWPF : CommandBase
 	{
-		LevelWPF level;
+		/// <summary>
+		/// The Game's Level
+		/// </summary>
+		private LevelWPF _level;
+		/// <summary>
+		/// The direction that the move will take place
+		/// </summary>
+		private Direction _direction;
 
 		/// <summary>
-		/// Gets or sets the direction for the <see cref="Move"/>.
+		/// Gets or sets the direction for the Move.
 		/// </summary>
 		/// <value>The direction that the move will take place.</value>
 		public Direction Direction
 		{
-			get;
-			private set;
+            get
+            {
+				return _direction;
+            }
+			private set
+            {
+				_direction = value;
+            }
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MoveCommand"/> class.
+		/// Initializes a new instance of the <see cref="MoveCommandWPF"/> class.
 		/// </summary>
-		/// <param name="level">The level where the move will take place.</param>
-		/// <param name="direction">The direction of the move.</param>
-		public MoveCommandWPF(LevelWPF level, Direction direction)
+		/// <param name="parLevel">The level where the move will take place.</param>
+		/// <param name="parDirection">The direction of the move.</param>
+		public MoveCommandWPF(LevelWPF parLevel, Direction parDirection)
 		{
-			if (level == null)
+			if (parLevel == null)
 			{
 				throw new ArgumentNullException("level");
 			}
-			Direction = direction;
-			this.level = level;
+			_direction = parDirection;
+			this._level = parLevel;
 		}
 
 		/// <summary>
 		/// Executes this command.
-		/// Move the <see cref="Actor"/> one step
-		/// in the predefined <see cref="Direction"/>.
+		/// Move the Actor one step
+		/// in the predefined Direction.
 		/// </summary>
 		public override void Execute()
 		{
 			MoveWPF move = new MoveWPF(Direction);
-			level.Actor.DoMove(move);
+			_level.Actor.DoMove(move);
 		}
 
 		/// <summary>
-		/// Undoes that which was performed with <see cref="Execute"/>.
+		/// Undoes that which was performed with Execute.
 		/// Steps back to the original location.
 		/// </summary>
 		public override void Undo()
 		{
-			level.Actor.UndoMove();
+			_level.Actor.UndoMove();
 		}
 	}
 }

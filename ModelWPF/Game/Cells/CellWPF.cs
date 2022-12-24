@@ -9,24 +9,32 @@ using System.Threading.Tasks;
 namespace ModelWPF.Game.Cells
 {
 	/// <summary>
-	/// Base class for all cells in a <see cref="Level"/>.
+	/// Base class for all cells in a Level.
 	/// </summary>
 	public abstract class CellWPF : CellBaseWPF
 	{
-		public bool CellContentChanged
-        {
-			get;
-			set;
-        }
-
+		/// <summary>
+		/// The level where this cell is located
+		/// </summary>
+		private LevelWPF _level;
+		/// <summary>
+		/// The cell contents
+		/// </summary>
+		private CellContentsWPF _cellContents;
 		/// <summary>
 		/// Gets or sets the level where this cell is located.
 		/// </summary>
 		/// <value>The level where this cell is located.</value>
 		public LevelWPF Level
 		{
-			get;
-			private set;
+            get
+            {
+				return _level;
+            }
+			private set
+            {
+				_level = value;
+            }
 		}
 
 		/// <summary>
@@ -36,17 +44,25 @@ namespace ModelWPF.Game.Cells
 		/// or an <em>Actors</em>.</value>
 		public CellContentsWPF CellContents
 		{
-			get;
-			private set;
+            get
+            {
+				return _cellContents;
+
+			}
+			private set
+            {
+				_cellContents = value;
+
+			}
 		}
 
 		/// <summary>
 		/// Removes the contents of the cell.
-		/// Sets the <see cref="CellContents"/> to null.
+		/// Sets the CellContents to null.
 		/// </summary>
 		public virtual void RemoveContents()
 		{
-			CellContents = null;
+			_cellContents = null;
 			OnPropertyChanged("CellContents");
 		}
 
@@ -54,101 +70,102 @@ namespace ModelWPF.Game.Cells
 		/// Gets a value indicating whether cell contents can be put here.
 		/// </summary>
 		/// <value><c>true</c> if this instance will accept 
-		/// an instance of <see cref="CellContents"/>; 
+		/// an instance of CellContentsWPF
 		/// otherwise, <c>false</c>.</value>
 		public virtual bool CanEnter
 		{
 			get
 			{
-				return CellContents == null;
+				return _cellContents == null;
 			}
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Cell"/> class.
+		/// Initializes a new instance of the CellWPF class.
 		/// </summary>
-		/// <param name="name">The name of the cell. <seealso cref="Name"/>.</param>
+		/// <param name="name">The name of the cell.</param>
 		/// <param name="location">The location of the cell. <seealso cref="Location"/></param>
-		/// <param name="level">The level where the cell is located. <seealso cref="Level"/></param>
+		/// <param name="level">The level where the cell is located. <seealso cref="LevelWPF"/></param>
 		public CellWPF(string name, Location location, LevelWPF level):base(name,location)
 		{
 			Level = level;
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Cell"/> class.
+		/// Initializes a new instance of the <see cref="CellWPF"/> class.
 		/// </summary>
-		/// <param name="name">The name of the cell. <seealso cref="Name"/>.</param>
-		/// <param name="location">The location of the cell. <seealso cref="Location"/></param>
-		/// <param name="level">The level where the cell is located. <seealso cref="Level"/></param>
-		/// <param name="contents">The contents of this cell. <seealso cref="CellContents"/>/param>
-		public CellWPF(string name, Location location, LevelWPF level, CellContentsWPF contents)
-			: this(name, location, level)
+		/// <param name="parName">The name of the cell.</param>
+		/// <param name="parLocation">The location of the cell. <seealso cref="Location"/></param>
+		/// <param name="parLevel">The level where the cell is located. <seealso cref="LevelWPF"/></param>
+		/// <param name="parContents">The contents of this cell. <seealso cref="CellContentsWPF"/>/param>
+		public CellWPF(string parName, Location parLocation, LevelWPF parLevel, CellContentsWPF parContents)
+			: this(parName, parLocation, parLevel)
 		{
-			/* Add to this cell. */
-			CellContents = contents;
-			/* Make sure the content knows where it is. */
-			contents.Cell = this;
+			ChangeCellContents(parContents);
 		}
 
 		/// <summary>
 		/// Tries to the set the cell contents.
 		/// </summary>
-		/// <param name="contents">The contents to place in the cell.</param>
+		/// <param name="parContents">The contents to place in the cell.</param>
 		/// <returns><code>true</code> if the specified contents
 		/// was able to be placed in this cell; <code>false</code> otherwise.</returns>
-		public virtual bool TrySetContents(CellContentsWPF contents)
+		public virtual bool TrySetContents(CellContentsWPF parContents)
 		{
 			if (CanEnter)
 			{
-				contents.Cell.RemoveContents();
-				/* Add to this cell. */
-				CellContents = contents;
-				/* Make sure the content knows where it is. */
-				contents.Cell = this;
+				parContents.Cell.RemoveContents();
+				ChangeCellContents(parContents);
 				OnPropertyChanged("CellContents");
 				return true;
 			}
 			return false;
 		}
+		private void ChangeCellContents(CellContentsWPF parContents)
+        {
+			/* Add to this cell. */
+			_cellContents = parContents;
+			/* Make sure the content knows where it is. */
+			parContents.Cell = this;
+        }
 
 		/// <summary>
-		/// Tries to push the current <see cref="CellContents"/>
+		/// Tries to push the current <see cref="CellContentsWPF"/>
 		/// to the cell neighbour in the specified direction.
 		/// </summary>
-		/// <param name="direction">The direction of an adjacent
-		/// cell in which to place this cell's <see cref="CellContents"/>.</param>
+		/// <param name="parDirection">The direction of an adjacent
+		/// cell in which to place this cell's <see cref="CellContentsWPF"/>.</param>
 		/// <returns><code>true</code> if the contents was able 
 		/// to be placed in the adjacent cell; <code>false</code> otherwise.</returns>
-		public bool TryPushContents(Direction direction)
+		public bool TryPushContents(Direction parDirection)
 		{
-			if (!CanPush(direction))
+			if (!CanPush(parDirection))
 			{
 				return false;
 			}
-			CellWPF neighbour = Level[Location.GetAdjacentLocation(direction)];
-			neighbour.TrySetContents(CellContents);
+			CellWPF neighbour = _level[Location.GetAdjacentLocation(parDirection)];
+			neighbour.TrySetContents(_cellContents);
 			return true;
 		}
 
 		/// <summary>
 		/// Determines whether this instance can push the current
-		/// <see cref="CellContents"/> in the specified direction.
+		/// <see cref="CellContentsWPF"/> in the specified direction.
 		/// </summary>
-		/// <param name="direction">The direction in which the cell contents
+		/// <param name="parDirection">The direction in which the cell contents
 		/// should be tested for movability. That is, the direction
 		/// of an adjacent cell that the cell contents might be placed.</param>
 		/// <returns>
 		/// 	<c>true</c> if this instance can push the cell contents to an adjacent
 		/// cell in the specified direction; otherwise, <c>false</c>.
 		/// </returns>
-		public bool CanPush(Direction direction)
+		public bool CanPush(Direction parDirection)
 		{
-			if (CellContents == null)
+			if (_cellContents == null)
 			{
 				return false;
 			}
-			CellWPF neighbour = Level[Location.GetAdjacentLocation(direction)];
+			CellWPF neighbour = _level[Location.GetAdjacentLocation(parDirection)];
 			return neighbour != null && neighbour.CanEnter;
 		}
 

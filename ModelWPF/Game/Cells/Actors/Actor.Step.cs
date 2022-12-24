@@ -15,20 +15,20 @@ namespace ModelWPF.Game.Cells.Actors
 		/// <summary>
 		/// Tries to move in the direction of the specified move.
 		/// </summary>
-		/// <param name="move">The move indicating where to go.</param>
+		/// <param name="parMove">The move indicating where to go.</param>
 		/// <returns><code>true</code> if the move completed
 		/// successfully, <code>false</code> otherwise.</returns>
-		internal bool DoMove(MoveWPF move)
+		internal bool DoMove(MoveWPF parMove)
 		{
-			lock (moveLock)
+			lock (_moveLock)
 			{
-				return DoMoveAux(move);
+				return DoMoveAux(parMove);
 			}
 		}
-		internal bool DoMoveAux(MoveWPF move)
+		internal bool DoMoveAux(MoveWPF parMove)
 		{
 			bool result = false;
-			Location moveLocation = Location.GetAdjacentLocation(move.Direction);
+			Location moveLocation = Location.GetAdjacentLocation(parMove.Direction);
 			if (Level.InBounds(moveLocation))
 			{
 				CellWPF toCell = Level[moveLocation];
@@ -37,21 +37,21 @@ namespace ModelWPF.Game.Cells.Actors
 
 				if (toCell.CanEnter)
 				{   /* Empty cell. */
-					if (!move.Undo)
+					if (!parMove.Undo)
 					{   /* Regular move - nominal case. */
 						result = toCell.TrySetContents(this);
 						if (result)
 						{
-							MoveWPF newMove = new MoveWPF(move.Direction.GetOppositeDirection()) { Undo = true };
-							moves.Push(newMove);
+							MoveWPF newMove = new MoveWPF(parMove.Direction.GetOppositeDirection()) { Undo = true };
+							_movesStack.Push(newMove);
 							CommandManager.CanUndo = true;
 							MoveCount++;
 						}
 					}
-					else if (move.PushedContents != null)
+					else if (parMove.PushedContents != null)
 					{   /* Is an undo and there was contents. */
 						toCell.TrySetContents(this);
-						result = fromCell.TrySetContents(move.PushedContents);
+						result = fromCell.TrySetContents(parMove.PushedContents);
 						if (result)
 						{
 							MoveCount--;
@@ -66,12 +66,12 @@ namespace ModelWPF.Game.Cells.Actors
 						}
 					}
 				}
-				else if (toCell.TryPushContents(move.Direction))
+				else if (toCell.TryPushContents(parMove.Direction))
 				{   /* Wasn't able to enter, but could push contents. */
-					if (!move.Undo)
+					if (!parMove.Undo)
 					{
-						MoveWPF newMove = new MoveWPF(move.Direction.GetOppositeDirection()) { Undo = true, PushedContents = toCellContents };
-						moves.Push(newMove);
+						MoveWPF newMove = new MoveWPF(parMove.Direction.GetOppositeDirection()) { Undo = true, PushedContents = toCellContents };
+						_movesStack.Push(newMove);
 					}
 
 					result = toCell.TrySetContents(this);

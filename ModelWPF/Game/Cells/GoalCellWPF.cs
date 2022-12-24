@@ -10,12 +10,15 @@ namespace ModelWPF.Game.Cells
 {
 	/// <summary>
 	/// Represents a goal on the level grid
-	/// where <see cref="Treasure"/>s must be pushed
-	/// in order to complete the <see cref="Level"/>.
+	/// where <see cref="TreasureWPF"/>s must be pushed
+	/// in order to complete the <see cref="LevelWPF"/>.
 	/// </summary>
 	public class GoalCellWPF : CellWPF
 	{
-		const string cellName = "Goal";
+		/// <summary>
+		/// Cell's name
+		/// </summary>
+		private const string CELL_NAME = "Goal";
 
 		/// <summary>
 		/// Gets a value indicating whether this instance has a treasure in it.
@@ -32,42 +35,42 @@ namespace ModelWPF.Game.Cells
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="GoalCell"/> class.
+		/// Initializes a new instance of the <see cref="GoalCellWPF"/> class.
 		/// </summary>
-		/// <param name="location">The location of the goal
+		/// <param name="parLocation">The location of the goal
 		/// on the level grid.</param>
-		/// <param name="level">The level grid where this cell
+		/// <param name="parLevel">The level grid where this cell
 		/// is located.</param>
-		public GoalCellWPF(Location location, LevelWPF level)
-			: base(cellName, location, level)
+		public GoalCellWPF(Location parLocation, LevelWPF parLevel)
+			: base(CELL_NAME, parLocation, parLevel)
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="GoalCell"/> class.
+		/// Initializes a new instance of the <see cref="GoalCellWPF"/> class.
 		/// </summary>
-		/// <param name="location">The location of the goal
+		/// <param name="parLocation">The location of the goal
 		/// on the level grid.</param>
-		/// <param name="level">The level grid where this cell
+		/// <param name="parLevel">The level grid where this cell
 		/// is located.</param>
-		/// <param name="contents">The contents of this goal cell.</param>
-		public GoalCellWPF(Location location, LevelWPF level, CellContentsWPF contents)
-			: base(cellName, location, level, contents)
+		/// <param name="parContents">The contents of this goal cell.</param>
+		public GoalCellWPF(Location parLocation, LevelWPF parLevel, CellContentsWPF parContents)
+			: base(CELL_NAME, parLocation, parLevel, parContents)
 		{
 		}
 
 		/// <summary>
 		/// Tries the set the contents of this goal.
 		/// </summary>
-		/// <param name="contents">The contents to set.</param>
+		/// <param name="parContents">The contents to set.</param>
 		/// <returns><code>true</code> if the contents 
 		/// was successfully placed on the goal, <code>false</code> otherwise.
 		/// </returns>
-		public override bool TrySetContents(CellContentsWPF contents)
+		public override bool TrySetContents(CellContentsWPF parContents)
 		{
-			if (base.TrySetContents(contents))
+			if (base.TrySetContents(parContents))
 			{
-				if (contents is TreasureWPF)
+				if (parContents is TreasureWPF)
 				{
 					OnCompletedGoalChanged(EventArgs.Empty);
 				}
@@ -77,7 +80,7 @@ namespace ModelWPF.Game.Cells
 		}
 
 		/// <summary>
-		/// Removes the <see cref="CellContents"/> contents from this goal.
+		/// Removes the <see cref="CellContentsWPF"/> contents from this goal.
 		/// </summary>
 		public override void RemoveContents()
 		{
@@ -90,33 +93,33 @@ namespace ModelWPF.Game.Cells
 		}
 
 		#region CompletedGoalChanged event
-		event EventHandler completedGoalChanged;
+		private event EventHandler _completedGoalChanged;
 
 		/// <summary>
-		/// Occurs when a <see cref="Treasure"/> instance
+		/// Occurs when a <see cref="TreasureWPF"/> instance
 		/// is either removed from or placed in this goal.
 		/// </summary>
 		public event EventHandler CompletedGoalChanged
 		{
 			add
 			{
-				completedGoalChanged += value;
+				_completedGoalChanged += value;
 			}
 			remove
 			{
-				completedGoalChanged -= value;
+				_completedGoalChanged -= value;
 			}
 		}
 
 		/// <summary>
-		/// Raises the <see cref="E:CompletedGoalChanged"/> event.
+		/// Raises the CompletedGoalChanged event.
 		/// </summary>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected void OnCompletedGoalChanged(EventArgs e)
 		{
-			if (completedGoalChanged != null)
+			if (_completedGoalChanged != null)
 			{
-				completedGoalChanged(this, e);
+				_completedGoalChanged(this, e);
 			}
 		}
 		#endregion

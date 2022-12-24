@@ -10,7 +10,10 @@ using System.Threading.Tasks;
 
 namespace ModelWPF.Game.Cells
 {
-    public class CellBaseWPF:CellBase, INotifyPropertyChanged
+	/// <summary>
+	/// This is provided as a base implementation for all others CellsWPF
+	/// </summary>
+	public class CellBaseWPF:CellBase, INotifyPropertyChanged
     {
 		private SynchronizationContext _context = SynchronizationContext.Current;
 		/// <summary>
@@ -52,7 +55,7 @@ namespace ModelWPF.Game.Cells
 		}
 
 		/// <summary>
-		/// Raises the <see cref="E:PropertyChanged"/> event.
+		/// Raises the PropertyChanged event.
 		/// </summary>
 		/// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> 
 		/// instance containing the event data.</param>
@@ -65,7 +68,7 @@ namespace ModelWPF.Game.Cells
 		}
 
 		/// <summary>
-		/// Raises the <see cref="E:PropertyChanged"/> event.
+		/// Raises the PropertyChanged event.
 		/// </summary>
 		/// <param name="property">The name of the property that changed.</param>
 		protected void OnPropertyChanged(string property)
@@ -86,7 +89,12 @@ namespace ModelWPF.Game.Cells
 				}, null);
 			}
 		}
-		public CellBaseWPF(string name, Location location):base(name, location)
+		/// <summary>
+		/// CellBaseWPF's Constructor
+		/// </summary>
+		/// <param parName="name">Cell's Name</param>
+		/// <param parName="location">Cell's location</param>
+		public CellBaseWPF(string parName, Location parLocation):base(parName, parLocation)
         {
 
         }

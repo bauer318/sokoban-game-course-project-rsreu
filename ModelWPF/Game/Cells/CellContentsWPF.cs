@@ -11,20 +11,30 @@ using System.Threading.Tasks;
 namespace ModelWPF.Game.Cells
 {
 	/// <summary>
-	/// Represents the contents of a <see cref="Cell"/>.
+	/// Represents the contents of a Cell.
 	/// This is provided as a base implementation
 	/// for other cell contents.
 	/// </summary>
 	public class CellContentsWPF : CellBaseWPF
 	{
 		/// <summary>
+		/// The level where this instance is located
+		/// </summary>
+		private LevelWPF _level;
+		/// <summary>
 		/// Gets or sets the level where this instance is located.
 		/// </summary>
 		/// <value>The level where this instance is located.</value>
 		public LevelWPF Level
 		{
-			get;
-			private set;
+            get
+            {
+				return _level;
+            }
+			private set
+            {
+				_level = value;
+            }
 		}
 
 		/// <summary>
@@ -35,7 +45,7 @@ namespace ModelWPF.Game.Cells
 		{
 			get
 			{
-				return Level[Location];
+				return _level[Location];
 			}
 			set
 			{
@@ -48,12 +58,12 @@ namespace ModelWPF.Game.Cells
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CellContents"/> class.
 		/// </summary>
-		/// <param name="name">The name of this cell contents. <seealso cref="Name"/></param>
-		/// <param name="location">The location on the level. <seealso cref="Location"/></param>
-		/// <param name="level">The level where this instance is located. <seealso cref="Level"/></param>
-		public CellContentsWPF(string name, Location location, LevelWPF level):base(name,location)
+		/// <param name="parName">The name of this cell contents. <seealso cref="Name"/></param>
+		/// <param name="parLocation">The location on the level. <seealso cref="Location"/></param>
+		/// <param name="parLevel">The level where this instance is located. <seealso cref="Level"/></param>
+		public CellContentsWPF(string parName, Location parLocation, LevelWPF parLevel):base(parName,parLocation)
 		{
-			Level = level;
+			_level = parLevel;
 		}
 
 	}

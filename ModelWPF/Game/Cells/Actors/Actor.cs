@@ -15,10 +15,16 @@ namespace ModelWPF.Game.Cells.Actors
 	/// </summary>
 	public partial class Actor : CellContentsWPF
 	{
-		readonly Stack<MoveBase> moves = new Stack<MoveBase>();
-		int moveCount;
+		/// <summary>
+		/// Stack of all move for this Actor in the current level
+		/// </summary>
+		private readonly Stack<MoveBase> _movesStack = new Stack<MoveBase>();
+		/// <summary>
+		/// Move count
+		/// </summary>
+		private int _moveCount;
 		/* lock object for the DoMove methods. */
-		readonly object moveLock = new object();
+		private readonly object _moveLock = new object();
 
 		/// <summary>
 		/// Gets the move count.
@@ -29,14 +35,14 @@ namespace ModelWPF.Game.Cells.Actors
 		{
 			get
 			{
-				return moveCount;
+				return _moveCount;
 			}
 			private set
 			{
-				moveCount = value;
-				if (moveCount < 0)
+				_moveCount = value;
+				if (_moveCount < 0)
 				{   /* Just in case. */
-					moveCount = 0;
+					_moveCount = 0;
 				}
 				OnPropertyChanged("MoveCount");
 			}
@@ -45,26 +51,24 @@ namespace ModelWPF.Game.Cells.Actors
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Actor"/> class.
 		/// </summary>
-		/// <param name="location">The location.</param>
-		/// <param name="level">The level.</param>
-		public Actor(Location location, LevelWPF level)
-			: base("Actor", location, level)
+		/// <param name="parLocation">The location.</param>
+		/// <param name="parLevel">The level.</param>
+		public Actor(Location parLocation, LevelWPF parLevel)
+			: base("Actor", parLocation, parLevel)
 		{
 		}
 
 		/// <summary>
 		/// Undoes the last move.
-		/// The move may be a single move, or it may be a series
-		/// of moves that were taken as part of a <see cref="Jump"/>.
 		/// </summary>
 		/// <returns></returns>
 		public bool UndoMove()
 		{
-			if (moves.Count < 1)
+			if (_movesStack.Count < 1)
 			{
 				return false;
 			}
-			MoveBase moveBase = moves.Pop();
+			MoveBase moveBase = _movesStack.Pop();
 			MoveWPF move = moveBase as MoveWPF;
 			if (move != null)
 			{

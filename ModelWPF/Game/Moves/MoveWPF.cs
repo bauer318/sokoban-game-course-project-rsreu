@@ -9,8 +9,16 @@ using System.Threading.Tasks;
 
 namespace ModelWPF.Game.Moves
 {
-    public class MoveWPF:MoveBase
+	/// <summary>
+	/// Describes a single step that an Actor will take
+	/// to relocate to a destination on a Level.
+	/// </summary>
+	public class MoveWPF:MoveBase
     {
+		/// <summary>
+		/// The contents that were pushed 
+		/// </summary>
+		private CellContentsWPF _pushedContents;
 		/// <summary>
 		/// Gets or sets the contents that were moved
 		/// as part of the relocation. This is used for undo's.
@@ -19,10 +27,21 @@ namespace ModelWPF.Game.Moves
 		/// as part of the relocation.</value>
 		public CellContentsWPF PushedContents
 		{
-			get;
-			set;
+            get
+            {
+				return _pushedContents;
+            }
+            set
+            {
+				_pushedContents = value;
+            }
 		}
-		public MoveWPF(Direction direction) : base(direction) 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MoveWPF"/> class.
+		/// </summary>
+		/// <param name="parDirection">The direction in an <see cref="Actor"/> 
+		/// should relocate. <seealso cref="Direction"/></param>
+		public MoveWPF(Direction parDirection) : base(parDirection) 
 		{
 			
 		}
