@@ -116,7 +116,7 @@ namespace ModelWPF.Game.Levels
 		/// Loads the level data from the specified map stream.
 		/// </summary>
 		/// <param name="parMapStream">The map stream to load the level.</param>
-		public void Load(TextReader parMapStream)
+		public override void Load(TextReader parMapStream)
 		{
 			if (parMapStream == null)
 			{
@@ -215,7 +215,7 @@ namespace ModelWPF.Game.Levels
 		/// <returns><code>true</code> if the location
 		/// is within the <see cref="LevelWPF"/>; 
 		/// <code>false</code> otherwise.</returns>
-		public bool InBounds(Location location)
+		public override bool InBounds(Location location)
 		{
 			return (location.RowNumber >= 0
 				&& location.RowNumber < RowCount

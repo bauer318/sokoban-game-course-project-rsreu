@@ -12,32 +12,9 @@ namespace ModelWPF.Game.NewGame
     public class NewGameWPF : NewGameBase
     {
         /// <summary>
-        /// The state of Game
-        /// </summary>
-        private GameState _gameState;
-        /// <summary>
         /// The current level of the game
         /// </summary>
         private LevelWPF _level;
-        /// <summary>
-        /// Gets the state of the game. That is, whether
-        /// it is running, loading etc.
-        /// <see cref="GameState"/>
-        /// </summary>
-        /// <value>The state of the game.</value>
-        public GameState GameState
-        {
-            get
-            {
-                return _gameState;
-            }
-            private set
-            {
-                _gameState = value;
-                //OnPropertyChanged("GameState");
-            }
-        }
-
         /// <summary>
         /// Gets the current level of the game.
         /// </summary>
