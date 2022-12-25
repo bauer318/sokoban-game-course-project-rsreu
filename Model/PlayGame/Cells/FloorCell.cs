@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Model.PlayGame.Cells
 {
-    /// <summary>
+	/// <summary>
 	/// Represents a vacant floor cell in the level grid.
 	/// </summary>
-    public class FloorCell:Cell
-    {
+	public class FloorCell : Cell
+	{
 		/// <summary>
 		/// Cell's name
 		/// </summary>

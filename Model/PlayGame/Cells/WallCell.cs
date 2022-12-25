@@ -11,8 +11,8 @@ namespace Model.PlayGame.Cells
 	/// <summary>
 	/// Represents a wall on the level grid
 	/// </summary>
-	public class WallCell:Cell
-    {
+	public class WallCell : Cell
+	{
 		/// <summary>
 		/// Gets a value indicating whether the Actor/> 
 		/// or other <see cref="CellContents"/>

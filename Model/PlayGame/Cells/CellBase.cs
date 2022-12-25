@@ -12,7 +12,7 @@ namespace Model.PlayGame.Cells
 	/// <summary>
 	/// Base class for all cells in a Level.
 	/// </summary>
-	public class CellBase: INotifyPropertyChanged
+	public class CellBase : INotifyPropertyChanged
 	{
 		/// <summary>
 		/// The context for the main UI thread

@@ -109,7 +109,7 @@ namespace Model.PlayGame.Levels
 				return _cells != null && _cells.Length > 0 ? _cells[0].Length : 0;
 			}
 		}
-		
+
 		/// <summary>
 		/// Gets the level number.
 		/// </summary>
@@ -187,8 +187,8 @@ namespace Model.PlayGame.Levels
 		/// Loads the level data from the specified map stream.
 		/// </summary>
 		/// <param name="parMapStream">The map stream to load the level.</param>
-		public  void Load(TextReader parMapStream)
-        {
+		public void Load(TextReader parMapStream)
+		{
 			if (parMapStream == null)
 			{
 				throw new ArgumentNullException("mapStream");
@@ -287,7 +287,7 @@ namespace Model.PlayGame.Levels
 		/// is within the <see cref="LevelBase"/>; 
 		/// <code>false</code> otherwise.</returns>
 		public bool InBounds(Location location)
-        {
+		{
 			return (location.RowNumber >= 0
 				&& location.RowNumber < RowCount
 				&& location.ColumnNumber >= 0

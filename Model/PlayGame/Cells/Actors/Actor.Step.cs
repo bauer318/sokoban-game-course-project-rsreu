@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace Model.PlayGame.Cells.Actors
 {
-    public partial class Actor
-    {
+	public partial class Actor
+	{
 		/// <summary>
 		/// Tries to move in the direction of the specified move.
 		/// </summary>

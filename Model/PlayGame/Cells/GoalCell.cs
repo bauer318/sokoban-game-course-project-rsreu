@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Model.PlayGame.Cells
 {
-    /// <summary>
+	/// <summary>
 	/// Represents a goal on the level grid
 	/// where <see cref="Treasure"/>s must be pushed
 	/// in order to complete the <see cref="Level"/>.
 	/// </summary>
-    public class GoalCell:Cell
-    {
+	public class GoalCell : Cell
+	{
 		/// <summary>
 		/// Cell's name
 		/// </summary>

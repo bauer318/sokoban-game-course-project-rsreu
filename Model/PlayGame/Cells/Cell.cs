@@ -11,7 +11,7 @@ namespace Model.PlayGame.Cells
     /// <summary>
     /// Base implementation class for all Cells
     /// </summary>
-    public class Cell:CellBase
+    public class Cell : CellBase
     {
         /// <summary>
         /// The level where this cell is located
