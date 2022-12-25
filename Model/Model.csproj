@@ -19,8 +19,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="PlayGame\Levels\" />
-  </ItemGroup>
-
 </Project>

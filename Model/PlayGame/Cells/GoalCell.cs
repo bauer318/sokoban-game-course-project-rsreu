@@ -1,22 +1,22 @@
-﻿using Model.PlayGame.Locations;
-using ModelWPF.Game.Levels;
+﻿using Model.PlayGame.Levels;
+using Model.PlayGame.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelWPF.Game.Cells
+namespace Model.PlayGame.Cells
 {
-	/// <summary>
+    /// <summary>
 	/// Represents a goal on the level grid
-	/// where <see cref="TreasureWPF"/>s must be pushed
-	/// in order to complete the <see cref="LevelWPF"/>.
+	/// where <see cref="Treasure"/>s must be pushed
+	/// in order to complete the <see cref="Level"/>.
 	/// </summary>
-	public class GoalCellWPF : CellWPF
-	{
+    public class GoalCell:Cell
+    {
 		/// <summary>
-		/// Cell's name
+		/// Cells's name
 		/// </summary>
 		private const string CELL_NAME = "Goal";
 
@@ -30,31 +30,31 @@ namespace ModelWPF.Game.Cells
 		{
 			get
 			{
-				return CellContents is TreasureWPF;
+				return CellContents is Treasure;
 			}
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="GoalCellWPF"/> class.
+		/// Initializes a new instance of the <see cref="GoalCell"/> class.
 		/// </summary>
 		/// <param name="parLocation">The location of the goal
 		/// on the level grid.</param>
 		/// <param name="parLevel">The level grid where this cell
 		/// is located.</param>
-		public GoalCellWPF(Location parLocation, LevelWPF parLevel)
+		public GoalCell(Location parLocation, Level parLevel)
 			: base(CELL_NAME, parLocation, parLevel)
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="GoalCellWPF"/> class.
+		/// Initializes a new instance of the <see cref="GoalCell"/> class.
 		/// </summary>
 		/// <param name="parLocation">The location of the goal
 		/// on the level grid.</param>
 		/// <param name="parLevel">The level grid where this cell
 		/// is located.</param>
 		/// <param name="parContents">The contents of this goal cell.</param>
-		public GoalCellWPF(Location parLocation, LevelWPF parLevel, CellContentsWPF parContents)
+		public GoalCell(Location parLocation, Level parLevel, CellContents parContents)
 			: base(CELL_NAME, parLocation, parLevel, parContents)
 		{
 		}
@@ -66,11 +66,11 @@ namespace ModelWPF.Game.Cells
 		/// <returns><code>true</code> if the contents 
 		/// was successfully placed on the goal, <code>false</code> otherwise.
 		/// </returns>
-		public override bool TrySetContents(CellContentsWPF parContents)
+		public override bool TrySetContents(CellContents parContents)
 		{
 			if (base.TrySetContents(parContents))
 			{
-				if (parContents is TreasureWPF)
+				if (parContents is Treasure)
 				{
 					OnCompletedGoalChanged(EventArgs.Empty);
 				}
@@ -80,12 +80,12 @@ namespace ModelWPF.Game.Cells
 		}
 
 		/// <summary>
-		/// Removes the <see cref="CellContentsWPF"/> contents from this goal.
+		/// Removes the <see cref="CellContents"/> contents from this goal.
 		/// </summary>
 		public override void RemoveContents()
 		{
 			/* Check for the removal of a treasure from goal square. */
-			if (CellContents != null && CellContents is TreasureWPF)
+			if (CellContents != null && CellContents is Treasure)
 			{
 				OnCompletedGoalChanged(EventArgs.Empty);
 			}
@@ -96,7 +96,7 @@ namespace ModelWPF.Game.Cells
 		private event EventHandler _completedGoalChanged;
 
 		/// <summary>
-		/// Occurs when a <see cref="TreasureWPF"/> instance
+		/// Occurs when a <see cref="Treasure"/> instance
 		/// is either removed from or placed in this goal.
 		/// </summary>
 		public event EventHandler CompletedGoalChanged

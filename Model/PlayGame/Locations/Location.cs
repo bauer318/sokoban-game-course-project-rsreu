@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Model.PlayGame.Locations
 {
 	/// <summary>
-	/// Cell's location on the game's map
+	/// Cells's location on the game's map
 	/// </summary>
 	public class Location
 	{

@@ -1,5 +1,4 @@
-﻿using Model.PlayGame.Cell;
-using Model.PlayGame.Locations;
+﻿using Model.PlayGame.Locations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,12 +7,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ModelWPF.Game.Cells
+namespace Model.PlayGame.Cells
 {
 	/// <summary>
-	/// This is provided as a base implementation for all others CellsWPF
+	/// Base class for all cells in a Level.
 	/// </summary>
-	public class CellBaseWPF : CellBase, INotifyPropertyChanged
+	public class CellBase: INotifyPropertyChanged
 	{
 		private SynchronizationContext _context = SynchronizationContext.Current;
 		/// <summary>
@@ -38,22 +37,6 @@ namespace ModelWPF.Game.Cells
 			}
 		}
 		public event PropertyChangedEventHandler PropertyChanged;
-
-		/// <summary>
-		/// Occurs when a property value changes.
-		/// </summary>
-		/*public event PropertyChangedEventHandler PropertyChanged
-		{
-			add
-			{
-				_propertyChanged += value;
-			}
-			remove
-			{
-				_propertyChanged -= value;
-			}
-		}*/
-
 		/// <summary>
 		/// Raises the PropertyChanged event.
 		/// </summary>
@@ -90,13 +73,58 @@ namespace ModelWPF.Game.Cells
 			}
 		}
 		/// <summary>
-		/// CellBaseWPF's Constructor
+		/// The parName can be used to identify the type
+		/// of the cell without using GetType().
 		/// </summary>
-		/// <param parName="name">Cell's Name</param>
-		/// <param parName="location">Cell's location</param>
-		public CellBaseWPF(string parName, Location parLocation) : base(parName, parLocation)
+		private string _name;
+		/// <summary>
+		/// the location on the Level.
+		/// </summary>
+		private Location _location;
+		/// <summary>
+		/// Gets or sets the parName of this cell.
+		/// The parName can be used to identify the type
+		/// of the cell without using GetType().
+		/// </summary>
+		/// <value>The parName of the cell. 
+		/// The conceptual type parName of the cell, 
+		/// such as <em>Wall</em> or <em>Floor</em></value>
+		public string Name
 		{
+			get
+			{
+				return _name;
+			}
+			set
+			{
+				_name = value;
+			}
+		}
 
+		/// <summary>
+		/// Gets or sets the location on the Level>.
+		/// </summary>
+		/// <value>The location of the cell on the Level</value>
+		public Location Location
+		{
+			get
+			{
+				return _location;
+			}
+			set
+			{
+				_location = value;
+			}
+		}
+		/// <summary>
+		/// CellBase's Constructor
+		/// </summary>
+		/// <param parName="name">Cells's Name</param>
+		/// <param parName="location">Cells's location</param>
+		public CellBase(string parName, Location parLocation)
+		{
+			_name = parName;
+			_location = parLocation;
 		}
 	}
 }

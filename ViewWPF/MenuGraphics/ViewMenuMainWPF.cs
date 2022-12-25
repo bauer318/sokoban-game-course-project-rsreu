@@ -74,10 +74,10 @@ namespace ViewWPF.MenuGraphics
         {
             if (e.Key == Key.Escape && !_isMenuMainActive)
             {
-                ReturnToMainMenu();
+                BackToMainMenu();
             }
         }
-        public static void ReturnToMainMenu()
+        public static void BackToMainMenu()
         {
             MainWindow.Content = _mainStackPanel;
         }

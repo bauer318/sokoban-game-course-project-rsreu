@@ -1,26 +1,28 @@
-﻿using Model.PlayGame.Locations;
-using ModelWPF.Game.Levels;
+﻿using Model.PlayGame.Levels;
+using Model.PlayGame.Locations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ModelWPF.Game.Cells
+namespace Model.PlayGame.Cells
 {
-    /// <summary>
-    /// Base class for all cells in a Level.
-    /// </summary>
-    public abstract class CellWPF : CellBaseWPF
+    public class Cell:CellBase
     {
         /// <summary>
         /// The level where this cell is located
         /// </summary>
-        private LevelWPF _level;
+        private Level _level;
         /// <summary>
         /// The cell contents
         /// </summary>
-        private CellContentsWPF _cellContents;
+        private CellContents _cellContents;
         /// <summary>
         /// Gets or sets the level where this cell is located.
         /// </summary>
         /// <value>The level where this cell is located.</value>
-        public LevelWPF Level
+        public Level Level
         {
             get
             {
@@ -35,9 +37,9 @@ namespace ModelWPF.Game.Cells
         /// <summary>
         /// Gets or sets the cell contents of this cell.
         /// </summary>
-        /// <value>The cell contents, such as a <em>TreasureWPF</em>,
+        /// <value>The cell contents, such as a <em>Treasure</em>,
         /// or an <em>Actors</em>.</value>
-        public CellContentsWPF CellContents
+        public CellContents CellContents
         {
             get
             {
@@ -65,7 +67,7 @@ namespace ModelWPF.Game.Cells
         /// Gets a value indicating whether cell contents can be put here.
         /// </summary>
         /// <value><c>true</c> if this instance will accept 
-        /// an instance of CellContentsWPF
+        /// an instance of CellContents
         /// otherwise, <c>false</c>.</value>
         public virtual bool CanEnter
         {
@@ -76,24 +78,24 @@ namespace ModelWPF.Game.Cells
         }
 
         /// <summary>
-        /// Initializes a new instance of the CellWPF class.
+        /// Initializes a new instance of the Cells class.
         /// </summary>
         /// <param name="name">The name of the cell.</param>
         /// <param name="location">The location of the cell. <seealso cref="Location"/></param>
-        /// <param name="level">The level where the cell is located. <seealso cref="LevelWPF"/></param>
-        public CellWPF(string name, Location location, LevelWPF level) : base(name, location)
+        /// <param name="level">The level where the cell is located. <seealso cref="Level"/></param>
+        public Cell(string name, Location location, Level level) : base(name, location)
         {
             Level = level;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CellWPF"/> class.
+        /// Initializes a new instance of the <see cref="Cell"/> class.
         /// </summary>
         /// <param name="parName">The name of the cell.</param>
         /// <param name="parLocation">The location of the cell. <seealso cref="Location"/></param>
-        /// <param name="parLevel">The level where the cell is located. <seealso cref="LevelWPF"/></param>
-        /// <param name="parContents">The contents of this cell. <seealso cref="CellContentsWPF"/>/param>
-        public CellWPF(string parName, Location parLocation, LevelWPF parLevel, CellContentsWPF parContents)
+        /// <param name="parLevel">The level where the cell is located. <seealso cref="Level"/></param>
+        /// <param name="parContents">The contents of this cell. <seealso cref="CellContents"/>/param>
+        public Cell(string parName, Location parLocation, Level parLevel, CellContents parContents)
             : this(parName, parLocation, parLevel)
         {
             ChangeCellContents(parContents);
@@ -105,7 +107,7 @@ namespace ModelWPF.Game.Cells
         /// <param name="parContents">The contents to place in the cell.</param>
         /// <returns><code>true</code> if the specified contents
         /// was able to be placed in this cell; <code>false</code> otherwise.</returns>
-        public virtual bool TrySetContents(CellContentsWPF parContents)
+        public virtual bool TrySetContents(CellContents parContents)
         {
             if (CanEnter)
             {
@@ -116,7 +118,7 @@ namespace ModelWPF.Game.Cells
             }
             return false;
         }
-        private void ChangeCellContents(CellContentsWPF parContents)
+        private void ChangeCellContents(CellContents parContents)
         {
             /* Add to this cell. */
             _cellContents = parContents;
@@ -125,11 +127,11 @@ namespace ModelWPF.Game.Cells
         }
 
         /// <summary>
-        /// Tries to push the current <see cref="CellContentsWPF"/>
+        /// Tries to push the current <see cref="CellContents"/>
         /// to the cell neighbour in the specified direction.
         /// </summary>
         /// <param name="parDirection">The direction of an adjacent
-        /// cell in which to place this cell's <see cref="CellContentsWPF"/>.</param>
+        /// cell in which to place this cell's <see cref="CellContents"/>.</param>
         /// <returns><code>true</code> if the contents was able 
         /// to be placed in the adjacent cell; <code>false</code> otherwise.</returns>
         public bool TryPushContents(Direction parDirection)
@@ -138,14 +140,14 @@ namespace ModelWPF.Game.Cells
             {
                 return false;
             }
-            CellWPF neighbour = _level[Location.GetAdjacentLocation(parDirection)];
+            Cell neighbour = _level[Location.GetAdjacentLocation(parDirection)];
             neighbour.TrySetContents(_cellContents);
             return true;
         }
 
         /// <summary>
         /// Determines whether this instance can push the current
-        /// <see cref="CellContentsWPF"/> in the specified direction.
+        /// <see cref="CellContents"/> in the specified direction.
         /// </summary>
         /// <param name="parDirection">The direction in which the cell contents
         /// should be tested for movability. That is, the direction
@@ -160,9 +162,8 @@ namespace ModelWPF.Game.Cells
             {
                 return false;
             }
-            CellWPF neighbour = _level[Location.GetAdjacentLocation(parDirection)];
+            Cell neighbour = _level[Location.GetAdjacentLocation(parDirection)];
             return neighbour != null && neighbour.CanEnter;
         }
-
     }
 }

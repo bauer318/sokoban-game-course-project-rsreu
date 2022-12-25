@@ -1,4 +1,5 @@
-﻿using Model.PlayGame.Locations;
+﻿using Model.PlayGame.Levels;
+using Model.PlayGame.Locations;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,8 +12,27 @@ namespace Model.PlayGame.NewGame
 	/// <summary>
 	/// A Sokoban's Game
 	/// </summary>
-	public abstract class NewGameBase
+	public class Game
 	{
+		/// <summary>
+		/// The current level of the game
+		/// </summary>
+		private Level _level;
+		/// <summary>
+		/// Gets the current level of the game.
+		/// </summary>
+		/// <value>The current level. May be <code>null</code>.</value>
+		public Level Level
+		{
+			get
+			{
+				return _level;
+			}
+			private set
+			{
+				_level = value;
+			}
+		}
 		/// <summary>
 		/// The state of Game
 		/// </summary>
@@ -59,9 +79,9 @@ namespace Model.PlayGame.NewGame
 			}
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="NewGameBase"/> class.
+		/// Initializes a new instance of the <see cref="Game"/> class.
 		/// </summary>
-		public NewGameBase()
+		public Game()
 		{
 		}
 		/// <summary>
@@ -90,12 +110,35 @@ namespace Model.PlayGame.NewGame
 		/// Reloads and then starts the current level
 		/// from the beginning.
 		/// </summary>
-		public abstract void RestartLevel();
+		public void RestartLevel()
+        {
+			LoadLevel(Level != null ? Level.LevelNumber : 0);
+		}
 		/// <summary>
 		/// Loads the level specified with the specified level number.
 		/// </summary>
 		/// <param name="parLevelNumber">The level number of the level to load.</param>
-		public abstract void LoadLevel(int parLevelNumber);
+		public void LoadLevel(int parLevelNumber)
+        {
+			GameState = GameState.Loading;
+
+			if (Level != null)
+			{
+				/* Detach the level completed event. */
+				Level.LevelCompleted -= new EventHandler(Level_LevelCompleted);
+			}
+
+			Level = new Level(this, parLevelNumber);
+			Level.LevelCompleted += new EventHandler(Level_LevelCompleted);
+
+			string fileName = GetFileNameByLevelNumber(parLevelNumber);
+			using (StreamReader reader = File.OpenText(fileName))
+			{
+				Level.Load(reader);
+			}
+			StartLevel();
+
+		}
 
 
 		/// <summary>
@@ -107,14 +150,35 @@ namespace Model.PlayGame.NewGame
 		/// <returns><code>true</code> if the location
 		/// is within the Level>; 
 		/// <code>false</code> otherwise.</returns>
-		public abstract bool InBounds(Location parLocation);
+		public bool InBounds(Location parLocation)
+        {
+			return Level.InBounds(parLocation);
+		}
 
-		public abstract void Level_LevelCompleted(object sender, EventArgs e);
+		public void Level_LevelCompleted(object sender, EventArgs e)
+        {
+			if (Level.LevelNumber < LevelCount - 1)
+			{
+				GameState = GameState.LevelCompleted;
+			}
+			else
+			{
+				/* Do finished game stuff. */
+				GameState = GameState.GameOver;
+			}
+		}
 
 		/// <summary>
 		/// Attempts to go to the next level.
 		/// </summary>
-		public abstract void GotoNextLevel();
+		public  void GotoNextLevel()
+        {
+
+			if (Level.LevelNumber < LevelCount)
+			{
+				LoadLevel(Level.LevelNumber + 1);
+			}
+		}
 		
 	}
 }

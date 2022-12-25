@@ -1,26 +1,24 @@
-﻿using Model.PlayGame.Commands;
+﻿using Model.PlayGame.Levels;
 using Model.PlayGame.Locations;
 using Model.PlayGame.Moves;
-using ModelWPF.Game.Levels;
-using ModelWPF.Game.Moves;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelWPF.Game.Commands
+namespace Model.PlayGame.Commands
 {
-	/// <summary>
-	/// Performs a move with the <see cref="LevelWPF"/>'s Actor
+    /// <summary>
+	/// Performs a move with the <see cref="Level"/>'s Actor
 	/// instance. A move is a single step.
 	/// </summary>
-	public class MoveCommandWPF : CommandBase
-	{
+    public class MoveCommand:CommandBase
+    {
 		/// <summary>
 		/// The Game's Level
 		/// </summary>
-		private LevelWPF _level;
+		private Level _level;
 		/// <summary>
 		/// The direction that the move will take place
 		/// </summary>
@@ -32,22 +30,22 @@ namespace ModelWPF.Game.Commands
 		/// <value>The direction that the move will take place.</value>
 		public Direction Direction
 		{
-            get
-            {
+			get
+			{
 				return _direction;
-            }
+			}
 			private set
-            {
+			{
 				_direction = value;
-            }
+			}
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MoveCommandWPF"/> class.
+		/// Initializes a new instance of the <see cref="MoveCommand"/> class.
 		/// </summary>
 		/// <param name="parLevel">The level where the move will take place.</param>
 		/// <param name="parDirection">The direction of the move.</param>
-		public MoveCommandWPF(LevelWPF parLevel, Direction parDirection)
+		public MoveCommand(Level parLevel, Direction parDirection)
 		{
 			if (parLevel == null)
 			{
@@ -64,7 +62,7 @@ namespace ModelWPF.Game.Commands
 		/// </summary>
 		public override void Execute()
 		{
-			MoveWPF move = new MoveWPF(Direction);
+			Move move = new Move(Direction);
 			_level.Actor.DoMove(move);
 		}
 

@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-                     xmlns:Sokoban ="clr-namespace:ModelWPF.Game.NewGame;assembly=ModelWPF">
+                     xmlns:Sokoban ="clr-namespace:ModelWPF.PlayGame.NewGame;assembly=ModelWPF">
     <!-- Game instance used throughout. -->
-    <Sokoban:NewGameWPF x:Key="sokobanGame"/>
-    <!-- Displays the Treasre or Actor icon. -->
+    <Sokoban:GameWPF x:Key="sokobanGame"/>
+        <!-- Displays the Treasre or Actor icon. -->
     <Style x:Key="CellContentStyle" TargetType="{x:Type Rectangle}">
         <Style.Triggers>
             <MultiDataTrigger>
@@ -47,8 +47,8 @@
                     <!-- If the cell is an outer empty space cell. -->
                     <Condition Binding="{Binding Path=Name}" Value="Space" />
                 </MultiDataTrigger.Conditions>
-                <!--<Setter Property="Fill" Value="Transparent"/>-->
-                <Setter Property="Fill" Value="{DynamicResource FloorCellBrush}"/>
+                <Setter Property="Fill" Value="Transparent"/>
+                <!--<Setter Property="Fill" Value="{DynamicResource FloorCellBrush}"/>-->
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>

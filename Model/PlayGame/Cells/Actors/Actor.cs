@@ -1,24 +1,23 @@
-﻿using Model.PlayGame.Locations;
+﻿using Model.PlayGame.Levels;
+using Model.PlayGame.Locations;
 using Model.PlayGame.Moves;
-using ModelWPF.Game.Levels;
-using ModelWPF.Game.Moves;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelWPF.Game.Cells.Actors
+namespace Model.PlayGame.Cells.Actors
 {
-	/// <summary>
+    /// <summary>
 	/// Represents the token manipulated by the user.
 	/// </summary>
-	public partial class Actor : CellContentsWPF
-	{
+    public partial class Actor:CellContents
+    {
 		/// <summary>
 		/// Stack of all move for this Actor in the current level
 		/// </summary>
-		private readonly Stack<MoveBase> _movesStack = new Stack<MoveBase>();
+		private readonly Stack<Move> _movesStack = new Stack<Move>();
 		/// <summary>
 		/// Move count
 		/// </summary>
@@ -53,7 +52,7 @@ namespace ModelWPF.Game.Cells.Actors
 		/// </summary>
 		/// <param name="parLocation">The location.</param>
 		/// <param name="parLevel">The level.</param>
-		public Actor(Location parLocation, LevelWPF parLevel)
+		public Actor(Location parLocation, Level parLevel)
 			: base("Actor", parLocation, parLevel)
 		{
 		}
@@ -68,13 +67,14 @@ namespace ModelWPF.Game.Cells.Actors
 			{
 				return false;
 			}
-			MoveBase moveBase = _movesStack.Pop();
-			MoveWPF move = moveBase as MoveWPF;
+			Move moveBase = _movesStack.Pop();
+			Move move = moveBase as Move;
 			if (move != null)
 			{
 				return DoMove(move);
 			}
 			return false;
 		}
+
 	}
 }

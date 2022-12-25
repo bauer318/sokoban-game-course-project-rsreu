@@ -1,23 +1,23 @@
-﻿using Model.PlayGame.Locations;
-using ModelWPF.Game.Levels;
+﻿using Model.PlayGame.Levels;
+using Model.PlayGame.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelWPF.Game.Cells
+namespace Model.PlayGame.Cells
 {
     /// <summary>
 	/// Represents a space on the level grid
 	/// </summary>
-    public class SpaceCellWPF : CellWPF
+    public class SpaceCell:Cell
     {
         /// <summary>
         /// Represents a cell containing nothing. 
-        /// This is not a cell that is used to place <see cref="CellContentsWPF"/>.
+        /// This is not a cell that is used to place <see cref="CellContents"/>.
         /// </summary>
-        public SpaceCellWPF(Location parLocation, LevelWPF parLevel)
+        public SpaceCell(Location parLocation, Level parLevel)
             : base("Space", parLocation, parLevel)
         {
         }

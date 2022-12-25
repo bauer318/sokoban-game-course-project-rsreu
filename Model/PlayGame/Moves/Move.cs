@@ -1,4 +1,5 @@
-﻿using Model.PlayGame.Locations;
+﻿using Model.PlayGame.Cells;
+using Model.PlayGame.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,10 @@ namespace Model.PlayGame.Moves
 	/// Base implementation for _moves.
 	/// Moves describe an Actor relocation.
 	/// </summary>
-	public class MoveBase
+	public class Move
 	{
 		/// <summary>
-		/// indicates whether this <see cref="MoveBase"/> is an undo
+		/// indicates whether this <see cref="Move"/> is an undo
 		/// </summary>
 		private bool _undo;
 		/// <summary>
@@ -22,7 +23,7 @@ namespace Model.PlayGame.Moves
 		/// </summary>
 		private Direction _direction;
 		/// <summary>
-		/// Gets or sets a value indicating whether this <see cref="MoveBase"/> is an undo.
+		/// Gets or sets a value indicating whether this <see cref="Move"/> is an undo.
 		/// That is, it is a reversion of a previously executed move.
 		/// </summary>
 		/// <value><c>true</c> if an undo; otherwise, <c>false</c>.</value>
@@ -53,10 +54,31 @@ namespace Model.PlayGame.Moves
 			}
 		}
 		/// <summary>
+		/// The contents that were pushed 
+		/// </summary>
+		private CellContents _pushedContents;
+		/// <summary>
+		/// Gets or sets the contents that were moved
+		/// as part of the relocation. This is used for undo's.
+		/// </summary>
+		/// <value>The contents that were pushed 
+		/// as part of the relocation.</value>
+		public CellContents PushedContents
+		{
+			get
+			{
+				return _pushedContents;
+			}
+			set
+			{
+				_pushedContents = value;
+			}
+		}
+		/// <summary>
 		/// MoveBase's contructor
 		/// </summary>
 		/// <param name="parDirection">The direction to relocate</param>
-		public MoveBase(Direction parDirection)
+		public Move(Direction parDirection)
 		{
 			_direction = parDirection;
 		}
