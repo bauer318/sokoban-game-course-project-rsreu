@@ -65,7 +65,52 @@ namespace Model.PlayGame.Levels
 			Game = parNewGameBase;
 			LevelNumber = parLevelNumber;
 		}
+		#region LevelCompleted event
+
+		private event EventHandler levelCompleted;
+
+		/// <summary>
+		/// Occurs when a level has been completed successfully.
+		/// </summary>
+		public event EventHandler LevelCompleted
+		{
+			add
+			{
+				levelCompleted += value;
+			}
+			remove
+			{
+				levelCompleted -= value;
+			}
+		}
+
+		/// <summary>
+		/// Raises the LevelCompleted event.
+		/// </summary>
+		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		protected void OnLevelCompleted(EventArgs e)
+		{
+			if (levelCompleted != null)
+			{
+				levelCompleted(this, e);
+
+			}
+		}
+		#endregion
+		/// <summary>
+		/// Loads the level data from the specified map stream.
+		/// </summary>
+		/// <param name="parMapStream">The map stream to load the level.</param>
 		public abstract void Load(TextReader parMapStream);
+		/// <summary>
+		/// Tests whether the specified location is within 
+		/// the Levels grid.
+		/// </summary>
+		/// <param name="location">The location to test
+		/// whether it is within the level grid.</param>
+		/// <returns><code>true</code> if the location
+		/// is within the <see cref="LevelBase"/>; 
+		/// <code>false</code> otherwise.</returns>
 		public abstract bool InBounds(Location location);
 
 	}

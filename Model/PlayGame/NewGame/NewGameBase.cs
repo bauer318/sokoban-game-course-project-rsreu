@@ -64,8 +64,30 @@ namespace Model.PlayGame.NewGame
 		public NewGameBase()
 		{
 		}
+		public void StartLevel()
+        {
+			GameState = GameState.Running;
+		}
 
+		/// <summary>
+		/// Starts the game by loading the first level.
+		/// </summary>
+		public void Start()
+		{
+			string[] files = Directory.GetFiles(LevelDirectory, "*.skbn");
+			LevelCount = files.Length;
+			LoadLevel(52);
+		}
+		public string GetFileNameByLevelNumber(int parLevelNumber)
+        {
+			return string.Format(@"{0}Level{1:000}.skbn", LevelDirectory, parLevelNumber);
+		}
 
+		/// <summary>
+		/// Reloads and then starts the current level
+		/// from the beginning.
+		/// </summary>
+		public abstract void RestartLevel();
 		/// <summary>
 		/// Loads the level specified with the specified level number.
 		/// </summary>
@@ -93,22 +115,5 @@ namespace Model.PlayGame.NewGame
 		/// <summary>
 		/// Start the current level
 		/// </summary>
-		public abstract void StartLevel();
-
-		/// <summary>
-		/// Starts the game by loading the first level.
-		/// </summary>
-		public void Start()
-		{
-			string[] files = Directory.GetFiles(LevelDirectory, "*.skbn");
-			LevelCount = files.Length;
-			LoadLevel(52);
-		}
-
-		/// <summary>
-		/// Reloads and then starts the current level
-		/// from the beginning.
-		/// </summary>
-		public abstract void RestartLevel();
 	}
 }
