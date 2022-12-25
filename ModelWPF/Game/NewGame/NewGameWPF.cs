@@ -53,7 +53,7 @@ namespace ModelWPF.Game.NewGame
             Level = new LevelWPF(this, parLevelNumber);
             Level.LevelCompleted += new EventHandler(Level_LevelCompleted);
 
-            string fileName = string.Format(@"{0}Level{1:000}.skbn", LevelDirectory, parLevelNumber);
+            string fileName = GetFileNameByLevelNumber(parLevelNumber);
             using (StreamReader reader = File.OpenText(fileName))
             {
                 Level.Load(reader);
@@ -102,14 +102,6 @@ namespace ModelWPF.Game.NewGame
                 LoadLevel(Level.LevelNumber + 1);
             }
         }
-        /// <summary>
-        /// Start the Level
-        /// </summary>
-        public override void StartLevel()
-        {
-            GameState = GameState.Running;
-        }
-
         /// <summary>
         /// Reloads and then starts the current level
         /// from the beginning.

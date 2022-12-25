@@ -222,37 +222,5 @@ namespace ModelWPF.Game.Levels
 				&& location.ColumnNumber >= 0
 				&& location.ColumnNumber < ColumnCount);
 		}
-		#region LevelCompleted event
-
-		private event EventHandler levelCompleted;
-
-		/// <summary>
-		/// Occurs when a level has been completed successfully.
-		/// </summary>
-		public event EventHandler LevelCompleted
-		{
-			add
-			{
-				levelCompleted += value;
-			}
-			remove
-			{
-				levelCompleted -= value;
-			}
-		}
-
-		/// <summary>
-		/// Raises the LevelCompleted event.
-		/// </summary>
-		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void OnLevelCompleted(EventArgs e)
-		{
-			if (levelCompleted != null)
-			{
-				levelCompleted(this, e);
-
-			}
-		}
-		#endregion
 	}
 }
