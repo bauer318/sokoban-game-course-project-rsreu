@@ -1,61 +1,119 @@
 ﻿using Model.PlayGame.Locations;
 using Model.PlayGame.NewGame;
+using ModelConsole.Game.Levels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ModelConsole.Game.NewGame
 {
+    /// <summary>
+    /// The main class for the game of Sokoban.
+    /// </summary>
     public class NewGameConsole : NewGameBase
     {
-        private GameState gameState;
         /// <summary>
-        /// Gets the state of the game. That is, whether
-        /// it is running, loading etc.
-        /// <see cref="GameState"/>
+        /// The current level of the game
         /// </summary>
-        /// <value>The state of the game.</value>
-        public GameState GameState
+        private LevelConsole _level;
+        /// <summary>
+        /// Gets the current level of the game.
+        /// </summary>
+        /// <value>The current level. May be <code>null</code>.</value>
+        public LevelConsole Level
         {
             get
             {
-                return gameState;
+                return _level;
             }
             private set
             {
-                gameState = value;
+                _level = value;
             }
         }
-        public override void GotoNextLevel()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NewGameConsole"/> class.
+        /// </summary>
+        public NewGameConsole() : base()
         {
-            throw new NotImplementedException();
         }
-
-        public override bool InBounds(Location parLocation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Level_LevelCompleted(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Loads the level specified with the specified level number.
+        /// </summary>
+        /// <param name="parLevelNumber">The level number of the level to load.</param>
         public override void LoadLevel(int parLevelNumber)
         {
-            throw new NotImplementedException();
+            GameState = GameState.Loading;
+
+            if (Level != null)
+            {
+                /* Detach the level completed event. */
+                Level.LevelCompleted -= new EventHandler(Level_LevelCompleted);
+            }
+
+            Level = new LevelConsole(this, parLevelNumber);
+            Level.LevelCompleted += new EventHandler(Level_LevelCompleted);
+
+            string fileName = GetFileNameByLevelNumber(parLevelNumber);
+            using (StreamReader reader = File.OpenText(fileName))
+            {
+                Level.Load(reader);
+            }
+            StartLevel();
         }
 
+        /// <summary>
+        /// Tests whether the specified location is within 
+        /// the Levels grid.
+        /// </summary>
+        /// <param name="parLocation">The location to test
+        /// whether it is within the level grid.</param>
+        /// <returns><code>true</code> if the location
+        /// is within the <see cref="LevelConsole"/>; 
+        /// <code>false</code> otherwise.</returns>
+        public override bool InBounds(Location parLocation)
+        {
+            return Level.InBounds(parLocation);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public override void Level_LevelCompleted(object sender, EventArgs e)
+        {
+            if (Level.LevelNumber < LevelCount - 1)
+            {
+                GameState = GameState.LevelCompleted;
+            }
+            else
+            {
+                /* Do finished game stuff. */
+                GameState = GameState.GameOver;
+            }
+        }
+
+        /// <summary>
+        /// Attempts to go to the next level.
+        /// </summary>
+        public override void GotoNextLevel()
+        {
+            if (Level.LevelNumber < LevelCount)
+            {
+                LoadLevel(Level.LevelNumber + 1);
+            }
+        }
+        /// <summary>
+        /// Reloads and then starts the current level
+        /// from the beginning.
+        /// </summary>
         public override void RestartLevel()
         {
-            throw new NotImplementedException();
+            LoadLevel(Level != null ? Level.LevelNumber : 0);
         }
 
-        public override void StartLevel()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
