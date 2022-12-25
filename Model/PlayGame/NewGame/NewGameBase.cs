@@ -64,6 +64,9 @@ namespace Model.PlayGame.NewGame
 		public NewGameBase()
 		{
 		}
+		/// <summary>
+		/// Start the current level
+		/// </summary>
 		public void StartLevel()
         {
 			GameState = GameState.Running;
@@ -112,8 +115,6 @@ namespace Model.PlayGame.NewGame
 		/// Attempts to go to the next level.
 		/// </summary>
 		public abstract void GotoNextLevel();
-		/// <summary>
-		/// Start the current level
-		/// </summary>
+		
 	}
 }
