@@ -14,9 +14,13 @@ namespace Controller.PlayGame
     public abstract class ControllerPlayGame
     {
         public ViewNewGameBase ViewNewGameBase;
+        public readonly CommandManager CommandManager = new CommandManager();
         public ControllerPlayGame(ViewNewGameBase parViewNewGameBase)
         {
             ViewNewGameBase = parViewNewGameBase;
         }
+        public abstract void TryToStartFirstLevel();
+        public abstract void ProcessDrawGameLevel();
+        public abstract void SetCellButtonStyle();
     }
 }
