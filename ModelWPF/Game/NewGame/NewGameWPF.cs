@@ -34,6 +34,7 @@ namespace ModelWPF.Game.NewGame
             private set
             {
                 _gameState = value;
+                //OnPropertyChanged("GameState");
             }
         }
 

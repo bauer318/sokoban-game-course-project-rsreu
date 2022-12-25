@@ -140,17 +140,6 @@ namespace ControllerWPF.PlayGame
             if (command != null)
             {
                 _commandManager.Execute(command);
-                if (CellWPF.CellContentChanged)
-                {
-                    _viewNewGameWPF.CellButtons.ForEach(b =>
-                    {
-                        if (b.X == CellWPF.ToCell.Location.RowNumber && b.Y == CellWPF.ToCell.Location.ColumnNumber)
-                        {
-                            b.Style = (Style)Application.Current.FindResource("TestCell");
-                        }
-   
-                    });
-                }
             }
         }
     }

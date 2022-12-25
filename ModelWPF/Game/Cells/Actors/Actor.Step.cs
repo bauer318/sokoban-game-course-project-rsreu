@@ -12,7 +12,6 @@ namespace ModelWPF.Game.Cells.Actors
 {
 	public partial class Actor
 	{
-
 		/// <summary>
 		/// Tries to move in the direction of the specified move.
 		/// </summary>
@@ -21,7 +20,7 @@ namespace ModelWPF.Game.Cells.Actors
 		/// successfully, <code>false</code> otherwise.</returns>
 		internal bool DoMove(MoveWPF parMove)
 		{
-			lock (moveLock)
+			lock (_moveLock)
 			{
 				return DoMoveAux(parMove);
 			}
@@ -29,8 +28,6 @@ namespace ModelWPF.Game.Cells.Actors
 		internal bool DoMoveAux(MoveWPF parMove)
 		{
 			bool result = false;
-			CellWPF.ToCell = null;
-			CellWPF.FromCell = null;
 			Location moveLocation = Location.GetAdjacentLocation(parMove.Direction);
 			if (Level.InBounds(moveLocation))
 			{
@@ -49,8 +46,6 @@ namespace ModelWPF.Game.Cells.Actors
 							_movesStack.Push(newMove);
 							CommandManager.CanUndo = true;
 							MoveCount++;
-							CellWPF.ToCell = toCell;
-							CellWPF.FromCell = fromCell;
 						}
 					}
 					else if (parMove.PushedContents != null)
@@ -59,8 +54,6 @@ namespace ModelWPF.Game.Cells.Actors
 						result = fromCell.TrySetContents(parMove.PushedContents);
 						if (result)
 						{
-							CellWPF.ToCell = toCell;
-							CellWPF.FromCell = fromCell;
 							MoveCount--;
 						}
 					}
@@ -69,8 +62,6 @@ namespace ModelWPF.Game.Cells.Actors
 						result = toCell.TrySetContents(this);
 						if (result)
 						{
-							CellWPF.ToCell = toCell;
-							CellWPF.FromCell = fromCell;
 							MoveCount--;
 						}
 					}
@@ -88,8 +79,6 @@ namespace ModelWPF.Game.Cells.Actors
 					{
 						CommandManager.CanUndo = true;
 						MoveCount++;
-						CellWPF.ToCell = toCell;
-						CellWPF.FromCell = fromCell;
 					}
 				}
 			}

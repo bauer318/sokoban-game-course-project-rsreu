@@ -24,7 +24,7 @@ namespace ModelWPF.Game.Cells.Actors
 		/// </summary>
 		private int _moveCount;
 		/* lock object for the DoMove methods. */
-		private readonly object moveLock = new object();
+		private readonly object _moveLock = new object();
 
 		/// <summary>
 		/// Gets the move count.

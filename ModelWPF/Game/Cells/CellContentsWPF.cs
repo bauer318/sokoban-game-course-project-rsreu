@@ -27,14 +27,14 @@ namespace ModelWPF.Game.Cells
 		/// <value>The level where this instance is located.</value>
 		public LevelWPF Level
 		{
-            get
-            {
+			get
+			{
 				return _level;
-            }
+			}
 			private set
-            {
+			{
 				_level = value;
-            }
+			}
 		}
 
 		/// <summary>
@@ -52,7 +52,6 @@ namespace ModelWPF.Game.Cells
 				Location = value.Location;
 				OnPropertyChanged("Cell");
 				OnPropertyChanged("Location");
-				CellWPF.CellContentChanged = true;
 			}
 		}
 
@@ -62,7 +61,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="parName">The name of this cell contents. <seealso cref="Name"/></param>
 		/// <param name="parLocation">The location on the level. <seealso cref="Location"/></param>
 		/// <param name="parLevel">The level where this instance is located. <seealso cref="Level"/></param>
-		public CellContentsWPF(string parName, Location parLocation, LevelWPF parLevel):base(parName,parLocation)
+		public CellContentsWPF(string parName, Location parLocation, LevelWPF parLevel) : base(parName, parLocation)
 		{
 			_level = parLevel;
 		}

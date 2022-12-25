@@ -13,8 +13,8 @@ namespace ModelWPF.Game.Cells
 	/// <summary>
 	/// This is provided as a base implementation for all others CellsWPF
 	/// </summary>
-	public class CellBaseWPF:CellBase, INotifyPropertyChanged
-    {
+	public class CellBaseWPF : CellBase, INotifyPropertyChanged
+	{
 		private SynchronizationContext _context = SynchronizationContext.Current;
 		/// <summary>
 		/// Gets or sets the _context used to post 
@@ -73,7 +73,7 @@ namespace ModelWPF.Game.Cells
 		/// <param name="property">The name of the property that changed.</param>
 		protected void OnPropertyChanged(string property)
 		{
-			/* We use the SynchronizationContext context
+			/* We use the SynchronizationContext _context
 			 to ensure that we don't cause an InvalidOperationException
 			 if the property change triggers something occuring
 			 in the main UI thread. */
@@ -94,9 +94,9 @@ namespace ModelWPF.Game.Cells
 		/// </summary>
 		/// <param parName="name">Cell's Name</param>
 		/// <param parName="location">Cell's location</param>
-		public CellBaseWPF(string parName, Location parLocation):base(parName, parLocation)
-        {
+		public CellBaseWPF(string parName, Location parLocation) : base(parName, parLocation)
+		{
 
-        }
-    }
+		}
+	}
 }
