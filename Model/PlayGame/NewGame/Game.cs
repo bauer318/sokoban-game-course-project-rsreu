@@ -19,9 +19,21 @@ namespace Model.PlayGame.NewGame
 		/// </summary>
 		private Level _level;
 		/// <summary>
+		/// The state of Game
+		/// </summary>
+		private GameState _gameState;
+		/// <summary>
+		/// The the number of levels in the game
+		/// </summary>
+		private int _levelCount;
+		/// <summary>
 		/// Gets the current level of the game.
 		/// </summary>
 		/// <value>The current level. May be <code>null</code>.</value>
+		/// /// <summary>
+		/// The levels'folder directory
+		/// </summary>
+		public const string LevelDirectory = @"..\..\..\..\Levels\";
 		public Level Level
 		{
 			get
@@ -33,18 +45,7 @@ namespace Model.PlayGame.NewGame
 				_level = value;
 			}
 		}
-		/// <summary>
-		/// The state of Game
-		/// </summary>
-		private GameState _gameState;
-		/// <summary>
-		/// The the number of levels in the game
-		/// </summary>
-		private int _levelCount;
-		/// <summary>
-		/// The levels'folder directory
-		/// </summary>
-		public const string LevelDirectory = @"..\..\..\..\Levels\";
+
 		/// <summary>
 		/// Gets the number of levels available
 		/// to be played in a game.
@@ -88,7 +89,7 @@ namespace Model.PlayGame.NewGame
 		/// Start the current level
 		/// </summary>
 		public void StartLevel()
-        {
+		{
 			GameState = GameState.Running;
 		}
 
@@ -101,8 +102,13 @@ namespace Model.PlayGame.NewGame
 			LevelCount = files.Length;
 			LoadLevel(52);
 		}
+		/// <summary>
+		/// Get the level's filename by the level's number
+		/// </summary>
+		/// <param name="parLevelNumber">The level's number</param>
+		/// <returns></returns>
 		public string GetFileNameByLevelNumber(int parLevelNumber)
-        {
+		{
 			return string.Format(@"{0}Level{1:000}.skbn", LevelDirectory, parLevelNumber);
 		}
 
@@ -111,7 +117,7 @@ namespace Model.PlayGame.NewGame
 		/// from the beginning.
 		/// </summary>
 		public void RestartLevel()
-        {
+		{
 			LoadLevel(Level != null ? Level.LevelNumber : 0);
 		}
 		/// <summary>
@@ -119,7 +125,7 @@ namespace Model.PlayGame.NewGame
 		/// </summary>
 		/// <param name="parLevelNumber">The level number of the level to load.</param>
 		public void LoadLevel(int parLevelNumber)
-        {
+		{
 			GameState = GameState.Loading;
 
 			if (Level != null)
@@ -151,12 +157,16 @@ namespace Model.PlayGame.NewGame
 		/// is within the Level>; 
 		/// <code>false</code> otherwise.</returns>
 		public bool InBounds(Location parLocation)
-        {
+		{
 			return Level.InBounds(parLocation);
 		}
-
+		/// <summary>
+		/// Occurs when the current level is completed succefuly
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		public void Level_LevelCompleted(object sender, EventArgs e)
-        {
+		{
 			if (Level.LevelNumber < LevelCount - 1)
 			{
 				GameState = GameState.LevelCompleted;
@@ -171,14 +181,14 @@ namespace Model.PlayGame.NewGame
 		/// <summary>
 		/// Attempts to go to the next level.
 		/// </summary>
-		public  void GotoNextLevel()
-        {
+		public void GotoNextLevel()
+		{
 
 			if (Level.LevelNumber < LevelCount)
 			{
 				LoadLevel(Level.LevelNumber + 1);
 			}
 		}
-		
+
 	}
 }

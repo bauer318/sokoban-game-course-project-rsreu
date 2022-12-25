@@ -30,6 +30,14 @@ namespace Model.PlayGame.Levels
 		/// The Level's Actor
 		/// </summary>
 		private Actor _actor;
+		/// <summary>
+		/// The level number
+		/// </summary>
+		private int _levelNumber;
+		/// <summary>
+		/// The game that this level is located
+		/// </summary>
+		private Game _game;
 
 		/// <summary>
 		/// Gets the single Actor instance
@@ -101,14 +109,7 @@ namespace Model.PlayGame.Levels
 				return _cells != null && _cells.Length > 0 ? _cells[0].Length : 0;
 			}
 		}
-		/// <summary>
-		/// The level number
-		/// </summary>
-		private int _levelNumber;
-		/// <summary>
-		/// The game that this level is located
-		/// </summary>
-		private Game _newGameBase;
+
 		/// <summary>
 		/// Gets the level number.
 		/// </summary>
@@ -133,21 +134,21 @@ namespace Model.PlayGame.Levels
 		{
 			get
 			{
-				return _newGameBase;
+				return _game;
 			}
 			set
 			{
-				_newGameBase = value;
+				_game = value;
 			}
 		}
 		/// <summary>
 		/// Level's contructor
 		/// </summary>
-		/// <param name="newGameBase">The game that this level is located</param>
+		/// <param name="parGame">The game that this level is located</param>
 		/// <param name="levelNumber">The level number</param>
-		public Level(Game parNewGameBase, int parLevelNumber)
+		public Level(Game parGame, int parLevelNumber)
 		{
-			Game = parNewGameBase;
+			Game = parGame;
 			LevelNumber = parLevelNumber;
 		}
 		#region LevelCompleted event
@@ -186,8 +187,8 @@ namespace Model.PlayGame.Levels
 		/// Loads the level data from the specified map stream.
 		/// </summary>
 		/// <param name="parMapStream">The map stream to load the level.</param>
-		public  void Load(TextReader parMapStream)
-        {
+		public void Load(TextReader parMapStream)
+		{
 			if (parMapStream == null)
 			{
 				throw new ArgumentNullException("mapStream");
@@ -286,7 +287,7 @@ namespace Model.PlayGame.Levels
 		/// is within the <see cref="LevelBase"/>; 
 		/// <code>false</code> otherwise.</returns>
 		public bool InBounds(Location location)
-        {
+		{
 			return (location.RowNumber >= 0
 				&& location.RowNumber < RowCount
 				&& location.ColumnNumber >= 0

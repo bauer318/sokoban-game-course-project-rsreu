@@ -12,8 +12,11 @@ namespace Model.PlayGame.Cells
 	/// <summary>
 	/// Base class for all cells in a Level.
 	/// </summary>
-	public class CellBase: INotifyPropertyChanged
+	public class CellBase : INotifyPropertyChanged
 	{
+		/// <summary>
+		/// The context for the main UI thread
+		/// </summary>
 		private SynchronizationContext _context = SynchronizationContext.Current;
 		/// <summary>
 		/// Gets or sets the _context used to post 

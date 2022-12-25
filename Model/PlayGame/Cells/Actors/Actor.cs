@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Model.PlayGame.Cells.Actors
 {
-    /// <summary>
+	/// <summary>
 	/// Represents the token manipulated by the user.
 	/// </summary>
-    public partial class Actor:CellContents
-    {
+	public partial class Actor : CellContents
+	{
 		/// <summary>
 		/// Stack of all move for this Actor in the current level
 		/// </summary>
@@ -43,7 +43,6 @@ namespace Model.PlayGame.Cells.Actors
 				{   /* Just in case. */
 					_moveCount = 0;
 				}
-				OnPropertyChanged("MoveCount");
 			}
 		}
 

@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Model.PlayGame.Cells
 {
-    /// <summary>
+	/// <summary>
 	/// Represents the contents of a Cells.
 	/// This is provided as a base implementation
 	/// for other cell contents.
 	/// </summary>
-    public class CellContents:CellBase
-    {
+	public class CellContents : CellBase
+	{
 		/// <summary>
 		/// The level where this instance is located
 		/// </summary>
