@@ -43,7 +43,6 @@ namespace Model.PlayGame.Cells.Actors
 				{   /* Just in case. */
 					_moveCount = 0;
 				}
-				OnPropertyChanged("MoveCount");
 			}
 		}
 

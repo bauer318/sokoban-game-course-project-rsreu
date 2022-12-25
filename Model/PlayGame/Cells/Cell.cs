@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Model.PlayGame.Cells
 {
+    /// <summary>
+    /// Base implementation class for all Cells
+    /// </summary>
     public class Cell:CellBase
     {
         /// <summary>
@@ -78,7 +81,7 @@ namespace Model.PlayGame.Cells
         }
 
         /// <summary>
-        /// Initializes a new instance of the Cells class.
+        /// Initializes a new instance of the Cell class.
         /// </summary>
         /// <param name="name">The name of the cell.</param>
         /// <param name="location">The location of the cell. <seealso cref="Location"/></param>
@@ -118,6 +121,10 @@ namespace Model.PlayGame.Cells
             }
             return false;
         }
+        /// <summary>
+        /// Changes the cell's contents
+        /// </summary>
+        /// <param name="parContents">Cell's contents</param>
         private void ChangeCellContents(CellContents parContents)
         {
             /* Add to this cell. */

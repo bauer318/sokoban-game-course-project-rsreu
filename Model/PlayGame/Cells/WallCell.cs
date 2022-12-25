@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace Model.PlayGame.Cells
 {
-    public class WallCell:Cell
+	/// <summary>
+	/// Represents a wall on the level grid
+	/// </summary>
+	public class WallCell:Cell
     {
 		/// <summary>
 		/// Gets a value indicating whether the Actor/> 

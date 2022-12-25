@@ -24,6 +24,12 @@ namespace Model.PlayGame.Cells.Actors
 				return DoMoveAux(parMove);
 			}
 		}
+		/// <summary>
+		/// Tries to move in the direction of the specified move.
+		/// </summary>
+		/// <param name="parMove">The move indicating where to go.</param>
+		/// <returns><code>true</code> if the move completed
+		/// successfully, <code>false</code> otherwise.</returns>
 		internal bool DoMoveAux(Move parMove)
 		{
 			bool result = false;

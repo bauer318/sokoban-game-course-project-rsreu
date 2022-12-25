@@ -14,7 +14,7 @@ namespace Model.PlayGame.Cells
     public class FloorCell:Cell
     {
 		/// <summary>
-		/// Cells's name
+		/// Cell's name
 		/// </summary>
 		private const string CELL_NAME = "Floor";
 
