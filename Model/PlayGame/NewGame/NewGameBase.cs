@@ -14,6 +14,10 @@ namespace Model.PlayGame.NewGame
 	public abstract class NewGameBase
 	{
 		/// <summary>
+		/// The state of Game
+		/// </summary>
+		private GameState _gameState;
+		/// <summary>
 		/// The the number of levels in the game
 		/// </summary>
 		private int _levelCount;
@@ -35,6 +39,23 @@ namespace Model.PlayGame.NewGame
 			set
 			{
 				_levelCount = value;
+			}
+		}
+		/// <summary>
+		/// Gets the state of the game. That is, whether
+		/// it is running, loading etc.
+		/// <see cref="GameState"/>
+		/// </summary>
+		/// <value>The state of the game.</value>
+		public GameState GameState
+		{
+			get
+			{
+				return _gameState;
+			}
+			set
+			{
+				_gameState = value;
 			}
 		}
 		/// <summary>

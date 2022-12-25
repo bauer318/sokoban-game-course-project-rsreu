@@ -1,6 +1,8 @@
-﻿using Model.PlayGame.NewGame;
+﻿using Model.PlayGame.Locations;
+using Model.PlayGame.NewGame;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,7 @@ namespace Model.PlayGame.Levels
 	/// A level instance is able to load itself
 	/// from a map resource.
 	/// </summary>
-	public class LevelBase
+	public abstract class LevelBase
 	{
 		/// <summary>
 		/// The level number
@@ -63,6 +65,8 @@ namespace Model.PlayGame.Levels
 			Game = parNewGameBase;
 			LevelNumber = parLevelNumber;
 		}
+		public abstract void Load(TextReader parMapStream);
+		public abstract bool InBounds(Location location);
 
 	}
 }
