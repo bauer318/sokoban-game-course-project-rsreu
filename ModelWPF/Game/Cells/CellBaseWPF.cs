@@ -37,12 +37,12 @@ namespace ModelWPF.Game.Cells
 				_context = value;
 			}
 		}
-		private event PropertyChangedEventHandler _propertyChanged;
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		/// <summary>
 		/// Occurs when a property value changes.
 		/// </summary>
-		public event PropertyChangedEventHandler PropertyChanged
+		/*public event PropertyChangedEventHandler PropertyChanged
 		{
 			add
 			{
@@ -52,18 +52,18 @@ namespace ModelWPF.Game.Cells
 			{
 				_propertyChanged -= value;
 			}
-		}
+		}*/
 
 		/// <summary>
 		/// Raises the PropertyChanged event.
 		/// </summary>
 		/// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> 
 		/// instance containing the event data.</param>
-		void OnPropertyChanged(PropertyChangedEventArgs e)
+		public void OnPropertyChanged(PropertyChangedEventArgs e)
 		{
-			if (_propertyChanged != null)
+			if (PropertyChanged != null)
 			{
-				_propertyChanged(this, e);
+				PropertyChanged(this, e);
 			}
 		}
 
@@ -71,7 +71,7 @@ namespace ModelWPF.Game.Cells
 		/// Raises the PropertyChanged event.
 		/// </summary>
 		/// <param name="property">The name of the property that changed.</param>
-		protected void OnPropertyChanged(string property)
+		public void OnPropertyChanged(string property)
 		{
 			/* We use the SynchronizationContext _context
 			 to ensure that we don't cause an InvalidOperationException
