@@ -62,17 +62,14 @@ namespace ControllerConsole.PlayGame
                 }
                 else if (map[c.X, c.Y] == 2)
                 {
-                    //_viewNewGameConsole.SetLeftTopConsoleCursor(c.YMap, c.XMap);
                     _viewNewGameConsole.DrawFloorSpace();
                 }
                 else if(map[c.X, c.Y] == 3)
                 {
-                    //_viewNewGameConsole.SetLeftTopConsoleCursor(c.YMap, c.XMap);
                     _viewNewGameConsole.DrawWall();
                 } 
                 else if (map[c.X, c.Y] == 4)
                 {
-                    //_viewNewGameConsole.SetLeftTopConsoleCursor(c.YMap, c.XMap);
                     _viewNewGameConsole.DrawTreasure();
                 }
                 else if(map[c.X,c.Y]==5)
