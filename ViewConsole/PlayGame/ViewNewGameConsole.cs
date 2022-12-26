@@ -72,16 +72,37 @@ namespace ViewConsole.PlayGame
             Console.Write("#");
             Console.BackgroundColor = ConsoleColor.Black;
         }
-        public void DrawGoal()
+        public void DrawEmptyGoal()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("*");
+            Console.Write(".");
             Console.BackgroundColor = ConsoleColor.Black;
         }
-        public void DrawFloorSpace()
+        public void DrawTreasureOnGoal()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("#");
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+        public void DrawEmptyFloor()
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(".");
+        }
+        public void DrawTreasureOnFloor()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("#");
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+        public void DrawActorOnFloor()
+        {
+            Console.Write("@");
+        }
+        public void DrawSpace()
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write(" ");
         }
         public void SetLeftTopConsoleCursor(int parRow, int parCol)
         {
