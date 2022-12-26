@@ -11,6 +11,7 @@ namespace ViewConsole.PlayGame
     public class ViewNewGameConsole : ViewNewGameBase
     {
         private ViewMenuConsole _viewMenuConsole;
+        public List<CellButtonLocation> CellButtonLocations { get; set; } = new List<CellButtonLocation>();
 
         public ViewMenuConsole ViewMenuConsole
         {
@@ -29,6 +30,64 @@ namespace ViewConsole.PlayGame
             Console.Write(parMessage);
         }
 
+        public void InitCellButtonLocation(int parRowCount, int parColumnCount)
+        {
+            if(parRowCount<=_viewMenuConsole.HEIGHT && parColumnCount <= _viewMenuConsole.WIDTH)
+            {
+                Console.Clear();
+                var startLeft = (_viewMenuConsole.WIDTH - parColumnCount) / 2;
+                var startTop = (_viewMenuConsole.HEIGHT - parRowCount) / 2;
+                for (var row = 0; row < parRowCount; row++)
+                {
+                    startTop++;
+                    var left = startLeft;
+                    for (var col = 0; col < parColumnCount; col++)
+                    {
+                        left++;
+                        CellButtonLocations.Add(new CellButtonLocation(left, startTop, row, col));
+                    }
+                }
+            }
+            else
+            {
+                PrintExceptionMessage("Error");
+            }
+
+        }
+        public void DrawActor()
+        {
+            Console.Write("@");
+        }
+        public void DrawWall()
+        {
+
+            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write((char)166);
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+        public void DrawTreasure()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("#");
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+        public void DrawGoal()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("*");
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+        public void DrawFloorSpace()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(".");
+        }
+        public void SetLeftTopConsoleCursor(int parRow, int parCol)
+        {
+            Console.CursorLeft = parCol;
+            Console.CursorTop = parRow;
+        }
         public void TestFirst()
         {
             Console.Clear();
