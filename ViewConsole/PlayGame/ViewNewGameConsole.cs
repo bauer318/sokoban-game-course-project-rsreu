@@ -26,12 +26,14 @@ namespace ViewConsole.PlayGame
         }
         public override void PrintExceptionMessage(string parMessage)
         {
+            Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(parMessage);
         }
 
         public void InitCellButtonLocation(int parRowCount, int parColumnCount)
         {
+            CellButtonLocations.Clear();
             if(parRowCount<=_viewMenuConsole.HEIGHT && parColumnCount <= _viewMenuConsole.WIDTH)
             {
                 Console.Clear();
@@ -50,21 +52,20 @@ namespace ViewConsole.PlayGame
             }
             else
             {
-                PrintExceptionMessage("Error");
+                PrintExceptionMessage("Error!!!");
             }
 
         }
-        public void DrawActor()
+        public CellButtonLocation GetCellButtonLocation(int parCellRow, int parCellCol)
         {
-            Console.Write("@");
+           return CellButtonLocations.Find(c => c.X == parCellRow && c.Y==parCellCol);
         }
         public void DrawWall()
         {
 
-            Console.BackgroundColor = ConsoleColor.Gray;
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write((char)166);
-            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("0");
+            Console.ForegroundColor = ConsoleColor.Black;
         }
         public void DrawTreasure()
         {
@@ -74,13 +75,14 @@ namespace ViewConsole.PlayGame
         }
         public void DrawEmptyGoal()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(".");
             Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
         public void DrawTreasureOnGoal()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("#");
             Console.BackgroundColor = ConsoleColor.Black;
         }
@@ -94,10 +96,13 @@ namespace ViewConsole.PlayGame
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("#");
             Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
         public void DrawActorOnFloor()
         {
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write("@");
+            Console.ForegroundColor = ConsoleColor.White;
         }
         public void DrawSpace()
         {
@@ -109,13 +114,6 @@ namespace ViewConsole.PlayGame
             Console.CursorLeft = parCol;
             Console.CursorTop = parRow;
         }
-        public void TestFirst()
-        {
-            Console.Clear();
-            Console.CursorLeft = 20;
-            Console.Write("Here we go!");
-        }
-
         public void BackToMainMenu()
         {
             _viewMenuConsole.Draw();

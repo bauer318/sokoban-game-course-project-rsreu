@@ -100,7 +100,7 @@ namespace Model.PlayGame.NewGame
 		{
 			string[] files = Directory.GetFiles(LevelDirectory, "*.skbn");
 			LevelCount = files.Length;
-			LoadLevel(0);
+			LoadLevel(54);
 		}
 		/// <summary>
 		/// Get the level's filename by the level's number
