@@ -1,10 +1,12 @@
 ﻿using Controller.PlayGame;
+using ControllerWPF.Help;
 using ControllerWPF.Records;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViewWPF.Help;
 using ViewWPF.PlayGame;
 using ViewWPF.Record;
 
@@ -23,7 +25,11 @@ namespace ControllerWPF.Menu
                 _viewMenu.NewGame();
                 new ControllerPlayGameWPF(new ViewNewGameWPF());
             };
-            Menu[(int)Model.Menu.MenuItemCodes.Help].Selected += () => { _viewMenu.Help(); };
+            Menu[(int)Model.Menu.MenuItemCodes.Help].Selected += () => 
+            { 
+                _viewMenu.Help();
+                new ControllerHelpWPF(new ViewHelpWPF());
+            };
            Menu[(int)Model.Menu.MenuItemCodes.Record].Selected += () => 
            { 
                _viewMenu.Record();

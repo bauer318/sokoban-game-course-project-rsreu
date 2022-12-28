@@ -10,7 +10,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using View.PlayGame;
-using ViewWPF.GameMap;
 using ViewWPF.Help;
 using ViewWPF.PlayGame;
 using ViewWPF.Record;
