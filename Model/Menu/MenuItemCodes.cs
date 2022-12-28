@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace Model.Menu
 {
+    /// <summary>
+    /// Represents an enumeration of all menu item
+    /// </summary>
     public enum MenuItemCodes:int
     {
-        New,//0
-        Help, //1
-        Exit, //2
-        Map, //3
-        Record//4
+        New,// 0 The new game menu
+        Help, //1 The help menu
+        Exit, //2 The exit menu
+        //Map, //3 The level game editor menu [has not been realized]
+        Record//3 //The record menu
     }
 }

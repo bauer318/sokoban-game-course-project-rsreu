@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Model.Menu
 {
+    /// <summary>
+    /// All menu's states
+    /// </summary>
     public enum States:int
     {
         Normal, //0
