@@ -11,16 +11,47 @@ using View.PlayGame;
 
 namespace Controller.PlayGame
 {
-    public abstract class ControllerPlayGame
+    /// <summary>
+    /// Base class for a New Game Controller
+    /// </summary>
+    public abstract class ControllerPlayGame:ControllerNewGameRecordBase
     {
+        /// <summary>
+        /// The base view for a new game
+        /// </summary>
         public ViewNewGameBase ViewNewGameBase;
+        /// <summary>
+        /// Provides for execution and undoing a command
+        /// </summary>
         public readonly CommandManager CommandManager = new CommandManager();
-        public ControllerPlayGame(ViewNewGameBase parViewNewGameBase)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="parViewNewGameBase">The base view for a new game</param>
+        public ControllerPlayGame(ViewNewGameBase parViewNewGameBase):base()
         {
             ViewNewGameBase = parViewNewGameBase;
         }
+        /// <summary>
+        /// Attempts to start the game's first level
+        /// </summary>
         public abstract void TryToStartFirstLevel();
+        /// <summary>
+        ///Process drawing a game Level
+        /// </summary>
         public abstract void ProcessDrawGameLevel();
+        /// <summary>
+        /// Set the level's cell style
+        /// </summary>
         public abstract void SetCellButtonStyle();
+        /// <summary>
+        /// Update a record after that a level has been completed succefuly
+        /// </summary>
+        /// <param name="parLevelNumber">The current level's number</param>
+        /// <param name="parMoveCount">The Actor move count</param>
+        public void UpdateRecord(int parLevelNumber, int parMoveCount)
+        {
+            RecordUtils.UpdateRecord(parLevelNumber, parMoveCount);
+        }
     }
 }

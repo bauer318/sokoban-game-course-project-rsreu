@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace View.PlayGame
 {
-    public abstract class ViewNewGameBase
+    public abstract class ViewNewGameBase: ViewNewGameHelpRecordBase
     {
         public bool FirstStartLevel = true;
-        public abstract void PrintExceptionMessage(string parMessage);
     }
 }

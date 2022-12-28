@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Model.PlayGame.Moves
 {
 	/// <summary>
-	/// Base implementation for _moves.
+	/// Base implementation for Move.
 	/// Moves describe an Actor relocation.
 	/// </summary>
 	public class Move
@@ -75,7 +75,7 @@ namespace Model.PlayGame.Moves
 			}
 		}
 		/// <summary>
-		/// MoveBase's contructor
+		/// Move's contructor
 		/// </summary>
 		/// <param name="parDirection">The direction to relocate</param>
 		public Move(Direction parDirection)
