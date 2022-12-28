@@ -3,7 +3,7 @@
                      xmlns:Sokoban ="clr-namespace:ModelWPF.PlayGame.NewGame;assembly=ModelWPF">
     <!-- Game instance used throughout. -->
     <Sokoban:GameWPF x:Key="sokobanGame"/>
-        <!-- Displays the Treasre or Actor icon. -->
+    <!-- Displays the Treasre or Actor icon. -->
     <Style x:Key="CellContentStyle" TargetType="{x:Type Rectangle}">
         <Style.Triggers>
             <MultiDataTrigger>
