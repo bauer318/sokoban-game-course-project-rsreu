@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace View.Record
 {
-    public abstract class ViewRecordBase:ViewNewGameHelpRecordBase
+    /// <summary>
+    /// Base view for the record
+    /// </summary>
+    public abstract class ViewRecordBase : ViewNewGameHelpRecordBase
     {
 
     }

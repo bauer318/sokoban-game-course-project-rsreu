@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace View.Help
 {
-    public abstract class ViewHelpBase:ViewNewGameHelpRecordBase
+    /// <summary>
+    /// The base class of the Help's view
+    /// </summary>
+    public abstract class ViewHelpBase : ViewNewGameHelpRecordBase
     {
 
     }
