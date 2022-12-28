@@ -28,5 +28,20 @@ namespace ViewConsole.Record
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(parMessage);
         }
+        public void PrintTitle()
+        {
+            Console.Clear();
+            Console.CursorLeft = 2;
+            Console.Write("Уровень");
+            Console.CursorLeft = 15;
+            Console.Write("Количество шагов");
+            Console.CursorLeft = 35;
+            Console.Write("Дата и время");
+            Console.WriteLine();
+        }
+        public void BackToMainMenu()
+        {
+            _viewMenuConsole.Draw();
+        }
     }
 }
