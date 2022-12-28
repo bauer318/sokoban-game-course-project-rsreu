@@ -56,14 +56,14 @@ namespace Model.GameRecord
                 {
                     dictionary[parLevelNumber].MoveCount = parMoveCount;
                     dictionary[parLevelNumber].LastDateTime = DateTime.Now;
-                    
+                    _fileWriterReader.WriteRecordBinaryFile(new RecordManager(dictionary));
                 }
             }
             else
             {
                 dictionary.Add(parLevelNumber, new Record(parMoveCount, DateTime.Now));
+                _fileWriterReader.WriteRecordBinaryFile(new RecordManager(dictionary));
             }
-            _fileWriterReader.WriteRecordBinaryFile(new RecordManager(dictionary));
         }
         
     }
