@@ -56,6 +56,10 @@ namespace ControllerConsole.PlayGame
                 CommandBase command = null;
                 if (keyPressed.Key == ConsoleKey.Escape || Game.GameState == GameState.GameOver)
                 {
+                    if (Game.GameState == GameState.GameOver)
+                    {
+                        UpdateRecord(_level.LevelNumber, _level.Actor.MoveCount);
+                    }
                     ViewNewGameBase.FirstStartLevel = true;
                     _game = null;
                     _viewNewGameConsole.BackToMainMenu();
@@ -97,6 +101,7 @@ namespace ControllerConsole.PlayGame
                             case GameState.LevelCompleted:
                                 if (keyPressed.Key != ConsoleKey.Escape)
                                 {
+                                    UpdateRecord(_level.LevelNumber, _level.Actor.MoveCount);
                                     Game.GotoNextLevel();
                                     ViewNewGameBase.FirstStartLevel = false;
                                     ProcessDrawGameLevel();
