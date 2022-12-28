@@ -23,7 +23,6 @@ namespace ControllerWPF.Menu
                 new ControllerPlayGameWPF(new ViewNewGameWPF());
             };
             Menu[(int)Model.Menu.MenuItemCodes.Help].Selected += () => { _viewMenu.Help(); };
-            Menu[(int)Model.Menu.MenuItemCodes.Map].Selected += () => { _viewMenu.CreateGameMap(); };
            // Menu[(int)Model.Menu.MenuItemCodes.Record].Selected += () => { _viewMenu.Record(); };
             _viewMenu.Init();
             foreach (Model.Menu.MenuItem elMenuItem in Menu.Items)

@@ -117,12 +117,14 @@ namespace Controller.PlayGame
                     {
                         case GameState.GameOver:
                             ViewNewGameBase.FirstStartLevel = true;
+                            UpdateRecord(level.LevelNumber, level.Actor.MoveCount);
                             RemoveKeyDownEventHandler();
                             ViewMenuMainWPF.BackToMainMenu();
                             break;
                         case GameState.LevelCompleted:
                             if(e.Key != Key.Escape)
                             {
+                                UpdateRecord(level.LevelNumber, level.Actor.MoveCount);
                                 Game.GotoNextLevel();
                                 ViewNewGameBase.FirstStartLevel = false;
                                 ProcessDrawGameLevel();
