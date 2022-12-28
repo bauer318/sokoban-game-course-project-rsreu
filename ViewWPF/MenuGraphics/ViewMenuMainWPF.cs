@@ -25,7 +25,7 @@ namespace ViewWPF.MenuGraphics
        
         public ViewMenuMainWPF(Model.Menu.Menu parSubMenuItem) : base(parSubMenuItem)
         {
-            //Draw();
+          
         }
         public void Init()
         {
@@ -34,6 +34,15 @@ namespace ViewWPF.MenuGraphics
             _mainStackPanel = new StackPanel();
             _mainStackPanel.VerticalAlignment = VerticalAlignment.Center;
             _mainStackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            StackPanel textStackPanel = new StackPanel();
+            textStackPanel.VerticalAlignment = VerticalAlignment.Center;
+            textStackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            Label label = new Label();
+            label.Content = "SOKOBAN";
+            label.FontSize = 25;
+            label.Margin = new Thickness(0, 20, 0, 45);
+            textStackPanel.Children.Add(label);
+            _mainStackPanel.Children.Add(textStackPanel);
             MainWindow.Content = _mainStackPanel;
 
             SetParentControl(_mainStackPanel);
@@ -47,28 +56,29 @@ namespace ViewWPF.MenuGraphics
         }
         public void NewGame()
         {
-            _isMenuMainActive = false;
-           
+            DesactivesMainMenu();
         }
      
 
         public void Help()
         {
-            _isMenuMainActive = false;
-           
+            DesactivesMainMenu();
 
         }
 
         public void CreateGameMap()
         {
-            _isMenuMainActive = false;
+            DesactivesMainMenu();
         }
 
         public void Record()
         {
+            DesactivesMainMenu();
+        }
+        private void DesactivesMainMenu()
+        {
             _isMenuMainActive = false;
         }
-
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape && !_isMenuMainActive)
@@ -82,6 +92,7 @@ namespace ViewWPF.MenuGraphics
         }
         public override void Draw()
         {
+
             foreach (View.Menu.ViewMenuItem elViewMenuItem in Menu)
             {
                 elViewMenuItem.Draw();
