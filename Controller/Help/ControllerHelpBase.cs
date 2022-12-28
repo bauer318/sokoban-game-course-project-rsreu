@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using View.Help;
 
 namespace Controller.Help
 {
@@ -14,15 +15,20 @@ namespace Controller.Help
     public abstract class ControllerHelpBase
     {
         /// <summary>
+        /// The base view for the Help
+        /// </summary>
+        public ViewHelpBase ViewHelpBase;
+        /// <summary>
         /// Provides for write and read files
         /// </summary>
         private OutputInputFileWriterReader _outputInputFileWriterReader;
         /// <summary>
         /// Default's constructor
         /// </summary>
-        public ControllerHelpBase()
+        public ControllerHelpBase(ViewHelpBase parViewHelpBase)
         {
             _outputInputFileWriterReader = new OutputInputFileWriterReader();
+            ViewHelpBase = parViewHelpBase;
         }
         /// <summary>
         /// Get the text array of the Help file

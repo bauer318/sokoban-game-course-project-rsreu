@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace View.Record
 {
+    /// <summary>
+    /// Base view for the record
+    /// </summary>
     public abstract class ViewRecordBase:ViewNewGameHelpRecordBase
     {
 

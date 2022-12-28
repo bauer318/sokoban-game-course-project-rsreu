@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using View.Record;
 
 namespace Controller.Records
 {
@@ -13,11 +14,15 @@ namespace Controller.Records
     public abstract class ControllerRecordBase:ControllerNewGameRecordBase
     {
         /// <summary>
+        /// The base view for a record
+        /// </summary>
+        public ViewRecordBase ViewRecordBase;
+        /// <summary>
         /// Default constructor
         /// </summary>
-        public ControllerRecordBase() : base()
+        public ControllerRecordBase(ViewRecordBase parViewRecordBase) : base()
         {
-
+            ViewRecordBase = parViewRecordBase;
         }
         /// <summary>
         /// Get the Game's record dictionary
