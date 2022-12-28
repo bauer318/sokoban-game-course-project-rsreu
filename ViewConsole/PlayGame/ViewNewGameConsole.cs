@@ -60,55 +60,6 @@ namespace ViewConsole.PlayGame
         {
            return CellButtonLocations.Find(c => c.X == parCellRow && c.Y==parCellCol);
         }
-        public void DrawWall()
-        {
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("0");
-            Console.ForegroundColor = ConsoleColor.Black;
-        }
-        public void DrawTreasure()
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("#");
-            Console.BackgroundColor = ConsoleColor.Black;
-        }
-        public void DrawEmptyGoal()
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(".");
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-        public void DrawTreasureOnGoal()
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("#");
-            Console.BackgroundColor = ConsoleColor.Black;
-        }
-        public void DrawEmptyFloor()
-        {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write(".");
-        }
-        public void DrawTreasureOnFloor()
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("#");
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-        public void DrawActorOnFloor()
-        {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("@");
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-        public void DrawSpace()
-        {
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.Write(" ");
-        }
         public void SetLeftTopConsoleCursor(int parRow, int parCol)
         {
             Console.CursorLeft = parCol;

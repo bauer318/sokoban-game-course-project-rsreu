@@ -21,11 +21,29 @@ namespace ViewConsole.Menu
         }
         public void NewGame()
         {
+            DesactiveMainMenu();
+        }
+        public void Help()
+        {
+            DesactiveMainMenu();
+        }
+        public void Record()
+        {
+            DesactiveMainMenu();
+        }
+
+        private void DesactiveMainMenu()
+        {
             _isMenuMainActive = false;
         }
         public override void Draw()
         {
             Console.Clear();
+            Console.CursorLeft = 25;
+            Console.CursorTop = 10;
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("SOKOBAN");
+            Console.ForegroundColor = ConsoleColor.White;
             foreach(View.Menu.ViewMenuItem elViewMenuItem in Menu)
             {
                 elViewMenuItem.Draw();

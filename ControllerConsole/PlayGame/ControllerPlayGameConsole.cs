@@ -7,6 +7,7 @@ using Model.PlayGame.NewGame;
 using ModelConsole.PlayGame.NewGame;
 using System;
 using View.PlayGame;
+using ViewConsole;
 using ViewConsole.PlayGame;
 
 namespace ControllerConsole.PlayGame
@@ -147,7 +148,7 @@ namespace ControllerConsole.PlayGame
             switch (parCell.Name)
             {
                 case ("Wall"):
-                    _viewNewGameConsole.DrawWall();
+                    DrawCellUtils.DrawWall();
                     break;
                 case ("Floor"):
                     if (cellContents != null)
@@ -155,36 +156,36 @@ namespace ControllerConsole.PlayGame
                         switch (cellContents.Name)
                         {
                             case ("Treasure"):
-                                _viewNewGameConsole.DrawTreasureOnFloor();
+                                DrawCellUtils.DrawTreasureOnFloor();
                                 break;
                             case ("Actor"):
-                                _viewNewGameConsole.DrawActorOnFloor();
+                                DrawCellUtils.DrawActorOnFloor();
                                 break;
                         }
                     }
                     else
                     {
-                        _viewNewGameConsole.DrawEmptyFloor();
+                        DrawCellUtils.DrawEmptyFloor();
                     }
                     break;
                 case ("Space"):
-                    _viewNewGameConsole.DrawSpace();
+                    DrawCellUtils.DrawSpace();
                     break;
                 case ("Goal"):
                     if (cellContents != null)
                     {
                         if (cellContents.Name.Equals("Treasure"))
                         {
-                            _viewNewGameConsole.DrawTreasureOnGoal();
+                            DrawCellUtils.DrawTreasureOnGoal();
                         }
                         else
                         {
-                            _viewNewGameConsole.DrawActorOnFloor();
+                            DrawCellUtils.DrawActorOnFloor();
                         }
                     }
                     else
                     {
-                        _viewNewGameConsole.DrawEmptyGoal();
+                        DrawCellUtils.DrawEmptyGoal();
                     }
                     break;
             }
