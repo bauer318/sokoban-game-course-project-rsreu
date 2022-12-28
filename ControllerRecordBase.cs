@@ -11,7 +11,7 @@ namespace Controller.Records
     /// <summary>
     /// Base class for the Record's controller
     /// </summary>
-    public abstract class ControllerRecordBase : ControllerNewGameRecordBase
+    public abstract class ControllerRecordBase:ControllerNewGameRecordBase
     {
         /// <summary>
         /// The base view for a record
