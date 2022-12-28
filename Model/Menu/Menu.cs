@@ -6,23 +6,42 @@ using System.Threading.Tasks;
 
 namespace Model.Menu
 {
+    /// <summary>
+    /// Represent an application's menu
+    /// </summary>
     public class Menu : SubMenuItem
     {
+        /// <summary>
+        /// delegate for the NeedRedraw method
+        /// </summary>
         public delegate void dNeedRedraw();
-
+        /// <summary>
+        /// Occurs when need to redraw a menu
+        /// </summary>
         public event dNeedRedraw NeedRedraw = null;
-
+        /// <summary>
+        /// The menu item index focused
+        /// </summary>
         private int _focusedItemIndex = -1;
+        /// <summary>
+        /// Get or Set the menu item index focused
+        /// </summary>
         public int FocusedItemIndex
         {
             get { return _focusedItemIndex; }
             protected set { _focusedItemIndex = value; }
         }
+        /// <summary>
+        /// Initialize a Menu
+        /// </summary>
+        /// <param name="parName">Menu's name</param>
         public Menu(string parName) : base(0, parName)
         {
 
         }
-
+        /// <summary>
+        /// Focus the next menu
+        /// </summary>
         public void FocusNext()
         {
             int savFocusedIndex = _focusedItemIndex;
@@ -36,6 +55,9 @@ namespace Model.Menu
 
             NeedRedraw?.Invoke();
         }
+        /// <summary>
+        /// Focus the preview menu
+        /// </summary>
         public void FocusPrevious()
         {
             int savFocusedIndex = _focusedItemIndex;
@@ -49,6 +71,10 @@ namespace Model.Menu
 
             NeedRedraw?.Invoke();
         }
+        /// <summary>
+        /// Focus the menu by id
+        /// </summary>
+        /// <param name="parId">The menu's id</param>
         public void FocusItemById(int parId)
         {
             int savFocusedIndex = _focusedItemIndex;
@@ -60,6 +86,9 @@ namespace Model.Menu
             Items[_focusedItemIndex].State = States.Focused;
             NeedRedraw?.Invoke();
         }
+        /// <summary>
+        /// Selectes the menu item focused
+        /// </summary>
         public void SelectFocusedItem()
         {
             Items[_focusedItemIndex].State = States.Selected;
