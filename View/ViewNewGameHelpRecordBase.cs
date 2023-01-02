@@ -15,6 +15,6 @@ namespace View
         /// Prints an exception's message
         /// </summary>
         /// <param name="parMessage">The exception's message</param>
-        public abstract void PrintExceptionMessage(string parMessage);
+        public abstract void PrintMessage(string parMessage);
     }
 }
