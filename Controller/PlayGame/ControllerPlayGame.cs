@@ -21,10 +21,6 @@ namespace Controller.PlayGame
         /// </summary>
         public ViewNewGameBase ViewNewGameBase;
         /// <summary>
-        /// Provides for execution and undoing a command
-        /// </summary>
-        public readonly CommandManager CommandManager = new CommandManager();
-        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="parViewNewGameBase">The base view for a new game</param>
@@ -32,18 +28,6 @@ namespace Controller.PlayGame
         {
             ViewNewGameBase = parViewNewGameBase;
         }
-        /// <summary>
-        /// Attempts to start the game's first level
-        /// </summary>
-        public abstract void TryToStartFirstLevel();
-        /// <summary>
-        ///Process drawing a game Level
-        /// </summary>
-        public abstract void ProcessDrawGameLevel();
-        /// <summary>
-        /// Set the level's cell style
-        /// </summary>
-        public abstract void SetCellButtonStyle();
         /// <summary>
         /// Update a record after that a level has been completed succefuly
         /// </summary>

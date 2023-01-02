@@ -6,128 +6,79 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using View.PlayGame;
-using CommandManager = Model.PlayGame.Commands.CommandManager;
 using ViewWPF.PlayGame;
 using ViewWPF.MenuGraphics;
-using Model.PlayGame.Cells;
-using Model.PlayGame.Levels;
 using ModelWPF.PlayGame.NewGame;
 
 namespace Controller.PlayGame
 {
     public class ControllerPlayGameWPF:ControllerPlayGame
     {
-        private ResourceDictionary _resourceDictionary = Application.LoadComponent(
-            new Uri("/ViewWPF;component/PlayGame/ResourceDictionaries/CellWPF.xaml",
-               UriKind.RelativeOrAbsolute)) as ResourceDictionary;
         private ViewNewGameWPF _viewNewGameWPF = null;
-        public GameWPF Game
-        {
-            get
-            {
-                //return new GameWPF();
-                return (GameWPF)_resourceDictionary["sokobanGame"];
-            }
-            set
-            {
-                Game = value;
-            }
-        }
+        private GameWPF _game;
         public ControllerPlayGameWPF(ViewNewGameBase parViewNewGameBase) : base(parViewNewGameBase)
         {
             _viewNewGameWPF = parViewNewGameBase as ViewNewGameWPF;
-            ProcessDrawGameLevel();
-        }
-        /// <summary>
-        /// Try to load and start the first level of the game.
-        /// </summary>
-        public override void TryToStartFirstLevel()
-        {
-            try
-            {
-                Game.Start();
-            }
-            catch (Exception ex)
-            {
-                ViewNewGameBase.PrintExceptionMessage("Problem loading game. " + ex.Message);
-            }
-        }
-
-        public override void ProcessDrawGameLevel()
-        {
-            CommandManager.Clear();
-            if (ViewNewGameBase.FirstStartLevel)
-            {
-                TryToStartFirstLevel();
-                ViewMenuMainWPF.MainWindow.KeyDown += new KeyEventHandler(Controll_KeyDown);
-                _viewNewGameWPF.SetApplicationResourceDictionary(_resourceDictionary);
-            }
-            _viewNewGameWPF.DrawGameLevel(Game.Level.RowCount, Game.Level.ColumnCount);
-            SetCellButtonStyle();
-            ViewMenuMainWPF.MainWindow.Content = _viewNewGameWPF.DockPanel;
-        }
-        public override void SetCellButtonStyle()
-        {
-            _viewNewGameWPF.CellButtons.ForEach(cellButton => 
-            {
-                Cell cell = Game.Level[cellButton.X, cellButton.Y];
-                cellButton.DataContext = cell;
-                cellButton.Style = (Style)Application.Current.FindResource("Cell");
-            });
-            _viewNewGameWPF.GridMain.DataContext = Game.Level;
+            _game = _viewNewGameWPF.Game;
+            ViewNewGameBase.ProcessDrawGameLevel();
+            AddKeyDownEventHandler();
         }
         private void RemoveKeyDownEventHandler()
         {
             ViewMenuMainWPF.MainWindow.KeyDown -= new KeyEventHandler(Controll_KeyDown);
         }
+
+        private void AddKeyDownEventHandler()
+        {
+            ViewMenuMainWPF.MainWindow.KeyDown += new KeyEventHandler(Controll_KeyDown);
+        }
         
         private void Controll_KeyDown(object sender, KeyEventArgs e)
         {
             CommandBase command = null;
-            Level level = Game.Level;
-            if (Game != null)
+            if (_game != null)
             {
-                if (Game.GameState == GameState.Running)
+                if (_game.GameState == GameState.Running)
                 {
                     switch (e.Key)
                     {
                         case Key.Up:
-                            command = new MoveCommand(level, Direction.Up);
+                            command = new MoveCommand(_game.Level, Direction.Up);
                             break;
                         case Key.Down:
-                            command = new MoveCommand(level, Direction.Down);
+                            command = new MoveCommand(_game.Level, Direction.Down);
                             break;
                         case Key.Left:
-                            command = new MoveCommand(level, Direction.Left);
+                            command = new MoveCommand(_game.Level, Direction.Left);
                             break;
                         case Key.Right:
-                            command = new MoveCommand(level, Direction.Right);
+                            command = new MoveCommand(_game.Level, Direction.Right);
                             break;
                         case Key.Z:
                             if (Keyboard.Modifiers == ModifierKeys.Control)
                             {
-                                CommandManager.Undo();
+                                ViewNewGameBase.CommandManager.Undo();
                             }
                             break;
                     }
                 }
                 else
                 {
-                    switch (Game.GameState)
+                    switch (_game.GameState)
                     {
                         case GameState.GameOver:
                             ViewNewGameBase.FirstStartLevel = true;
-                            UpdateRecord(level.LevelNumber, level.Actor.MoveCount);
+                            UpdateRecord(_game.Level.LevelNumber, _game.Level.Actor.MoveCount);
                             RemoveKeyDownEventHandler();
                             ViewMenuMainWPF.BackToMainMenu();
                             break;
                         case GameState.LevelCompleted:
                             if(e.Key != Key.Escape)
                             {
-                                UpdateRecord(level.LevelNumber, level.Actor.MoveCount);
-                                Game.GotoNextLevel();
+                                UpdateRecord(_game.Level.LevelNumber, _game.Level.Actor.MoveCount);
+                                _game.GotoNextLevel();
                                 ViewNewGameBase.FirstStartLevel = false;
-                                ProcessDrawGameLevel();
+                                ViewNewGameBase.ProcessDrawGameLevel();
                             }
                             break;
                     }
@@ -140,7 +91,7 @@ namespace Controller.PlayGame
             }
             if (command != null)
             {
-                CommandManager.Execute(command);
+                ViewNewGameBase.CommandManager.Execute(command);
             }
         }
     }
