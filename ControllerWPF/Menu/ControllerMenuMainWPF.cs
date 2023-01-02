@@ -15,11 +15,16 @@ namespace ControllerWPF.Menu
     public class ControllerMenuMainWPF : Controller.Menu.ControllerMenu
     {
         private ViewWPF.MenuGraphics.ViewMenuMainWPF _viewMenu = null;
+        private bool _needExit;
         public ControllerMenuMainWPF()
         {
             Menu = new Model.Menu.MenuMain();
             _viewMenu = new ViewWPF.MenuGraphics.ViewMenuMainWPF(Menu);
-            Menu[(int)Model.Menu.MenuItemCodes.Exit].Selected += () => { _viewMenu.Close(); };
+            Menu[(int)Model.Menu.MenuItemCodes.Exit].Selected += () =>
+            {
+                _needExit = true;
+                _viewMenu.Close(); 
+            };
             Menu[(int)Model.Menu.MenuItemCodes.New].Selected += () => 
             {
                 _viewMenu.NewGame();
@@ -44,7 +49,10 @@ namespace ControllerWPF.Menu
         }
         public override void Start()
         {
-            throw new NotImplementedException();
+            do
+            {
+
+            } while (!_needExit);
         }
     }
 }
