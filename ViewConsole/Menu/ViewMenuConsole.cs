@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
 using View.Menu;
@@ -12,30 +13,15 @@ namespace ViewConsole.Menu
     {
         public int WIDTH = Console.WindowWidth;
         public int HEIGHT = Console.WindowHeight;
-        private bool _isMenuMainActive;
-
+        
+        
+        [SupportedOSPlatform("windows")]
         public ViewMenuConsole(Model.Menu.Menu parSubMeuItem) : base(parSubMeuItem)
         {
             Init();
             Draw();
         }
-        public void NewGame()
-        {
-            DesactiveMainMenu();
-        }
-        public void Help()
-        {
-            DesactiveMainMenu();
-        }
-        public void Record()
-        {
-            DesactiveMainMenu();
-        }
-
-        private void DesactiveMainMenu()
-        {
-            _isMenuMainActive = false;
-        }
+        
         public override void Draw()
         {
             Console.Clear();
@@ -59,13 +45,15 @@ namespace ViewConsole.Menu
             return null;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
+        [SupportedOSPlatform("windows")]
         private void Init()
         {
+            
             Console.WindowHeight = HEIGHT;
             Console.WindowWidth = WIDTH;
 
             Console.SetBufferSize(WIDTH, HEIGHT);
+            Console.SetWindowSize(WIDTH, HEIGHT);
             Console.CursorVisible = false;
 
             View.Menu.ViewMenuItem[] menu = Menu;

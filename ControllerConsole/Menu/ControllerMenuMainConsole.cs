@@ -4,6 +4,7 @@ using ControllerConsole.Records;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
 using ViewConsole.Help;
@@ -16,7 +17,7 @@ namespace ControllerConsole.Menu
     {
         private ViewConsole.Menu.ViewMenuConsole _viewMenu = null;
         protected bool NeedExit { get; set; }
-
+        [SupportedOSPlatform("windows")]
         public ControllerMenuMainConsole()
         {
             Menu = new Model.Menu.MenuMain();
@@ -25,21 +26,21 @@ namespace ControllerConsole.Menu
             Menu[(int)Model.Menu.MenuItemCodes.Exit].Selected += () => { NeedExit = true; };
             Menu[(int)Model.Menu.MenuItemCodes.New].Selected += () =>
             {
-                _viewMenu.NewGame();
+                
                 ViewNewGameConsole viewNewGameConsole = new ViewNewGameConsole();
                 viewNewGameConsole.ViewMenuConsole = _viewMenu;
                 new ControllerPlayGameConsole(viewNewGameConsole);
             };
             Menu[(int)Model.Menu.MenuItemCodes.Help].Selected += () =>
             {
-                _viewMenu.Help();
+                
                 ViewHelpConsole viewHelpConsole = new ViewHelpConsole();
                 viewHelpConsole.ViewMenuConsole = _viewMenu;
                 new ControllerHelpConsole(viewHelpConsole);
             };
             Menu[(int)Model.Menu.MenuItemCodes.Record].Selected += () =>
             {
-                _viewMenu.Record();
+                
                 ViewRecordConsole viewRecordConsole = new ViewRecordConsole();
                 viewRecordConsole.ViewMenuConsole = _viewMenu;
                 new ControllerRecordConsole(viewRecordConsole);
