@@ -1,57 +1,168 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using static System.Console;
 namespace ViewConsole
 {
     public class DrawCellUtils
     {
-        
+        public static int pixelSize = 3;
+        public static void DrawWall(int parX, int parY)
+        {
+            for (int x = 0; x < pixelSize; x++)
+            {
+                for (int y = 0; y < pixelSize; y++)
+                {
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    DrawWall();
+                }
+            }
+        }
+        public static void DrawTreasure(int parX, int parY)
+        {
+            for (int x = 0; x < pixelSize; x++)
+            {
+                for (int y = 0; y < pixelSize; y++)
+                {
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    DrawTreasure();
+                }
+            }
+        }
+        public static void DrawEmptyGoal(int parX, int parY)
+        {
+            for (int x = 0; x < pixelSize; x++)
+            {
+                for (int y = 0; y < pixelSize; y++)
+                {
+
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    if(x==1 && y == 1)
+                    {
+                        DrawSpace();
+                    }
+                    else
+                    {
+                        DrawEmptyGoal();
+                    }
+                }
+            }
+        }
+        public static void DrawTreasureOnGoal(int parX, int parY)
+        {
+            for (int x = 0; x < pixelSize; x++)
+            {
+                for (int y = 0; y < pixelSize; y++)
+                {
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    DrawTreasureOnGoal();
+                }
+            }
+        }
+        public static void DrawEmptyFloor(int parX, int parY)
+        {
+            for (int x = 0; x < pixelSize; x++)
+            {
+                for (int y = 0; y < pixelSize; y++)
+                {
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    DrawEmptyFloor();
+                }
+            }
+        }
+        public static void DrawTreasureOnFloor(int parX, int parY)
+        {
+            for (int x = 0; x < pixelSize; x++)
+            {
+                for (int y = 0; y < pixelSize; y++)
+                {
+
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    if (x == 1 && y == 1)
+                    {
+                        DrawSpace();
+                    }
+                    else
+                    {
+                        DrawTreasureOnFloor();
+                    }
+
+                }
+            }
+        }
+        public static void DrawActorOnFloor(int parX, int parY)
+        {
+            for (int x = 0; x < pixelSize; x++)
+            {
+                for (int y = 0; y < pixelSize; y++)
+                {
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    if (x == 1 && y == 1)
+                    {
+                        DrawActorOnFloor();
+                    }
+                    else
+                    {
+                        BackgroundColor = ConsoleColor.Black;
+                        Write('#');
+                    }
+                    BackgroundColor = ConsoleColor.Black;
+                }
+            }
+        }
+        public static void DrawSpace(int parX, int parY)
+        {
+            for (int x = 0; x < pixelSize; x++)
+            {
+                for (int y = 0; y < pixelSize; y++)
+                {
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    DrawSpace();
+                }
+            }
+        }
         public static void DrawWall()
         {
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("0");
-            Console.ForegroundColor = ConsoleColor.Black;
+            ForegroundColor = ConsoleColor.Cyan;
+            Write('█');
+            ForegroundColor = ConsoleColor.Black;
         }
         public static void DrawTreasure()
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("#");
-            Console.BackgroundColor = ConsoleColor.Black;
+            ForegroundColor = ConsoleColor.Yellow;
+            Write("█");
+            ForegroundColor = ConsoleColor.Black;
         }
         public static void DrawEmptyGoal()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(".");
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
+            ForegroundColor = ConsoleColor.Red;
+            //Write("*");
+            Write("█");
+            BackgroundColor = ConsoleColor.Black;
+            ForegroundColor = ConsoleColor.White;
         }
         public static void DrawTreasureOnGoal()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("#");
-            Console.BackgroundColor = ConsoleColor.Black;
+            ForegroundColor = ConsoleColor.Red;
+            //Write("#");
+            Write("█");
+            BackgroundColor = ConsoleColor.Black;
         }
         public static void DrawEmptyFloor()
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write(".");
+            ForegroundColor = ConsoleColor.White;
+            Write(".");
         }
         public static void DrawTreasureOnFloor()
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("#");
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
+            ForegroundColor = ConsoleColor.Yellow;
+            Write("█");
+            BackgroundColor = ConsoleColor.Black;
+            ForegroundColor = ConsoleColor.Yellow;
         }
         public static void DrawActorOnFloor()
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("@");
-            Console.ForegroundColor = ConsoleColor.White;
+            ForegroundColor = ConsoleColor.White;
+            Write("@");
+            ForegroundColor = ConsoleColor.Black;
         }
         public static void DrawSpace()
         {
