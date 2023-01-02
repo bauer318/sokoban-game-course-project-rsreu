@@ -10,8 +10,8 @@ namespace ViewConsole.Menu
 {
     public class ViewMenuConsole:View.Menu.ViewMenu
     {
-        public int WIDTH = 60;
-        public int HEIGHT = 30;
+        public int WIDTH = Console.WindowWidth;
+        public int HEIGHT = Console.WindowHeight;
         private bool _isMenuMainActive;
 
         public ViewMenuConsole(Model.Menu.Menu parSubMeuItem) : base(parSubMeuItem)

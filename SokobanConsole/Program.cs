@@ -7,7 +7,9 @@ namespace SokobanConsole
         static void Main(string[] args)
         {
             new ControllerConsole.Menu.ControllerMenuMainConsole().Start();
-            //TestConsole.main();
+            //Console.WriteLine(Console.WindowHeight);
+            //Console.WriteLine(Console.WindowWidth);
+            //Console.ReadLine();
         }
     }
 }
