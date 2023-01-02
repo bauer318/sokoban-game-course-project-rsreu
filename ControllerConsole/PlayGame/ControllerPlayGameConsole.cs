@@ -16,38 +16,12 @@ namespace ControllerConsole.PlayGame
     {
         private ViewNewGameConsole _viewNewGameConsole;
         private GameConsole _game;
-        private Level _level;
-        public GameConsole Game
-        {
-            get
-            {
-                return _game;
-            }
-            set
-            {
-                _game = value;
-            }
-        }
         public ControllerPlayGameConsole(ViewNewGameBase parViewNewGameBase) : base(parViewNewGameBase)
         {
-            _game = new GameConsole();
             _viewNewGameConsole = parViewNewGameBase as ViewNewGameConsole;
-            ProcessDrawGameLevel();
-        }
-
-        public override void ProcessDrawGameLevel()
-        {
-            CommandManager.Clear();
-            if (ViewNewGameBase.FirstStartLevel)
-            {
-                TryToStartFirstLevel();
-            }
-            _viewNewGameConsole.InitCellButtonLocation(Game.Level.RowCount, Game.Level.ColumnCount);
-            SetCellButtonStyle();
-            if (ViewNewGameBase.FirstStartLevel)
-            {
-                Controll_KeyDown();
-            }
+            _game = _viewNewGameConsole.Game;
+            ViewNewGameBase.ProcessDrawGameLevel();
+            Controll_KeyDown();
         }
         private void Controll_KeyDown()
         {
@@ -55,11 +29,11 @@ namespace ControllerConsole.PlayGame
             {
                 ConsoleKeyInfo keyPressed = Console.ReadKey(true);
                 CommandBase command = null;
-                if (keyPressed.Key == ConsoleKey.Escape || Game.GameState == GameState.GameOver)
+                if (keyPressed.Key == ConsoleKey.Escape || _game.GameState == GameState.GameOver)
                 {
-                    if (Game.GameState == GameState.GameOver)
+                    if (_game.GameState == GameState.GameOver)
                     {
-                        UpdateRecord(_level.LevelNumber, _level.Actor.MoveCount);
+                        UpdateRecord(_game.Level.LevelNumber, _game.Level.Actor.MoveCount);
                     }
                     ViewNewGameBase.FirstStartLevel = true;
                     _game = null;
@@ -67,45 +41,44 @@ namespace ControllerConsole.PlayGame
                     break;
 
                 }
-                if (Game != null)
+                if (_game != null)
                 {
-                    _level = Game.Level;
-                    if (Game.GameState == GameState.Running)
+                    if (_game.GameState == GameState.Running)
                     {
                         switch (keyPressed.Key)
                         {
                             case ConsoleKey.UpArrow:
-                                command = new MoveCommand(_level, Direction.Up);
+                                command = new MoveCommand(_game.Level, Direction.Up);
                                 break;
                             case ConsoleKey.DownArrow:
-                                command = new MoveCommand(_level, Direction.Down);
+                                command = new MoveCommand(_game.Level, Direction.Down);
                                 break;
                             case ConsoleKey.LeftArrow:
-                                command = new MoveCommand(_level, Direction.Left);
+                                command = new MoveCommand(_game.Level, Direction.Left);
                                 break;
                             case ConsoleKey.RightArrow:
-                                command = new MoveCommand(_level, Direction.Right);
+                                command = new MoveCommand(_game.Level, Direction.Right);
                                 break;
                             case ConsoleKey.Z:
                                 if (keyPressed.Modifiers == ConsoleModifiers.Control)
                                 {
-                                    CommandManager.Undo();
-                                    Reedraw();
+                                    ViewNewGameBase.CommandManager.Undo();
+                                    _viewNewGameConsole.Reedraw();
                                 }
                                 break;
                         }
                     }
                     else
                     {
-                        switch (Game.GameState)
+                        switch (_game.GameState)
                         {
                             case GameState.LevelCompleted:
                                 if (keyPressed.Key != ConsoleKey.Escape)
                                 {
-                                    UpdateRecord(_level.LevelNumber, _level.Actor.MoveCount);
-                                    Game.GotoNextLevel();
+                                    UpdateRecord(_game.Level.LevelNumber, _game.Level.Actor.MoveCount);
+                                    _game.GotoNextLevel();
                                     ViewNewGameBase.FirstStartLevel = false;
-                                    ProcessDrawGameLevel();
+                                    ViewNewGameBase.ProcessDrawGameLevel();
                                 }
                                 break;
                         }
@@ -114,92 +87,11 @@ namespace ControllerConsole.PlayGame
                 }
                 if (command != null)
                 {
-                    CommandManager.Execute(command);
-                    Reedraw();
+                    ViewNewGameBase.CommandManager.Execute(command);
+                    _viewNewGameConsole.Reedraw();
                 }
             }
         }
 
-        public override void SetCellButtonStyle()
-        {
-            _viewNewGameConsole.CellButtonLocations.ForEach(c =>
-            {
-                Cell cell = Game.Level[c.X, c.Y];
-                _viewNewGameConsole.SetLeftTopConsoleCursor(c.YMap, c.XMap);
-                DrawCell(cell);
-
-            });
-        }
-        public void Reedraw()
-        {
-            _viewNewGameConsole.CellButtonLocations.ForEach(c =>
-            {
-                Cell cell = Game.Level[c.X, c.Y];
-                if (!cell.Name.Equals("Wall"))
-                {
-                    _viewNewGameConsole.SetLeftTopConsoleCursor(c.YMap, c.XMap);
-                    DrawCell(cell);
-                }
-            });
-        }
-        private void DrawCell(Cell parCell)
-        {
-            CellContents cellContents = parCell.CellContents;
-            switch (parCell.Name)
-            {
-                case ("Wall"):
-                    DrawCellUtils.DrawWall();
-                    break;
-                case ("Floor"):
-                    if (cellContents != null)
-                    {
-                        switch (cellContents.Name)
-                        {
-                            case ("Treasure"):
-                                DrawCellUtils.DrawTreasureOnFloor();
-                                break;
-                            case ("Actor"):
-                                DrawCellUtils.DrawActorOnFloor();
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        DrawCellUtils.DrawEmptyFloor();
-                    }
-                    break;
-                case ("Space"):
-                    DrawCellUtils.DrawSpace();
-                    break;
-                case ("Goal"):
-                    if (cellContents != null)
-                    {
-                        if (cellContents.Name.Equals("Treasure"))
-                        {
-                            DrawCellUtils.DrawTreasureOnGoal();
-                        }
-                        else
-                        {
-                            DrawCellUtils.DrawActorOnFloor();
-                        }
-                    }
-                    else
-                    {
-                        DrawCellUtils.DrawEmptyGoal();
-                    }
-                    break;
-            }
-        }
-        public override void TryToStartFirstLevel()
-        {
-            try
-            {
-                Game.Start();
-            }
-            catch (Exception ex)
-            {
-                ViewNewGameBase.PrintExceptionMessage("Problem loading game. " + ex.Message);
-            }
-        }
     }
 }

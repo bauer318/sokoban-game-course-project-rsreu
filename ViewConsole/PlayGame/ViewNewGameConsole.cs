@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Model.PlayGame.Cells;
+using ModelConsole.PlayGame.NewGame;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,19 @@ namespace ViewConsole.PlayGame
     public class ViewNewGameConsole : ViewNewGameBase
     {
         private ViewMenuConsole _viewMenuConsole;
-        public List<CellButtonLocation> CellButtonLocations { get; set; } = new List<CellButtonLocation>();
+        private List<CellButtonLocation> _cellButtonLocations = new List<CellButtonLocation>();
+        private GameConsole _game;
+        public GameConsole Game
+        {
+            get
+            {
+                return _game;
+            }
+            set
+            {
+                _game = value;
+            }
+        }
 
         public ViewMenuConsole ViewMenuConsole
         {
@@ -24,6 +38,10 @@ namespace ViewConsole.PlayGame
                 _viewMenuConsole = value;
             }
         }
+        public ViewNewGameConsole() : base()
+        {
+            _game = new GameConsole();
+        }
         public override void PrintExceptionMessage(string parMessage)
         {
             Console.Clear();
@@ -31,22 +49,27 @@ namespace ViewConsole.PlayGame
             Console.Write(parMessage);
         }
 
-        public void InitCellButtonLocation(int parRowCount, int parColumnCount)
+        public void DrawGameLevel()
         {
-            CellButtonLocations.Clear();
-            if(parRowCount<=_viewMenuConsole.HEIGHT && parColumnCount <= _viewMenuConsole.WIDTH)
+            _cellButtonLocations.Clear();
+            var rowCount = _game.Level.RowCount;
+            var colCount = _game.Level.ColumnCount;
+            if(rowCount <= _viewMenuConsole.HEIGHT && colCount <= _viewMenuConsole.WIDTH)
             {
                 Console.Clear();
-                var startLeft = (_viewMenuConsole.WIDTH - parColumnCount) / 2;
-                var startTop = (_viewMenuConsole.HEIGHT - parRowCount) / 2;
-                for (var row = 0; row < parRowCount; row++)
+                var startLeft = (_viewMenuConsole.WIDTH - colCount) / 2;
+                var startTop = (_viewMenuConsole.HEIGHT - rowCount) / 2;
+                for (var row = 0; row < rowCount; row++)
                 {
                     startTop++;
                     var left = startLeft;
-                    for (var col = 0; col < parColumnCount; col++)
+                    for (var col = 0; col < colCount; col++)
                     {
                         left++;
-                        CellButtonLocations.Add(new CellButtonLocation(left, startTop, row, col));
+                        _cellButtonLocations.Add(new CellButtonLocation(left, startTop, row, col));
+                        Cell cell = _game.Level[row, col];
+                        SetLeftTopConsoleCursor(startTop, left);
+                        DrawCell(cell);
                     }
                 }
             }
@@ -56,9 +79,65 @@ namespace ViewConsole.PlayGame
             }
 
         }
-        public CellButtonLocation GetCellButtonLocation(int parCellRow, int parCellCol)
+        public void Reedraw()
         {
-           return CellButtonLocations.Find(c => c.X == parCellRow && c.Y==parCellCol);
+            _cellButtonLocations.ForEach(c =>
+            {
+                Cell cell = Game.Level[c.X, c.Y];
+                if (!cell.Name.Equals("Wall"))
+                {
+                    SetLeftTopConsoleCursor(c.YMap, c.XMap);
+                    DrawCell(cell);
+                }
+            });
+        }
+        private void DrawCell(Cell parCell)
+        {
+            CellContents cellContents = parCell.CellContents;
+            switch (parCell.Name)
+            {
+                case ("Wall"):
+                    DrawCellUtils.DrawWall();
+                    break;
+                case ("Floor"):
+                    if (cellContents != null)
+                    {
+                        switch (cellContents.Name)
+                        {
+                            case ("Treasure"):
+                                DrawCellUtils.DrawTreasureOnFloor();
+                                break;
+                            case ("Actor"):
+                                DrawCellUtils.DrawActorOnFloor();
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        DrawCellUtils.DrawEmptyFloor();
+                    }
+                    break;
+                case ("Space"):
+                    DrawCellUtils.DrawSpace();
+                    break;
+                case ("Goal"):
+                    if (cellContents != null)
+                    {
+                        if (cellContents.Name.Equals("Treasure"))
+                        {
+                            DrawCellUtils.DrawTreasureOnGoal();
+                        }
+                        else
+                        {
+                            DrawCellUtils.DrawActorOnFloor();
+                        }
+                    }
+                    else
+                    {
+                        DrawCellUtils.DrawEmptyGoal();
+                    }
+                    break;
+            }
         }
         public void SetLeftTopConsoleCursor(int parRow, int parCol)
         {
@@ -70,5 +149,26 @@ namespace ViewConsole.PlayGame
             _viewMenuConsole.Draw();
         }
 
+        public override void TryToStartFirstLevel()
+        {
+            try
+            {
+                Game.Start();
+            }
+            catch (Exception ex)
+            {
+                PrintExceptionMessage("Problem loading game. " + ex.Message);
+            }
+        }
+
+        public override void ProcessDrawGameLevel()
+        {
+            CommandManager.Clear();
+            if (FirstStartLevel)
+            {
+                TryToStartFirstLevel();
+            }
+            DrawGameLevel();
+        }
     }
 }
