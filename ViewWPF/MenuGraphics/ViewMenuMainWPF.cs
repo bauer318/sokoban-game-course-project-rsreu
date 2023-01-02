@@ -22,10 +22,12 @@ namespace ViewWPF.MenuGraphics
 		public static MainWindow MainWindow = null;
         private static  StackPanel _mainStackPanel = null;
         private bool _isMenuMainActive = true;
+        private int _indexMenuItemFocused = 0;
+        private Model.Menu.Menu _menu;
        
         public ViewMenuMainWPF(Model.Menu.Menu parSubMenuItem) : base(parSubMenuItem)
         {
-          
+            _menu = parSubMenuItem;
         }
         public void Init()
         {
@@ -56,23 +58,21 @@ namespace ViewWPF.MenuGraphics
         }
         public void NewGame()
         {
+            _indexMenuItemFocused = 0;
             DesactivesMainMenu();
         }
      
 
         public void Help()
         {
+            _indexMenuItemFocused = 1;
             DesactivesMainMenu();
 
-        }
-
-        public void CreateGameMap()
-        {
-            DesactivesMainMenu();
         }
 
         public void Record()
         {
+            _indexMenuItemFocused = 3;
             DesactivesMainMenu();
         }
         private void DesactivesMainMenu()
@@ -83,6 +83,7 @@ namespace ViewWPF.MenuGraphics
         {
             if (e.Key == Key.Escape && !_isMenuMainActive)
             {
+                _menu.FocusItemById(_indexMenuItemFocused);
                 BackToMainMenu();
             }
         }

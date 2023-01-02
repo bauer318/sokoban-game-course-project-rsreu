@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ViewWPF.Help;
+using ViewWPF.MenuGraphics;
 using ViewWPF.PlayGame;
 using ViewWPF.Record;
 
@@ -46,13 +48,27 @@ namespace ControllerWPF.Menu
 
                 ((ViewWPF.MenuGraphics.ViewMenuItemWPF)_viewMenu[elMenuItem.ID]).Enter += (id) => { Menu.FocusItemById(id); Menu.SelectFocusedItem(); };
             }
+            
         }
         public override void Start()
         {
-            do
+            ViewMenuMainWPF.MainWindow.KeyDown += new KeyEventHandler(Controll_KeyDown);
+        }
+        
+        private void Controll_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
             {
-
-            } while (!_needExit);
+                case Key.Up:
+                    Menu.FocusPrevious();
+                    break;
+                case Key.Down:
+                    Menu.FocusNext();
+                    break;
+                case Key.Enter:
+                    Menu.SelectFocusedItem();
+                    break;
+            }
         }
     }
 }

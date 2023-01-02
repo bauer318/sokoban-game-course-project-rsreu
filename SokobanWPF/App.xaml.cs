@@ -16,7 +16,7 @@ namespace SokobanWPF
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            new ControllerMenuMainWPF();
+            new ControllerMenuMainWPF().Start();
         }
     }
 }
