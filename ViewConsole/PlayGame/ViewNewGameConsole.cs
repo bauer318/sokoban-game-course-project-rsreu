@@ -2,9 +2,6 @@
 using ModelConsole.PlayGame.NewGame;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using View.PlayGame;
 using ViewConsole.Menu;
 
@@ -42,10 +39,12 @@ namespace ViewConsole.PlayGame
         {
             _game = new GameConsole();
         }
-        public override void PrintExceptionMessage(string parMessage)
+        public override void PrintMessage(string parMessage)
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.CursorLeft = Console.WindowWidth / 4;
+            Console.CursorTop = Console.WindowHeight / 2;
             Console.Write(parMessage);
         }
 
@@ -54,7 +53,7 @@ namespace ViewConsole.PlayGame
             _cellButtonLocations.Clear();
             var rowCount = _game.Level.RowCount;
             var colCount = _game.Level.ColumnCount;
-            if(rowCount <= _viewMenuConsole.HEIGHT && colCount <= _viewMenuConsole.WIDTH)
+            if (rowCount <= _viewMenuConsole.HEIGHT && colCount <= _viewMenuConsole.WIDTH)
             {
                 Console.Clear();
                 var startLeft = (_viewMenuConsole.WIDTH - colCount) / 2;
@@ -75,7 +74,7 @@ namespace ViewConsole.PlayGame
             }
             else
             {
-                PrintExceptionMessage("Error!!!");
+                PrintMessage("Error!!!");
             }
 
         }
@@ -157,7 +156,7 @@ namespace ViewConsole.PlayGame
             }
             catch (Exception ex)
             {
-                PrintExceptionMessage("Problem loading game. " + ex.Message);
+                PrintMessage("Problem loading game. " + ex.Message);
             }
         }
 

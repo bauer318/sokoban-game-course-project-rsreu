@@ -22,7 +22,7 @@ namespace ViewConsole.Record
                 _viewMenuConsole = value;
             }
         }
-        public override void PrintExceptionMessage(string parMessage)
+        public override void PrintMessage(string parMessage)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;

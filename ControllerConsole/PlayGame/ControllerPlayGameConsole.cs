@@ -6,6 +6,7 @@ using Model.PlayGame.Locations;
 using Model.PlayGame.NewGame;
 using ModelConsole.PlayGame.NewGame;
 using System;
+using System.Threading;
 using View.PlayGame;
 using ViewConsole;
 using ViewConsole.PlayGame;
@@ -34,6 +35,11 @@ namespace ControllerConsole.PlayGame
                     if (_game.GameState == GameState.GameOver)
                     {
                         UpdateRecord(_game.Level.LevelNumber, _game.Level.Actor.MoveCount);
+                        if (RecordUtils.NewRecordHasBeenSet)
+                        {
+                            ViewNewGameBase.PrintMessage("New Record has been set");
+                            Thread.Sleep(1000);
+                        }
                     }
                     ViewNewGameBase.FirstStartLevel = true;
                     _game = null;
@@ -76,6 +82,11 @@ namespace ControllerConsole.PlayGame
                                 if (keyPressed.Key != ConsoleKey.Escape)
                                 {
                                     UpdateRecord(_game.Level.LevelNumber, _game.Level.Actor.MoveCount);
+                                    if (RecordUtils.NewRecordHasBeenSet)
+                                    {
+                                        ViewNewGameBase.PrintMessage("New Record has been set");
+                                        Thread.Sleep(1000);
+                                    }
                                     _game.GotoNextLevel();
                                     ViewNewGameBase.FirstStartLevel = false;
                                     ViewNewGameBase.ProcessDrawGameLevel();
