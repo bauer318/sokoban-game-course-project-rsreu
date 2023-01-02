@@ -12,6 +12,7 @@ namespace Model.GameRecord
     /// </summary>
     public class RecordUtils
     {
+        public bool NewRecordHasBeenSet { get; private set; } = false;
         /// <summary>
         /// The Record manager
         /// </summary>
@@ -48,6 +49,7 @@ namespace Model.GameRecord
         /// <param name="parMoveCount">The Actor move count</param>
         public void UpdateRecord(int parLevelNumber, int parMoveCount)
         {
+            NewRecordHasBeenSet = false;
             Dictionary<int, Record> dictionary = _recordManager.RecordsDictionary;
             if (dictionary.ContainsKey(parLevelNumber))
             {
@@ -57,15 +59,18 @@ namespace Model.GameRecord
                     dictionary[parLevelNumber].MoveCount = parMoveCount;
                     dictionary[parLevelNumber].LastDateTime = DateTime.Now;
                     _fileWriterReader.WriteRecordBinaryFile(new RecordManager(dictionary));
+                    NewRecordHasBeenSet = true;
                 }
             }
             else
             {
                 dictionary.Add(parLevelNumber, new Record(parMoveCount, DateTime.Now));
                 _fileWriterReader.WriteRecordBinaryFile(new RecordManager(dictionary));
+                NewRecordHasBeenSet = true;
             }
             
         }
+        
         
     }
 }

@@ -41,7 +41,7 @@ namespace ViewWPF.PlayGame
             }
             catch (Exception ex)
             {
-                PrintExceptionMessage("Problem loading game. " + ex.Message);
+                PrintMessage("Problem loading game. " + ex.Message);
             }
         }
 
@@ -139,7 +139,7 @@ namespace ViewWPF.PlayGame
             Application.Current.Resources.MergedDictionaries.Add(parResourceDictionary);
         }
 
-        public override void PrintExceptionMessage(string parMessage)
+        public override void PrintMessage(string parMessage)
         {
             MessageBox.Show(parMessage);
         }

@@ -69,6 +69,10 @@ namespace Controller.PlayGame
                         case GameState.GameOver:
                             ViewNewGameBase.FirstStartLevel = true;
                             UpdateRecord(_game.Level.LevelNumber, _game.Level.Actor.MoveCount);
+                            if (RecordUtils.NewRecordHasBeenSet)
+                            {
+                                ViewNewGameBase.PrintMessage("New record has been set!");
+                            }
                             RemoveKeyDownEventHandler();
                             ViewMenuMainWPF.BackToMainMenu();
                             break;
@@ -76,6 +80,10 @@ namespace Controller.PlayGame
                             if(e.Key != Key.Escape)
                             {
                                 UpdateRecord(_game.Level.LevelNumber, _game.Level.Actor.MoveCount);
+                                if (RecordUtils.NewRecordHasBeenSet)
+                                {
+                                    ViewNewGameBase.PrintMessage("New record has been set!");
+                                }
                                 _game.GotoNextLevel();
                                 ViewNewGameBase.FirstStartLevel = false;
                                 ViewNewGameBase.ProcessDrawGameLevel();

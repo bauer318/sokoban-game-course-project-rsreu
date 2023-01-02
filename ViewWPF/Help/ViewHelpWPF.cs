@@ -32,7 +32,7 @@ namespace ViewWPF.Help
                 _gridMain = value;
             }
         }
-        public override void PrintExceptionMessage(string parMessage)
+        public override void PrintMessage(string parMessage)
         {
             MessageBox.Show(parMessage);
         }
