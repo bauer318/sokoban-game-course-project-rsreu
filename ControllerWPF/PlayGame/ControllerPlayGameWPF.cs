@@ -22,6 +22,7 @@ namespace Controller.PlayGame
             _viewNewGameWPF = parViewNewGameBase as ViewNewGameWPF;
             _game = _viewNewGameWPF.Game;
             Thread thread = new Thread(ViewNewGameBase.ProcessDrawGameLevel);
+            thread.Name = "Play Game View Thread";
             thread.Start();
             AddKeyDownEventHandler();
         }
