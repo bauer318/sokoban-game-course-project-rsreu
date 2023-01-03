@@ -9,6 +9,7 @@ using View.PlayGame;
 using ViewWPF.PlayGame;
 using ViewWPF.MenuGraphics;
 using ModelWPF.PlayGame.NewGame;
+using System.Threading;
 
 namespace Controller.PlayGame
 {
@@ -20,7 +21,8 @@ namespace Controller.PlayGame
         {
             _viewNewGameWPF = parViewNewGameBase as ViewNewGameWPF;
             _game = _viewNewGameWPF.Game;
-            ViewNewGameBase.ProcessDrawGameLevel();
+            Thread thread = new Thread(ViewNewGameBase.ProcessDrawGameLevel);
+            thread.Start();
             AddKeyDownEventHandler();
         }
         private void RemoveKeyDownEventHandler()

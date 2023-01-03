@@ -50,6 +50,8 @@ namespace ViewWPF.MenuGraphics
             SetParentControl(_mainStackPanel);
             Draw();
             MainWindow.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+            /*Thread thread = new Thread(MainWindow.Show);
+            thread.Start();*/
             MainWindow.Show();
         }
         public void Close()

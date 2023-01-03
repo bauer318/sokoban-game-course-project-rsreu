@@ -17,7 +17,7 @@ namespace ViewWPF.PlayGame
         private ResourceDictionary _resourceDictionary = Application.LoadComponent(
             new Uri("/ViewWPF;component/PlayGame/ResourceDictionaries/CellWPF.xaml",
                UriKind.RelativeOrAbsolute)) as ResourceDictionary;
-        
+
         public GameWPF Game
         {
             get
@@ -66,61 +66,64 @@ namespace ViewWPF.PlayGame
 
         public void DrawGameLevel()
         {
-            Border border = new Border();
-            border.Padding = new Thickness(20, 0, 0, 0);
-            border.CornerRadius = new CornerRadius(12);
-            border.BorderThickness = new Thickness(0, 0, 0, 0);
-
-            Viewbox viewbox = new Viewbox();
-            viewbox.Stretch = Stretch.Uniform;
-
-            Grid gridGame = new Grid();
-            gridGame.Children.Clear();
-            gridGame.RowDefinitions.Clear();
-            gridGame.ColumnDefinitions.Clear();
-
-            _gridMain = new Grid();
-            _gridMain.Children.Clear();
-            _gridMain.RowDefinitions.Clear();
-            _gridMain.ColumnDefinitions.Clear();
-
-            var rowCount = Game.Level.RowCount;
-            var columnCount = Game.Level.ColumnCount;
-            for (var i = 0; i < rowCount; i++)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                gridGame.RowDefinitions.Add(new RowDefinition());
+                Border border = new Border();
+                border.Padding = new Thickness(20, 0, 0, 0);
+                border.CornerRadius = new CornerRadius(12);
+                border.BorderThickness = new Thickness(0, 0, 0, 0);
 
-            }
-            for (var i = 0; i < columnCount; i++)
-            {
-                gridGame.ColumnDefinitions.Add(new ColumnDefinition());
+                Viewbox viewbox = new Viewbox();
+                viewbox.Stretch = Stretch.Uniform;
 
-            }
+                Grid gridGame = new Grid();
+                gridGame.Children.Clear();
+                gridGame.RowDefinitions.Clear();
+                gridGame.ColumnDefinitions.Clear();
 
-            for (var row = 0; row < rowCount; row++)
-            {
+                _gridMain = new Grid();
+                _gridMain.Children.Clear();
+                _gridMain.RowDefinitions.Clear();
+                _gridMain.ColumnDefinitions.Clear();
 
-                for (var column = 0; column < columnCount; column++)
+                var rowCount = Game.Level.RowCount;
+                var columnCount = Game.Level.ColumnCount;
+                for (var i = 0; i < rowCount; i++)
                 {
-                    Button button = new Button();
-                    button.Focusable = false;
-                    button.Padding = new Thickness(0, 0, 0, 0);
-                    Cell cell = Game.Level[row, column];
-                    button.DataContext = cell;
-                    button.Style = (Style)Application.Current.FindResource("Cell");
-                    Grid.SetRow(button, row);
-                    Grid.SetColumn(button, column);
-                    gridGame.Children.Add(button);
+                    gridGame.RowDefinitions.Add(new RowDefinition());
+
                 }
-            }
-            viewbox.Child = gridGame;
-            _gridMain.RowDefinitions.Add(new RowDefinition());
-            _gridMain.ColumnDefinitions.Add(new ColumnDefinition());
-            _gridMain.Children.Add(viewbox);
-            _gridMain.Focus();
-            _dockPanel = new DockPanel();
-            _gridMain.DataContext = Game.Level;
-            _dockPanel.Children.Add(_gridMain);
+                for (var i = 0; i < columnCount; i++)
+                {
+                    gridGame.ColumnDefinitions.Add(new ColumnDefinition());
+
+                }
+
+                for (var row = 0; row < rowCount; row++)
+                {
+
+                    for (var column = 0; column < columnCount; column++)
+                    {
+                        Button button = new Button();
+                        button.Focusable = false;
+                        button.Padding = new Thickness(0, 0, 0, 0);
+                        Cell cell = Game.Level[row, column];
+                        button.DataContext = cell;
+                        button.Style = (Style)Application.Current.FindResource("Cell");
+                        Grid.SetRow(button, row);
+                        Grid.SetColumn(button, column);
+                        gridGame.Children.Add(button);
+                    }
+                }
+                viewbox.Child = gridGame;
+                _gridMain.RowDefinitions.Add(new RowDefinition());
+                _gridMain.ColumnDefinitions.Add(new ColumnDefinition());
+                _gridMain.Children.Add(viewbox);
+                _gridMain.Focus();
+                _dockPanel = new DockPanel();
+                _gridMain.DataContext = Game.Level;
+                _dockPanel.Children.Add(_gridMain);
+            });
         }
 
         public override void ProcessDrawGameLevel()
@@ -132,7 +135,11 @@ namespace ViewWPF.PlayGame
                 SetApplicationResourceDictionary(_resourceDictionary);
             }
             DrawGameLevel();
-            ViewMenuMainWPF.MainWindow.Content = _dockPanel;
+            Application.Current.Dispatcher.Invoke(() => 
+            {
+                ViewMenuMainWPF.MainWindow.Content = _dockPanel;
+            });
+            
         }
         public void SetApplicationResourceDictionary(ResourceDictionary parResourceDictionary)
         {
