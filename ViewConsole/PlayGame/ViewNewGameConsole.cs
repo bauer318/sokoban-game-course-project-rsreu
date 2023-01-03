@@ -50,6 +50,7 @@ namespace ViewConsole.PlayGame
 
         public void DrawGameLevel()
         {
+            
             _cellButtonLocations.Clear();
             var rowCount = _game.Level.RowCount;
             var colCount = _game.Level.ColumnCount;

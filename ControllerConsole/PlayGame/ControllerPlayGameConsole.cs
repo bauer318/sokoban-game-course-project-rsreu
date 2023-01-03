@@ -21,7 +21,9 @@ namespace ControllerConsole.PlayGame
         {
             _viewNewGameConsole = parViewNewGameBase as ViewNewGameConsole;
             _game = _viewNewGameConsole.Game;
-            ViewNewGameBase.ProcessDrawGameLevel();
+            Thread thread = new Thread(ViewNewGameBase.ProcessDrawGameLevel);
+            thread.Name = "Play Game View Thread";
+            thread.Start();
             Controll_KeyDown();
         }
         private void Controll_KeyDown()
