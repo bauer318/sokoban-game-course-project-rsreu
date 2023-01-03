@@ -12,7 +12,7 @@ using System.Windows.Input;
 using View.PlayGame;
 using ViewWPF.Help;
 using ViewWPF.PlayGame;
-using ViewWPF.Record;
+using ViewWPF.Records;
 
 namespace ViewWPF.MenuGraphics
 {
@@ -23,7 +23,7 @@ namespace ViewWPF.MenuGraphics
         private static  StackPanel _mainStackPanel = null;
         private bool _isMenuMainActive = true;
         private int _indexMenuItemFocused = 0;
-        private Model.Menu.Menu _menu;
+        private readonly Model.Menu.Menu _menu;
        
         public ViewMenuMainWPF(Model.Menu.Menu parSubMenuItem) : base(parSubMenuItem)
         {
@@ -39,10 +39,12 @@ namespace ViewWPF.MenuGraphics
             StackPanel textStackPanel = new StackPanel();
             textStackPanel.VerticalAlignment = VerticalAlignment.Center;
             textStackPanel.HorizontalAlignment = HorizontalAlignment.Center;
-            Label label = new Label();
-            label.Content = "SOKOBAN";
-            label.FontSize = 25;
-            label.Margin = new Thickness(0, 20, 0, 45);
+            Label label = new()
+            {
+                Content = "SOKOBAN",
+                FontSize = 25,
+                Margin = new Thickness(0, 20, 0, 45)
+            };
             textStackPanel.Children.Add(label);
             _mainStackPanel.Children.Add(textStackPanel);
             MainWindow.Content = _mainStackPanel;

@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using View.Help;
 
 namespace ViewWPF.Help
 {
-    public class ViewHelpWPF:ViewHelpBase
+    public class ViewHelpWPF : ViewHelpBase
     {
         private DockPanel _dockPanel;
+        private Grid _gridMain;
         public DockPanel DockPanel
         {
             get
@@ -19,7 +15,6 @@ namespace ViewWPF.Help
                 return _dockPanel;
             }
         }
-        private Grid _gridMain;
 
         public Grid GridMain
         {
@@ -38,12 +33,14 @@ namespace ViewWPF.Help
         }
         public void PrintTextHelpGame(string[] parTextHelpArray)
         {
-            TextBox textBox = new TextBox();
-            textBox.Margin = new Thickness(10, 20, 10, 0);
-            textBox.TextWrapping = TextWrapping.Wrap;
-            textBox.AcceptsReturn = true;
-            textBox.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-            
+            TextBox textBox = new()
+            {
+                Margin = new Thickness(10, 20, 10, 0),
+                TextWrapping = TextWrapping.Wrap,
+                AcceptsReturn = true,
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto
+            };
+
             foreach (string s in parTextHelpArray)
             {
                 textBox.Text += s + "\n";
@@ -56,6 +53,7 @@ namespace ViewWPF.Help
             _gridMain.RowDefinitions.Add(new RowDefinition());
             _gridMain.ColumnDefinitions.Add(new ColumnDefinition());
             _gridMain.Children.Add(textBox);
+
             _dockPanel = new DockPanel();
             _dockPanel.Children.Add(_gridMain);
 

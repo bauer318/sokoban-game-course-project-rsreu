@@ -12,7 +12,7 @@ namespace ViewWPF
     public class MainWindow:Window
     {
         private static MainWindow instance;
-        private static object syncRoot = new Object();
+        private static readonly object syncRoot = new();
         private MainWindow()
         {
             ShowActivated = true;

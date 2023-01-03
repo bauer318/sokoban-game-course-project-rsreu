@@ -17,31 +17,17 @@ namespace ViewWPF.PlayGame
         private ResourceDictionary _resourceDictionary = Application.LoadComponent(
             new Uri("/ViewWPF;component/PlayGame/ResourceDictionaries/CellWPF.xaml",
                UriKind.RelativeOrAbsolute)) as ResourceDictionary;
-
+        private GameWPF _game;
         public GameWPF Game
         {
             get
             {
-                return (GameWPF)_resourceDictionary["sokobanGame"];
+                _game = (GameWPF)_resourceDictionary["sokobanGame"];
+                return _game;
             }
             set
             {
-                Game = value;
-            }
-        }
-
-        /// <summary>
-        /// Try to load and start the first level of the game.
-        /// </summary>
-        public override void TryToStartFirstLevel()
-        {
-            try
-            {
-                Game.Start();
-            }
-            catch (Exception ex)
-            {
-                PrintMessage("Problem loading game. " + ex.Message);
+                _game = value;
             }
         }
 
@@ -63,20 +49,30 @@ namespace ViewWPF.PlayGame
                 return _dockPanel;
             }
         }
-
-        public void DrawGameLevel()
+        /// <summary>
+        /// Try to load and start the first level of the game.
+        /// </summary>
+        public override void TryToStartFirstLevel()
+        {
+            try
+            {
+                _game.Start();
+            }
+            catch (Exception ex)
+            {
+                PrintMessage("Problem loading game. " + ex.Message);
+            }
+        }
+        private void DrawGameLevel()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Border border = new Border();
-                border.Padding = new Thickness(20, 0, 0, 0);
-                border.CornerRadius = new CornerRadius(12);
-                border.BorderThickness = new Thickness(0, 0, 0, 0);
+                Viewbox viewbox = new()
+                {
+                    Stretch = Stretch.Uniform
+                };
 
-                Viewbox viewbox = new Viewbox();
-                viewbox.Stretch = Stretch.Uniform;
-
-                Grid gridGame = new Grid();
+                Grid gridGame = new();
                 gridGame.Children.Clear();
                 gridGame.RowDefinitions.Clear();
                 gridGame.ColumnDefinitions.Clear();
@@ -86,8 +82,8 @@ namespace ViewWPF.PlayGame
                 _gridMain.RowDefinitions.Clear();
                 _gridMain.ColumnDefinitions.Clear();
 
-                var rowCount = Game.Level.RowCount;
-                var columnCount = Game.Level.ColumnCount;
+                var rowCount = _game.Level.RowCount;
+                var columnCount = _game.Level.ColumnCount;
                 for (var i = 0; i < rowCount; i++)
                 {
                     gridGame.RowDefinitions.Add(new RowDefinition());
@@ -104,10 +100,12 @@ namespace ViewWPF.PlayGame
 
                     for (var column = 0; column < columnCount; column++)
                     {
-                        Button button = new Button();
-                        button.Focusable = false;
-                        button.Padding = new Thickness(0, 0, 0, 0);
-                        Cell cell = Game.Level[row, column];
+                        Button button = new()
+                        {
+                            Focusable = false,
+                            Padding = new Thickness(0, 0, 0, 0)
+                        };
+                        Cell cell = _game.Level[row, column];
                         button.DataContext = cell;
                         button.Style = (Style)Application.Current.FindResource("Cell");
                         Grid.SetRow(button, row);
@@ -121,7 +119,7 @@ namespace ViewWPF.PlayGame
                 _gridMain.Children.Add(viewbox);
                 _gridMain.Focus();
                 _dockPanel = new DockPanel();
-                _gridMain.DataContext = Game.Level;
+                _gridMain.DataContext = _game.Level;
                 _dockPanel.Children.Add(_gridMain);
             });
         }
@@ -141,7 +139,7 @@ namespace ViewWPF.PlayGame
             });
             
         }
-        public void SetApplicationResourceDictionary(ResourceDictionary parResourceDictionary)
+        private void SetApplicationResourceDictionary(ResourceDictionary parResourceDictionary)
         {
             Application.Current.Resources.MergedDictionaries.Add(parResourceDictionary);
         }

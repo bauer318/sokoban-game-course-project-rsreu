@@ -16,12 +16,14 @@ namespace ViewWPF.MenuGraphics
         public delegate void dEnter(int parId);
         public event dEnter Enter = null;
         private FrameworkElement _parentControl = null;
-        Button _button = null;
-        Brush _brush = null;
+        private readonly Button _button = null;
+        private readonly Brush _brush = null;
         public ViewMenuItemWPF(Model.Menu.MenuItem parItem) : base(parItem)
         {
-            _button = new Button();
-            _button.Content = parItem.Name;
+            _button = new Button
+            {
+                Content = parItem.Name
+            };
             _button.Click += (s, e) => { Enter?.Invoke(this.Item.ID); };
             Height = (int)_button.Height;
             Width = (int)_button.Width;

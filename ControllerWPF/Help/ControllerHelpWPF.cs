@@ -12,7 +12,7 @@ namespace ControllerWPF.Help
 {
     public class ControllerHelpWPF:ControllerHelpBase
     {
-        private ViewHelpWPF _viewHelpWPF;
+        private readonly ViewHelpWPF _viewHelpWPF;
         public ControllerHelpWPF(ViewHelpBase parViewHelpBase) : base(parViewHelpBase)
         {
             _viewHelpWPF = parViewHelpBase as ViewHelpWPF;

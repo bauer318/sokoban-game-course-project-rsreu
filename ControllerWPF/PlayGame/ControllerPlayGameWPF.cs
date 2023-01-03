@@ -1,9 +1,6 @@
-﻿using Controller.PlayGame;
-using Model.PlayGame.Commands;
+﻿using Model.PlayGame.Commands;
 using Model.PlayGame.Locations;
 using Model.PlayGame.NewGame;
-using System;
-using System.Windows;
 using System.Windows.Input;
 using View.PlayGame;
 using ViewWPF.PlayGame;
@@ -15,13 +12,13 @@ namespace Controller.PlayGame
 {
     public class ControllerPlayGameWPF:ControllerPlayGame
     {
-        private ViewNewGameWPF _viewNewGameWPF = null;
-        private GameWPF _game;
+        private readonly ViewNewGameWPF _viewNewGameWPF = null;
+        private readonly GameWPF _game;
         public ControllerPlayGameWPF(ViewNewGameBase parViewNewGameBase) : base(parViewNewGameBase)
         {
             _viewNewGameWPF = parViewNewGameBase as ViewNewGameWPF;
             _game = _viewNewGameWPF.Game;
-            Thread thread = new Thread(ViewNewGameBase.ProcessDrawGameLevel);
+            Thread thread = new(ViewNewGameBase.ProcessDrawGameLevel);
             thread.Name = "Play Game View Thread";
             thread.Start();
             AddKeyDownEventHandler();
