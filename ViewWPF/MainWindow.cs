@@ -11,7 +11,9 @@ namespace ViewWPF
 {
     public class MainWindow:Window
     {
-        public MainWindow()
+        private static MainWindow instance;
+        private static object syncRoot = new Object();
+        private MainWindow()
         {
             ShowActivated = true;
             Width = 720;
@@ -19,6 +21,18 @@ namespace ViewWPF
             ResizeMode = ResizeMode.NoResize;
             WindowStyle = WindowStyle.None;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        }
+
+        public static MainWindow getInstance()
+        {
+            lock (syncRoot)
+            {
+                if (instance == null)
+                {
+                    instance = new MainWindow();
+                }
+            }
+            return instance;
         }
     }
 }

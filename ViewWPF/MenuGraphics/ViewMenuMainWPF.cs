@@ -31,7 +31,7 @@ namespace ViewWPF.MenuGraphics
         }
         public void Init()
         {
-            MainWindow = new MainWindow();
+            MainWindow = MainWindow.getInstance();
 
             _mainStackPanel = new StackPanel();
             _mainStackPanel.VerticalAlignment = VerticalAlignment.Center;
@@ -50,8 +50,6 @@ namespace ViewWPF.MenuGraphics
             SetParentControl(_mainStackPanel);
             Draw();
             MainWindow.PreviewKeyDown += new KeyEventHandler(HandleEsc);
-            /*Thread thread = new Thread(MainWindow.Show);
-            thread.Start();*/
             MainWindow.Show();
         }
         public void Close()
