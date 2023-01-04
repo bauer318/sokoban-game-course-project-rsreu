@@ -24,11 +24,12 @@ namespace ViewConsole.Menu
         
         public override void Draw()
         {
+            var gameName = "SOKOBAN";
             Console.Clear();
-            Console.CursorLeft = 25;
-            Console.CursorTop = 10;
+            Console.CursorLeft = (WIDTH - gameName.Length-4)/2;
+            Console.CursorTop = HEIGHT/3;
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("SOKOBAN");
+            Console.Write(gameName);
             Console.ForegroundColor = ConsoleColor.White;
             foreach(View.Menu.ViewMenuItem elViewMenuItem in Menu)
             {

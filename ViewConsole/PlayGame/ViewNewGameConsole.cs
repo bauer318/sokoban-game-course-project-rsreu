@@ -52,6 +52,7 @@ namespace ViewConsole.PlayGame
         {
             
             _cellButtonLocations.Clear();
+            Console.BackgroundColor = ConsoleColor.Gray;
             var rowCount = _game.Level.RowCount;
             var colCount = _game.Level.ColumnCount;
             if (rowCount <= _viewMenuConsole.HEIGHT && colCount <= _viewMenuConsole.WIDTH)
