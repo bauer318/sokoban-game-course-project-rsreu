@@ -26,6 +26,27 @@ namespace ControllerConsole.PlayGame
             thread.Start();
             Controll_KeyDown();
         }
+        /// <summary>
+        /// Process go to the next level by doing ctrl + N
+        /// </summary>
+        public override void ProcessNextLevel()
+        {
+            _game.GotoNextLevel();
+            LevelPlayedUtils.UpdateLevelPlayed(_game.Level.LevelNumber);
+            ViewNewGameBase.FirstStartLevel = false;
+            ViewNewGameBase.ProcessDrawGameLevel();
+        }
+        /// <summary>
+        /// Process back to previous level by doing ctrl + P
+        /// </summary>
+        public override void ProcessPreviousLevel()
+        {
+            _game.BackToPreviousLevel();
+            LevelPlayedUtils.UpdateLevelPlayed(_game.Level.LevelNumber);
+            ViewNewGameBase.FirstStartLevel = false;
+            ViewNewGameBase.ProcessDrawGameLevel();
+        }
+
         private void Controll_KeyDown()
         {
             while (true)
@@ -90,9 +111,7 @@ namespace ControllerConsole.PlayGame
                                         ViewNewGameBase.PrintMessage("New Record has been set");
                                         Thread.Sleep(1000);
                                     }
-                                    _game.GotoNextLevel();
-                                    ViewNewGameBase.FirstStartLevel = false;
-                                    ViewNewGameBase.ProcessDrawGameLevel();
+                                    ProcessNextLevel();
                                 }
                                 break;
                         }
