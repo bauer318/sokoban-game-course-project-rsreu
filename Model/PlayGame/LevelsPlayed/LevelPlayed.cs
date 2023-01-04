@@ -19,7 +19,7 @@ namespace Model.PlayGame.LevelsPlayed
 
         public void AddLevelPlayed(int parLevelNumber)
         {
-            if (!IsLevelPlayed(parLevelNumber))
+            if (!LevelsPlayed.Contains(parLevelNumber))
             {
                 LevelsPlayed.Add(parLevelNumber);
             }
