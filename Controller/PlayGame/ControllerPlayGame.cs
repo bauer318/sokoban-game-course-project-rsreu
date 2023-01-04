@@ -1,5 +1,6 @@
 ﻿using Model.PlayGame.Commands;
 using Model.PlayGame.Levels;
+using Model.PlayGame.LevelsPlayed;
 using Model.PlayGame.Locations;
 using Model.PlayGame.NewGame;
 using System;
@@ -21,12 +22,17 @@ namespace Controller.PlayGame
         /// </summary>
         public ViewNewGameBase ViewNewGameBase;
         /// <summary>
+        /// Provides for working with level's played file
+        /// </summary>
+        public LevelPlayedUtils LevelPlayedUtils { get; private set; }
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="parViewNewGameBase">The base view for a new game</param>
         public ControllerPlayGame(ViewNewGameBase parViewNewGameBase) : base()
         {
             ViewNewGameBase = parViewNewGameBase;
+            LevelPlayedUtils = new LevelPlayedUtils(true);
         }
         /// <summary>
         /// Update a record after that a level has been completed succefuly
