@@ -27,7 +27,7 @@ namespace View.Menu
         /// Add the view menu's item
         /// </summary>
         /// <param name="parViewMenuItem">The view menu's item</param>
-        protected void AddItem(ViewMenuItem parViewMenuItem)
+        public void AddItem(ViewMenuItem parViewMenuItem)
         {
             _items.Add(parViewMenuItem);
         }

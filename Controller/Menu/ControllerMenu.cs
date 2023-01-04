@@ -18,7 +18,7 @@ namespace Controller.Menu
         /// <summary>
         /// Get or set a menu
         /// </summary>
-        protected Model.Menu.Menu Menu
+        public Model.Menu.Menu Menu
         {
             get { return _menu; }
             set { _menu = value; }

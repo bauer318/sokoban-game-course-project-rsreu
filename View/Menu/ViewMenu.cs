@@ -68,12 +68,12 @@ namespace View.Menu
         /// <summary>
         /// Provides the drawing's process
         /// </summary>
-        protected abstract void NeedRedraw();
+        public abstract void NeedRedraw();
         /// <summary>
         /// Creates an menu item
         /// </summary>
         /// <param name="parMenuItem">menu's item</param>
         /// <returns></returns>
-        protected abstract ViewMenuItem CreateItem(Model.Menu.MenuItem parMenuItem);
+        public abstract ViewMenuItem CreateItem(Model.Menu.MenuItem parMenuItem);
     }
 }

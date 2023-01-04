@@ -15,11 +15,11 @@ namespace Model.PlayGame.Commands
 		/// <summary>
 		/// Command's stack
 		/// </summary>
-		private Stack<CommandBase> _commandStack = new Stack<CommandBase>();
+		private Stack<CommandBase> _commandStack = new();
 		/// <summary>
 		/// Redo command's stack
 		/// </summary>
-		private Stack<CommandBase> _redoStack = new Stack<CommandBase>();
+		private Stack<CommandBase> _redoStack = new();
 		/// <summary>
 		/// indicates if can undo
 		/// </summary>
@@ -41,7 +41,6 @@ namespace Model.PlayGame.Commands
 			_redoStack.Clear();
 			parCommand.Execute();
 			_commandStack.Push(parCommand);
-			//_canUndo = true;
 		}
 
 		/// <summary>

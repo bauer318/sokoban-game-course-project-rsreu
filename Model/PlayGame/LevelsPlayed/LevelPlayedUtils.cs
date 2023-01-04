@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Model.PlayGame.LevelsPlayed
 {
+    /// <summary>
+    /// Provides the utils for Played Level
+    /// </summary>
     public class LevelPlayedUtils
     {
         /// <summary>
@@ -29,7 +32,10 @@ namespace Model.PlayGame.LevelsPlayed
             }
             LevelPlayed = _fileWriterReader.GetLevelPlayedBinaryFile();
         }
-
+        /// <summary>
+        /// Update Level played adding the new level by number
+        /// </summary>
+        /// <param name="parLevelNumber">The new played level's number</param>
         public void UpdateLevelPlayed(int parLevelNumber)
         {
             LevelPlayed.AddLevelPlayed(parLevelNumber);

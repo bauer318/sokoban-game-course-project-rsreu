@@ -16,7 +16,6 @@ namespace Controller
         /// </summary>
         public ControllerBase()
         {
-            //Start();
         }
         /// <summary>
         /// Start a menu
