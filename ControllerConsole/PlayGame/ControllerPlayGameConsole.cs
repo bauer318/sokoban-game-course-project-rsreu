@@ -1,14 +1,11 @@
 ﻿using Controller.PlayGame;
-using Model.PlayGame.Cells;
 using Model.PlayGame.Commands;
-using Model.PlayGame.Levels;
 using Model.PlayGame.Locations;
 using Model.PlayGame.NewGame;
 using ModelConsole.PlayGame.NewGame;
 using System;
 using System.Threading;
 using View.PlayGame;
-using ViewConsole;
 using ViewConsole.PlayGame;
 
 namespace ControllerConsole.PlayGame
@@ -70,6 +67,17 @@ namespace ControllerConsole.PlayGame
                     break;
 
                 }
+                if (keyPressed.Key == ConsoleKey.R)
+                {
+                    if (keyPressed.Modifiers == ConsoleModifiers.Control)
+                    {
+                        LevelPlayedUtils = new(false);
+                        ViewNewGameBase.FirstStartLevel = true;
+                        _game = null;
+                        _viewNewGameConsole.BackToMainMenu();
+                        break;
+                    }
+                }
                 if (_game != null)
                 {
                     if (_game.GameState == GameState.Running)
@@ -95,14 +103,6 @@ namespace ControllerConsole.PlayGame
                                     _viewNewGameConsole.Reedraw();
                                 }
                                 break;
-                            case ConsoleKey.I:
-                                if (keyPressed.Modifiers == ConsoleModifiers.Control)
-                                {
-                                    LevelPlayedUtils = new(false);
-                                    ViewNewGameBase.FirstStartLevel = true;
-                                    ViewNewGameBase.ProcessDrawGameLevel();
-                                }
-                                break;
                             case ConsoleKey.N:
                                 if (keyPressed.Modifiers == ConsoleModifiers.Control)
                                 {
@@ -123,7 +123,7 @@ namespace ControllerConsole.PlayGame
                                 if (keyPressed.Modifiers == ConsoleModifiers.Control)
                                 {
                                     var previousLevel = _game.Level.LevelNumber - 1;
-                                    if (LevelPlayedUtils.LevelPlayed.IsLevelPlayed(previousLevel))
+                                    if (previousLevel >= 0)
                                     {
                                         ProcessPreviousLevel();
                                     }
