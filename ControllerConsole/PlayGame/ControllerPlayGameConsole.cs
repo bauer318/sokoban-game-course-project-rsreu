@@ -42,6 +42,7 @@ namespace ControllerConsole.PlayGame
                             ViewNewGameBase.PrintMessage("New Record has been set");
                             Thread.Sleep(1000);
                         }
+
                     }
                     ViewNewGameBase.FirstStartLevel = true;
                     _game = null;

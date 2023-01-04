@@ -22,7 +22,7 @@ namespace Controller
         /// </summary>
         public ControllerNewGameRecordBase()
         {
-            RecordUtils = new RecordUtils();
+            RecordUtils = new RecordUtils(true);
         }
         
     }
