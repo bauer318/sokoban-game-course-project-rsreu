@@ -32,7 +32,7 @@ namespace ViewWPF.MenuGraphics
             }
         }
 
-        protected override ViewMenuItem CreateItem(Model.Menu.MenuItem parMenuItem)
+        public override ViewMenuItem CreateItem(Model.Menu.MenuItem parMenuItem)
         {
             if (parMenuItem is Model.Menu.SubMenuItem)
                 return new ViewSubMenuItemWPF((Model.Menu.SubMenuItem)parMenuItem);
@@ -41,7 +41,7 @@ namespace ViewWPF.MenuGraphics
             return null;
         }
 
-        protected override void NeedRedraw()
+        public override void NeedRedraw()
         {
             foreach (View.Menu.ViewMenuItem elViewMenuItem in Menu)
             {

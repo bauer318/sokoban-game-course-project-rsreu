@@ -65,7 +65,7 @@ namespace ViewWPF.Records
             {
                 dynamic row = new ExpandoObject();
                 string[] dataGridColumnsValues = new string[3];
-                dataGridColumnsValues[0] = keyValues[j].ToString();
+                dataGridColumnsValues[0] = (keyValues[j]+1).ToString();
                 dataGridColumnsValues[1] = parRecordDictionary[keyValues[j]].MoveCount.ToString();
                 dataGridColumnsValues[2] = parRecordDictionary[keyValues[j]].LastDateTime.ToString();
                 for (int i = 0; i < _columnsName.Length; i++)
