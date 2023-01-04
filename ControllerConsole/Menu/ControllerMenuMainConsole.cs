@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ViewConsole.Help;
 using ViewConsole.PlayGame;
-using ViewConsole.Record;
+using ViewConsole.Records;
 
 namespace ControllerConsole.Menu
 {

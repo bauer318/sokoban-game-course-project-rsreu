@@ -37,7 +37,7 @@ namespace ViewConsole.Menu
             }
         }
 
-        protected override ViewMenuItem CreateItem(MenuItem parMenuItem)
+        public override ViewMenuItem CreateItem(MenuItem parMenuItem)
         {
             if (parMenuItem is Model.Menu.SubMenuItem)
                 return new ViewSubMenuItemConsole((Model.Menu.SubMenuItem)parMenuItem);
@@ -71,7 +71,7 @@ namespace ViewConsole.Menu
             }
         }
 
-        protected override void NeedRedraw()
+        public override void NeedRedraw()
         {
             Draw();
         }
