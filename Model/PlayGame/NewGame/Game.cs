@@ -1,4 +1,5 @@
 ﻿using Model.PlayGame.Levels;
+using Model.PlayGame.LevelsPlayed;
 using Model.PlayGame.Locations;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,10 @@ namespace Model.PlayGame.NewGame
 	/// </summary>
 	public class Game
 	{
+		/// <summary>
+		/// The last played level's number
+		/// </summary>
+		private int _lastPlayedLevelNumber;
 		/// <summary>
 		/// The current level of the game
 		/// </summary>
@@ -84,6 +89,8 @@ namespace Model.PlayGame.NewGame
 		/// </summary>
 		public Game()
 		{
+			LevelPlayedUtils levelPlayedUtils = new(true);
+			_lastPlayedLevelNumber = levelPlayedUtils.LevelPlayed.GetLastLevelPlayed();
 		}
 		/// <summary>
 		/// Start the current level
@@ -100,7 +107,7 @@ namespace Model.PlayGame.NewGame
 		{
 			string[] files = Directory.GetFiles(LevelDirectory, "*.skbn");
 			LevelCount = files.Length;
-			LoadLevel(52);
+			LoadLevel(_lastPlayedLevelNumber);
 		}
 		/// <summary>
 		/// Get the level's filename by the level's number
@@ -189,6 +196,16 @@ namespace Model.PlayGame.NewGame
 				LoadLevel(Level.LevelNumber + 1);
 			}
 		}
+		/// <summary>
+		/// Attemps to back to the previous level
+		/// </summary>
+		public void BackToPreviousLevel()
+        {
+			if(Level.LevelNumber > 0)
+            {
+				LoadLevel(Level.LevelNumber - 1);
+            }
+        }
 		
 	}
 }

@@ -9,7 +9,7 @@ namespace Model.GameRecord
     /// <summary>
     /// Represent a Game's level record of the minimal move count made by the actor
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public class Record
     {
         /// <summary>
