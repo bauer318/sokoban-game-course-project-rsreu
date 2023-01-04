@@ -9,6 +9,9 @@ namespace Model.GameRecord
     /// </summary>
     public class RecordUtils
     {
+        /// <summary>
+        /// Indicates whether a new record has been set
+        /// </summary>
         public bool NewRecordHasBeenSet { get; private set; } = false;
         /// <summary>
         /// The Record manager

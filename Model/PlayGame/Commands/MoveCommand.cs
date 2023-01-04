@@ -62,7 +62,7 @@ namespace Model.PlayGame.Commands
 		/// </summary>
 		public override void Execute()
 		{
-			Move move = new Move(Direction);
+			Move move = new(Direction);
 			_level.Actor.DoMove(move);
 		}
 

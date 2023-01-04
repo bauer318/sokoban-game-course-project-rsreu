@@ -18,7 +18,7 @@ namespace View.Menu
         /// <summary>
         /// Get the menu's item
         /// </summary>
-        protected Model.Menu.MenuItem Item
+        public Model.Menu.MenuItem Item
         {
             get
             {
