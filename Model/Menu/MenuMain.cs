@@ -17,9 +17,6 @@ namespace Model.Menu
         public MenuMain() : base(Properties.Resources.MainMenuName)
         {
             AddItem(new MenuItem((int)MenuItemCodes.Help, Properties.Resources.HelpMenuName));
-            /*has not been realized*/
-            //AddItem(new MenuItem((int)MenuItemCodes.Map, Properties.Resources.MapMenuName));
-
             AddItem(new MenuItem((int)MenuItemCodes.New, Properties.Resources.NewGameMenuName) { State = States.Focused });
             AddItem(new MenuItem((int)MenuItemCodes.Record, Properties.Resources.RecordMenuName));
             AddItem(new MenuItem((int)MenuItemCodes.Exit, Properties.Resources.ExiteMenuName));

@@ -25,7 +25,7 @@ namespace Model.PlayGame.Levels
 		/// <summary>
 		/// All Goals cell of this level
 		/// </summary>
-		private List<GoalCell> _goals = new List<GoalCell>();
+		private List<GoalCell> _goals = new();
 		/// <summary>
 		/// The Level's Actor
 		/// </summary>
@@ -153,7 +153,7 @@ namespace Model.PlayGame.Levels
 		}
 		#region LevelCompleted event
 
-		private event EventHandler levelCompleted;
+		private event EventHandler _levelCompleted;
 
 		/// <summary>
 		/// Occurs when a level has been completed successfully.
@@ -162,11 +162,11 @@ namespace Model.PlayGame.Levels
 		{
 			add
 			{
-				levelCompleted += value;
+				_levelCompleted += value;
 			}
 			remove
 			{
-				levelCompleted -= value;
+				_levelCompleted -= value;
 			}
 		}
 
@@ -176,9 +176,9 @@ namespace Model.PlayGame.Levels
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected void OnLevelCompleted(EventArgs e)
 		{
-			if (levelCompleted != null)
+			if (_levelCompleted != null)
 			{
-				levelCompleted(this, e);
+				_levelCompleted(this, e);
 
 			}
 		}
@@ -194,7 +194,7 @@ namespace Model.PlayGame.Levels
 				throw new ArgumentNullException("mapStream");
 			}
 
-			List<List<Cell>> rows = new List<List<Cell>>();
+			List<List<Cell>> rows = new();
 
 			string gridRowText;
 			int rowCount = 0;
@@ -217,13 +217,13 @@ namespace Model.PlayGame.Levels
 		/// <returns></returns>
 		private List<Cell> BuildCells(string parRowText, int parRowNumber)
 		{
-			List<Cell> row = new List<Cell>(parRowText.Length);
+			List<Cell> row = new(parRowText.Length);
 
 			int columnNumber = 0;
 
 			foreach (char c in parRowText)
 			{
-				Location location = new Location(parRowNumber, columnNumber++);
+				Location location = new(parRowNumber, columnNumber++);
 				switch (c)
 				{
 					case '#': /* Wall. */
@@ -236,19 +236,19 @@ namespace Model.PlayGame.Levels
 						row.Add(new FloorCell(location, this, new Treasure(location, this)));
 						break;
 					case '*': /* Treasure in a Goal. */
-						GoalCell goalCellWithTreasure = new GoalCell(location, this, new Treasure(location, this));
+						GoalCell goalCellWithTreasure = new(location, this, new Treasure(location, this));
 						goalCellWithTreasure.CompletedGoalChanged += new EventHandler(GoalCell_CompletedGoalChanged);
 						_goals.Add(goalCellWithTreasure);
 						row.Add(goalCellWithTreasure);
 						break;
 					case '.': /* Goal. */
-						GoalCell goalCell = new GoalCell(location, this);
+						GoalCell goalCell = new(location, this);
 						goalCell.CompletedGoalChanged += new EventHandler(GoalCell_CompletedGoalChanged);
 						_goals.Add(goalCell);
 						row.Add(goalCell);
 						break;
 					case '@': /* Actors in a floor cell. */
-						Actor actor = new Actor(location, this);
+						Actor actor = new(location, this);
 						row.Add(new FloorCell(location, this, actor));
 						_actor = actor;
 						break;

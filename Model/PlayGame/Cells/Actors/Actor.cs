@@ -17,13 +17,13 @@ namespace Model.PlayGame.Cells.Actors
 		/// <summary>
 		/// Stack of all move for this Actor in the current level
 		/// </summary>
-		private readonly Stack<Move> _movesStack = new Stack<Move>();
+		private readonly Stack<Move> _movesStack = new();
 		/// <summary>
 		/// Move count
 		/// </summary>
 		private int _moveCount;
-		/* lock object for the DoMove methods. */
-		private readonly object _moveLock = new object();
+		/* lock object for the DoMove methods */
+		private readonly object _moveLock = new();
 
 		/// <summary>
 		/// Gets the move count.
@@ -67,12 +67,11 @@ namespace Model.PlayGame.Cells.Actors
 				return false;
 			}
 			Move moveBase = _movesStack.Pop();
-			Move move = moveBase as Move;
-			if (move != null)
-			{
-				return DoMove(move);
-			}
-			return false;
+            if (moveBase is Move move)
+            {
+                return DoMove(move);
+            }
+            return false;
 		}
 
 	}

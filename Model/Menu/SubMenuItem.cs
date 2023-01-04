@@ -14,7 +14,7 @@ namespace Model.Menu
         /// <summary>
         /// The menu item's dictionary
         /// </summary>
-        private Dictionary<int, MenuItem> _items = new Dictionary<int, MenuItem>();
+        private Dictionary<int, MenuItem> _items = new();
         /// <summary>
         /// Get the array of all menu's items 
         /// </summary>
@@ -50,7 +50,7 @@ namespace Model.Menu
         /// Add the menu item
         /// </summary>
         /// <param name="parMenuItem">The added menu item</param>
-        protected void AddItem(MenuItem parMenuItem)
+        public void AddItem(MenuItem parMenuItem)
         {
             _items.Add(parMenuItem.ID, parMenuItem);
         }

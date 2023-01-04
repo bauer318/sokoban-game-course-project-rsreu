@@ -18,6 +18,16 @@ namespace Model.PlayGame.Cells
 		/// The context for the main UI thread
 		/// </summary>
 		private SynchronizationContext _context = SynchronizationContext.Current;
+
+		/// <summary>
+		/// The parName can be used to identify the type
+		/// of the cell without using GetType().
+		/// </summary>
+		private string _name;
+		/// <summary>
+		/// the location on the Level.
+		/// </summary>
+		private Location _location;
 		/// <summary>
 		/// Gets or sets the _context used to post 
 		/// to the main UI thread.
@@ -47,11 +57,8 @@ namespace Model.PlayGame.Cells
 		/// instance containing the event data.</param>
 		public void OnPropertyChanged(PropertyChangedEventArgs e)
 		{
-			if (PropertyChanged != null)
-			{
-				PropertyChanged(this, e);
-			}
-		}
+            PropertyChanged?.Invoke(this, e);
+        }
 
 		/// <summary>
 		/// Raises the PropertyChanged event.
@@ -75,15 +82,6 @@ namespace Model.PlayGame.Cells
 				}, null);
 			}
 		}
-		/// <summary>
-		/// The parName can be used to identify the type
-		/// of the cell without using GetType().
-		/// </summary>
-		private string _name;
-		/// <summary>
-		/// the location on the Level.
-		/// </summary>
-		private Location _location;
 		/// <summary>
 		/// Gets or sets the parName of this cell.
 		/// The parName can be used to identify the type

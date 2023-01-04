@@ -47,7 +47,7 @@ namespace Model.PlayGame.Cells.Actors
 						result = toCell.TrySetContents(this);
 						if (result)
 						{
-							Move newMove = new Move(parMove.Direction.GetOppositeDirection()) { Undo = true };
+							Move newMove = new(parMove.Direction.GetOppositeDirection()) { Undo = true };
 							_movesStack.Push(newMove);
 							CommandManager.CanUndo = true;
 							MoveCount++;
@@ -75,7 +75,7 @@ namespace Model.PlayGame.Cells.Actors
 				{   /* Wasn't able to enter, but could push contents. */
 					if (!parMove.Undo)
 					{
-						Move newMove = new Move(parMove.Direction.GetOppositeDirection()) { Undo = true, PushedContents = toCellContents };
+						Move newMove = new(parMove.Direction.GetOppositeDirection()) { Undo = true, PushedContents = toCellContents };
 						_movesStack.Push(newMove);
 					}
 
