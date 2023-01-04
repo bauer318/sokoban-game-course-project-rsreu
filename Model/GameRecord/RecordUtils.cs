@@ -1,9 +1,6 @@
 ﻿using Model.CommonWork;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.GameRecord
 {
@@ -20,7 +17,7 @@ namespace Model.GameRecord
         /// <summary>
         /// Provides for write and read the files
         /// </summary>
-        OutputInputFileWriterReader _fileWriterReader = new OutputInputFileWriterReader();
+        private OutputInputFileWriterReader _fileWriterReader = new OutputInputFileWriterReader();
         /// <summary>
         /// Get or Set the Record manager
         /// </summary>
@@ -36,10 +33,15 @@ namespace Model.GameRecord
             }
         }
         /// <summary>
-        /// Default constructor
+        /// Initialize the RecordUtils
         /// </summary>
-        public RecordUtils()
+        /// <param name="parExistRecordManagerBinaryFile">Indicates whether already exist the binary's file</param>
+        public RecordUtils(bool parExistRecordManagerBinaryFile)
         {
+            if (!parExistRecordManagerBinaryFile)
+            {
+                _fileWriterReader.WriteRecordBinaryFile(new RecordManager(new Dictionary<int, Record>()));
+            }
             _recordManager = _fileWriterReader.GetRecordManagerByRecordBinaryFile();
         }
         /// <summary>
@@ -68,9 +70,9 @@ namespace Model.GameRecord
                 _fileWriterReader.WriteRecordBinaryFile(new RecordManager(dictionary));
                 NewRecordHasBeenSet = true;
             }
-            
+
         }
-        
-        
+
+
     }
 }

@@ -60,6 +60,45 @@ namespace Controller.PlayGame
                                 ViewNewGameBase.CommandManager.Undo();
                             }
                             break;
+                        case Key.I:
+                            if (Keyboard.Modifiers == ModifierKeys.Control)
+                            {
+                                LevelPlayedUtils = new(false);
+                                ViewNewGameBase.FirstStartLevel = true;
+                                ViewNewGameBase.ProcessDrawGameLevel();
+                            }
+                            break;
+                        case Key.N:
+                            if (Keyboard.Modifiers == ModifierKeys.Control)
+                            {
+                                
+                                var nextLevel = _game.Level.LevelNumber + 1;
+                                if (LevelPlayedUtils.LevelPlayed.IsLevelPlayed(nextLevel))
+                                {
+                                    ProcessNextLevel();
+                                }
+                                else
+                                {
+                                    _viewNewGameWPF.PrintMessage(string.Format("The level {0} is not been played or the current level is the " +
+                                        "last game's level",nextLevel+1));
+                                }
+                            }
+                            break;
+                        case Key.P:
+                            if (Keyboard.Modifiers == ModifierKeys.Control)
+                            {
+                                
+                                var previousLevel = _game.Level.LevelNumber - 1;
+                                if (LevelPlayedUtils.LevelPlayed.IsLevelPlayed(previousLevel))
+                                {
+                                    ProcessPreviousLevel();
+                                }
+                                else
+                                {
+                                    _viewNewGameWPF.PrintMessage(" The current level is the first game's level !");
+                                }
+                            }
+                            break;
                     }
                 }
                 else
@@ -73,6 +112,7 @@ namespace Controller.PlayGame
                             {
                                 ViewNewGameBase.PrintMessage("New record has been set!");
                             }
+                            LevelPlayedUtils.UpdateLevelPlayed(_game.Level.LevelNumber);
                             RemoveKeyDownEventHandler();
                             ViewMenuMainWPF.BackToMainMenu();
                             break;
@@ -84,9 +124,7 @@ namespace Controller.PlayGame
                                 {
                                     ViewNewGameBase.PrintMessage("New record has been set!");
                                 }
-                                _game.GotoNextLevel();
-                                ViewNewGameBase.FirstStartLevel = false;
-                                ViewNewGameBase.ProcessDrawGameLevel();
+                                ProcessNextLevel();
                             }
                             break;
                     }
@@ -102,5 +140,31 @@ namespace Controller.PlayGame
                 ViewNewGameBase.CommandManager.Execute(command);
             }
         }
+        /// <summary>
+        /// Process go to the next level by doing ctrl + N
+        /// </summary>
+        public override void ProcessNextLevel()
+        {
+            
+            _game.GotoNextLevel();
+            LevelPlayedUtils.UpdateLevelPlayed(_game.Level.LevelNumber);
+            ViewNewGameBase.FirstStartLevel = false;
+            ViewNewGameBase.ProcessDrawGameLevel();
+        }
+        /// <summary>
+        /// Process back to previous level by doing ctrl + P
+        /// </summary>
+        public override void ProcessPreviousLevel()
+        {
+            
+            _game.BackToPreviousLevel();
+            LevelPlayedUtils.UpdateLevelPlayed(_game.Level.LevelNumber);
+            ViewNewGameBase.FirstStartLevel = false;
+            ViewNewGameBase.ProcessDrawGameLevel();
+        }
+
+       
+        
+        
     }
- }
+}
