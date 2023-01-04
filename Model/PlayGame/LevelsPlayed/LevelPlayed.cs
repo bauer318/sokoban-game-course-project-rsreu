@@ -15,7 +15,7 @@ namespace Model.PlayGame.LevelsPlayed
         {
             LevelsPlayed = parLevelsPlayed;
         }
-        
+
 
         public void AddLevelPlayed(int parLevelNumber)
         {
@@ -27,7 +27,7 @@ namespace Model.PlayGame.LevelsPlayed
 
         public bool IsLevelPlayed(int parLevelNumber)
         {
-            return LevelsPlayed.Contains(parLevelNumber);
+            return LevelsPlayed.Last() >= parLevelNumber && parLevelNumber >= 0;
         }
 
         public int GetLastLevelPlayed()
@@ -40,7 +40,7 @@ namespace Model.PlayGame.LevelsPlayed
             {
                 return 0;
             }
-            
+
         }
 
         public void ReInitializeLevelsPlayed()

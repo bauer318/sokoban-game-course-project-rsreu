@@ -24,7 +24,7 @@ namespace Controller.PlayGame
         /// <summary>
         /// Provides for working with level's played file
         /// </summary>
-        public LevelPlayedUtils LevelPlayedUtils { get; private set; }
+        public LevelPlayedUtils LevelPlayedUtils { get; set; }
         /// <summary>
         /// Constructor
         /// </summary>
@@ -43,5 +43,13 @@ namespace Controller.PlayGame
         {
             RecordUtils.UpdateRecord(parLevelNumber, parMoveCount);
         }
+        /// <summary>
+        /// Process go to the next level by doing ctrl + N
+        /// </summary>
+        public abstract void ProcessNextLevel();
+        /// <summary>
+        /// Process back to previous level by doing ctrl + P
+        /// </summary>
+        public abstract void ProcessPreviousLevel();
     }
 }
