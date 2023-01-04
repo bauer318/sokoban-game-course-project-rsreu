@@ -50,14 +50,13 @@ namespace ViewConsole.PlayGame
 
         public void DrawGameLevel()
         {
-            
+            Console.Clear();
             _cellButtonLocations.Clear();
             Console.BackgroundColor = ConsoleColor.Gray;
             var rowCount = _game.Level.RowCount;
             var colCount = _game.Level.ColumnCount;
             if (rowCount <= _viewMenuConsole.HEIGHT && colCount <= _viewMenuConsole.WIDTH)
             {
-                Console.Clear();
                 var startLeft = (_viewMenuConsole.WIDTH - colCount) / 2;
                 var startTop = (_viewMenuConsole.HEIGHT - rowCount) / 2;
                 for (var row = 0; row < rowCount; row++)

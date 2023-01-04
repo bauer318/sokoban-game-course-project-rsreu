@@ -32,7 +32,6 @@ namespace ControllerConsole.PlayGame
         public override void ProcessNextLevel()
         {
             _game.GotoNextLevel();
-            LevelPlayedUtils.UpdateLevelPlayed(_game.Level.LevelNumber);
             ViewNewGameBase.FirstStartLevel = false;
             ViewNewGameBase.ProcessDrawGameLevel();
         }
@@ -42,7 +41,6 @@ namespace ControllerConsole.PlayGame
         public override void ProcessPreviousLevel()
         {
             _game.BackToPreviousLevel();
-            LevelPlayedUtils.UpdateLevelPlayed(_game.Level.LevelNumber);
             ViewNewGameBase.FirstStartLevel = false;
             ViewNewGameBase.ProcessDrawGameLevel();
         }
@@ -63,6 +61,7 @@ namespace ControllerConsole.PlayGame
                             ViewNewGameBase.PrintMessage("New Record has been set");
                             Thread.Sleep(1000);
                         }
+                        LevelPlayedUtils.UpdateLevelPlayed(_game.Level.LevelNumber);
 
                     }
                     ViewNewGameBase.FirstStartLevel = true;
@@ -96,6 +95,44 @@ namespace ControllerConsole.PlayGame
                                     _viewNewGameConsole.Reedraw();
                                 }
                                 break;
+                            case ConsoleKey.I:
+                                if (keyPressed.Modifiers == ConsoleModifiers.Control)
+                                {
+                                    LevelPlayedUtils = new(false);
+                                    ViewNewGameBase.FirstStartLevel = true;
+                                    ViewNewGameBase.ProcessDrawGameLevel();
+                                }
+                                break;
+                            case ConsoleKey.N:
+                                if (keyPressed.Modifiers == ConsoleModifiers.Control)
+                                {
+                                    var nextLevel = _game.Level.LevelNumber + 1;
+                                    if (LevelPlayedUtils.LevelPlayed.IsLevelPlayed(nextLevel))
+                                    {
+                                        ProcessNextLevel();
+                                    }
+                                    else
+                                    {
+                                        _viewNewGameConsole.PrintMessage(string
+                                            .Format("The level {0} is not been played or the current level is the " +
+                                            "last game's level", nextLevel + 1));
+                                    }
+                                }
+                                break;
+                            case ConsoleKey.P:
+                                if (keyPressed.Modifiers == ConsoleModifiers.Control)
+                                {
+                                    var previousLevel = _game.Level.LevelNumber - 1;
+                                    if (LevelPlayedUtils.LevelPlayed.IsLevelPlayed(previousLevel))
+                                    {
+                                        ProcessPreviousLevel();
+                                    }
+                                    else
+                                    {
+                                        _viewNewGameConsole.PrintMessage(" The current level is the first game's level !");
+                                    }
+                                }
+                                break;
                         }
                     }
                     else
@@ -112,6 +149,7 @@ namespace ControllerConsole.PlayGame
                                         Thread.Sleep(1000);
                                     }
                                     ProcessNextLevel();
+                                    LevelPlayedUtils.UpdateLevelPlayed(_game.Level.LevelNumber);
                                 }
                                 break;
                         }

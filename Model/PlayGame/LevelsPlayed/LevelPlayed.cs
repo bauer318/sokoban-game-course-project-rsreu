@@ -27,6 +27,10 @@ namespace Model.PlayGame.LevelsPlayed
 
         public bool IsLevelPlayed(int parLevelNumber)
         {
+            if (LevelsPlayed.Count == 0)
+            {
+                return false;
+            }
             return LevelsPlayed.Last() >= parLevelNumber && parLevelNumber >= 0;
         }
 
