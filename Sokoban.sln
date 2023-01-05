@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View", "View\View.csproj", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SokobanTest", "SokobanTest", "{3D122DE3-CC5C-4355-B3DF-75705F401C87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSokoban", "TestSokoban\TestSokoban.csproj", "{F9FF179D-BBD7-464B-B6B4-610E250FB7B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSokoban", "TestSokoban\TestSokoban.csproj", "{F9FF179D-BBD7-464B-B6B4-610E250FB7B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
