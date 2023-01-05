@@ -10,10 +10,23 @@ using ViewConsole.PlayGame;
 
 namespace ControllerConsole.PlayGame
 {
+    /// <summary>
+    /// New game's controller
+    /// </summary>
     public class ControllerPlayGameConsole : ControllerPlayGame
     {
-        private ViewNewGameConsole _viewNewGameConsole;
+        // <summary>
+        /// New game's view
+        /// </summary>
+        private readonly ViewNewGameConsole _viewNewGameConsole;
+        /// <summary>
+        /// Representes the sokoban's game
+        /// </summary>
         private GameConsole _game;
+        /// <summary>
+        /// Initializes the new game's controller
+        /// </summary>
+        /// <param name="parViewNewGameBase">New game's base view</param>
         public ControllerPlayGameConsole(ViewNewGameBase parViewNewGameBase) : base(parViewNewGameBase)
         {
             _viewNewGameConsole = parViewNewGameBase as ViewNewGameConsole;
@@ -41,7 +54,9 @@ namespace ControllerConsole.PlayGame
             ViewNewGameBase.FirstStartLevel = false;
             ViewNewGameBase.ProcessDrawGameLevel();
         }
-
+        /// <summary>
+        /// Controll the KeyDown
+        /// </summary>
         private void Controll_KeyDown()
         {
             while (true)

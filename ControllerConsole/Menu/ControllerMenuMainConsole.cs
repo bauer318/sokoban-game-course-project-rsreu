@@ -13,10 +13,23 @@ using ViewConsole.Records;
 
 namespace ControllerConsole.Menu
 {
+    /// <summary>
+    /// Main menu's controller
+    /// </summary>
     public class ControllerMenuMainConsole:Controller.Menu.ControllerMenu
     {
-        private ViewConsole.Menu.ViewMenuConsole _viewMenu = null;
-        protected bool NeedExit { get; set; }
+        /// <summary>
+        /// Main menu's view
+        /// </summary>
+        private readonly ViewConsole.Menu.ViewMenuConsole _viewMenu = null;
+        /// <summary>
+        /// Indicates whether is need to exit app
+        /// Get or Set the value
+        /// </summary>
+        public bool NeedExit { get; set; }
+        /// <summary>
+        /// Default's contructor
+        /// </summary>
         [SupportedOSPlatform("windows")]
         public ControllerMenuMainConsole()
         {
@@ -46,6 +59,9 @@ namespace ControllerConsole.Menu
                 new ControllerRecordConsole(viewRecordConsole);
             };
         }
+        /// <summary>
+        /// Start Main menu to work with KeyDown 
+        /// </summary>
         public override void Start()
         {
             do

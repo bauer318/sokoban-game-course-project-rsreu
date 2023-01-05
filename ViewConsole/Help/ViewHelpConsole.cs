@@ -8,10 +8,18 @@ using ViewConsole.Menu;
 
 namespace ViewConsole.Help
 {
+    /// <summary>
+    /// The Help's view
+    /// </summary>
     public class ViewHelpConsole : ViewHelpBase
     {
-
+        /// <summary>
+        /// The view menu
+        /// </summary>
         private ViewMenuConsole _viewMenuConsole;
+        /// <summary>
+        /// Get or Set the view menu
+        /// </summary>
         public ViewMenuConsole ViewMenuConsole
         {
             get
@@ -23,12 +31,20 @@ namespace ViewConsole.Help
                 _viewMenuConsole = value;
             }
         }
+        /// <summary>
+        /// Print a message
+        /// </summary>
+        /// <param name="parMessage">The message to print</param>
         public override void PrintMessage(string parMessage)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(parMessage);
         }
+        /// <summary>
+        /// Print the help's text
+        /// </summary>
+        /// <param name="parTextHelpArray">The help's text</param>
         public void PrintHelpText(string[] parArrayHelpText)
         {
             Console.Clear();
@@ -62,6 +78,9 @@ namespace ViewConsole.Help
                 Console.WriteLine();
             }
         }
+        /// <summary>
+        /// Back to main menu
+        /// </summary>
         public void BackToMainMenu()
         {
             _viewMenuConsole.Draw();

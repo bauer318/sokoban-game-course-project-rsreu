@@ -9,9 +9,18 @@ using ViewConsole.Menu;
 
 namespace ViewConsole.Records
 {
+    /// <summary>
+    /// Representes the record's view
+    /// </summary>
     public class ViewRecordConsole : ViewRecordBase
     {
+        /// <summary>
+        /// The menu's view
+        /// </summary>
         private ViewMenuConsole _viewMenuConsole;
+        /// <summary>
+        /// Get or Set the menu's view
+        /// </summary>
         public ViewMenuConsole ViewMenuConsole
         {
             get
@@ -23,13 +32,20 @@ namespace ViewConsole.Records
                 _viewMenuConsole = value;
             }
         }
+        /// <summary>
+        /// Print a message
+        /// </summary>
+        /// <param name="parMessage">The message to print</param>
         public override void PrintMessage(string parMessage)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(parMessage);
         }
-        public void PrintTitle()
+        /// <summary>
+        /// Print the record columns's name
+        /// </summary>
+        public void PrintColumnsName()
         {
             Console.Clear();
             Console.CursorLeft = 2;
@@ -40,10 +56,17 @@ namespace ViewConsole.Records
             Console.Write("Дата и время");
             Console.WriteLine();
         }
+        /// <summary>
+        /// Back to main menu
+        /// </summary>
         public void BackToMainMenu()
         {
             _viewMenuConsole.Draw();
         }
+        /// <summary>
+        /// Processes to print game's record
+        /// </summary>
+        /// <param name="parRecordDictionary">The record's dictionary as a pair of level's number and record</param>
         public void ProcessPrintRecord(Dictionary<int, Record> parRecordDictionary)
         {
 

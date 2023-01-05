@@ -7,11 +7,26 @@ using ViewConsole.Menu;
 
 namespace ViewConsole.PlayGame
 {
+    /// <summary>
+    /// Representes the new game's view
+    /// </summary>
     public class ViewNewGameConsole : ViewNewGameBase
     {
+        /// <summary>
+        /// The menu's view
+        /// </summary>
         private ViewMenuConsole _viewMenuConsole;
-        private List<CellButtonLocation> _cellButtonLocations = new List<CellButtonLocation>();
+        /// <summary>
+        /// The List of current level's view cell with location
+        /// </summary>
+        private List<ViewCellLocation> _cellButtonLocations = new List<ViewCellLocation>();
+        /// <summary>
+        /// The sokoban's game
+        /// </summary>
         private GameConsole _game;
+        /// <summary>
+        /// Get or Set the sokoban's game
+        /// </summary>
         public GameConsole Game
         {
             get
@@ -23,7 +38,9 @@ namespace ViewConsole.PlayGame
                 _game = value;
             }
         }
-
+        /// <summary>
+        /// Get or Set the menu's view
+        /// </summary>
         public ViewMenuConsole ViewMenuConsole
         {
             get
@@ -35,10 +52,17 @@ namespace ViewConsole.PlayGame
                 _viewMenuConsole = value;
             }
         }
+        /// <summary>
+        /// Default's contructor
+        /// </summary>
         public ViewNewGameConsole() : base()
         {
             _game = new GameConsole();
         }
+        /// <summary>
+        /// Print a message
+        /// </summary>
+        /// <param name="parMessage">The message to print</param>
         public override void PrintMessage(string parMessage)
         {
             Console.Clear();
@@ -47,7 +71,9 @@ namespace ViewConsole.PlayGame
             Console.CursorTop = Console.WindowHeight / 2;
             Console.Write(parMessage);
         }
-
+        /// <summary>
+        /// Draw the current sokoban's game level
+        /// </summary>
         public void DrawGameLevel()
         {
             Console.Clear();
@@ -66,7 +92,7 @@ namespace ViewConsole.PlayGame
                     for (var col = 0; col < colCount; col++)
                     {
                         left++;
-                        _cellButtonLocations.Add(new CellButtonLocation(left, startTop, row, col));
+                        _cellButtonLocations.Add(new ViewCellLocation(left, startTop, row, col));
                         Cell cell = _game.Level[row, col];
                         SetLeftTopConsoleCursor(startTop, left);
                         DrawCell(cell);
@@ -75,10 +101,13 @@ namespace ViewConsole.PlayGame
             }
             else
             {
-                PrintMessage("Error!!!");
+                PrintMessage("Error!!!\n Incorrect row or column's level");
             }
 
         }
+        /// <summary>
+        /// Redraw the current game's level
+        /// </summary>
         public void Reedraw()
         {
             _cellButtonLocations.ForEach(c =>
@@ -91,6 +120,10 @@ namespace ViewConsole.PlayGame
                 }
             });
         }
+        /// <summary>
+        /// Draw a level's cell
+        /// </summary>
+        /// <param name="parCell">The level's cell to draw</param>
         private void DrawCell(Cell parCell)
         {
             CellContents cellContents = parCell.CellContents;
@@ -139,17 +172,26 @@ namespace ViewConsole.PlayGame
                     break;
             }
         }
-
+        /// <summary>
+        /// Set the console cursor's left and top
+        /// </summary>
+        /// <param name="parRow">The row's number as the console cursor's top</param>
+        /// <param name="parCol">The column's number as the console cursor's left</param>
         public void SetLeftTopConsoleCursor(int parRow, int parCol)
         {
             Console.CursorLeft = parCol;
             Console.CursorTop = parRow;
         }
+        /// <summary>
+        /// Back to main's menu
+        /// </summary>
         public void BackToMainMenu()
         {
             _viewMenuConsole.Draw();
         }
-
+        /// <summary>
+        /// Try to load and start the first or last played level of the game.
+        /// </summary>
         public override void TryToStartFirstLevel()
         {
             try
@@ -161,7 +203,9 @@ namespace ViewConsole.PlayGame
                 PrintMessage("Problem loading game. " + ex.Message);
             }
         }
-
+        /// <summary>
+        /// Processes to draw the sokoban's game level
+        /// </summary>
         public override void ProcessDrawGameLevel()
         {
             CommandManager.Clear();

@@ -2,6 +2,9 @@
 
 namespace SokobanConsole
 {
+    /// <summary>
+    /// Runner's class
+    /// </summary>
     class Program
     {
         [SupportedOSPlatform("windows")]
