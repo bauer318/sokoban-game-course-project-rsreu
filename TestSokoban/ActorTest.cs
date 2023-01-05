@@ -31,13 +31,13 @@ namespace TestSokoban
         /// </summary>
         private Level _level;
         /// <summary>
-        /// The command manager
-        /// </summary>
-        private CommandManager _commandManager;
-        /// <summary>
         /// The base command
         /// </summary>
         private CommandBase _command;
+        /// <summary>
+        /// The command manager
+        /// </summary>
+        private CommandManager _commandManager;
         /// <summary>
         /// Right's Direction
         /// </summary>
