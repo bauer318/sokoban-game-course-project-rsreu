@@ -1,5 +1,6 @@
 ﻿using Controller.Records;
 using System;
+using System.Threading;
 using View.Record;
 using ViewConsole.Records;
 
@@ -30,7 +31,13 @@ namespace ControllerConsole.Records
             {
                 if (_needPrint)
                 {
-                    _viewRecordConsole.ProcessPrintRecord(GetRecordDictionary());
+                    Thread t = new(() => 
+                    {
+                        _viewRecordConsole.ProcessPrintRecord(GetRecordDictionary());
+                    });
+                    t.Name = "Thread record's view";
+                    t.Start();
+                    
                 }
                 _needPrint = false;
                 ConsoleKeyInfo keyPressed = Console.ReadKey(true);
