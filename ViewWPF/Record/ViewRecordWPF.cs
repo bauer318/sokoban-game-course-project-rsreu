@@ -27,16 +27,7 @@ namespace ViewWPF.Records
         /// The main's grid
         /// </summary>
         private Grid _gridMain;
-        /// <summary>
-        /// Get the dockpanel
-        /// </summary>
-        public DockPanel DockPanel
-        {
-            get
-            {
-                return _dockPanel;
-            }
-        }
+        
         /// <summary>
         /// Print a message
         /// </summary>
@@ -51,27 +42,27 @@ namespace ViewWPF.Records
         /// <returns>The record's datagrid with columns's name</returns>
         private DataGrid CreateRecordDataGrid()
         {
-
-            DataGrid dataGrid = new()
+            return Application.Current.Dispatcher.Invoke(new Func<DataGrid>( () => 
             {
-                Margin = new Thickness(0, 20, 0, 0)
-            };
-
-            _columnsName = new string[] { "Уровень", "Количество шагов", "Дата и время" };
-
-            foreach (string label in _columnsName)
-            {
-                DataGridTextColumn column = new()
+                DataGrid dataGrid = new()
                 {
-                    Header = label,
-                    Binding = new Binding(label.Replace(' ', '_')),
-                    Width = 235
+                    Margin = new Thickness(0, 20, 0, 0)
                 };
-                dataGrid.Columns.Add(column);
-            }
-            dataGrid.Width = ViewMenuMainWPF.MainWindow.Width;
-            return dataGrid;
+                _columnsName = new string[] { "Уровень", "Количество шагов", "Дата и время" };
 
+                foreach (string label in _columnsName)
+                {
+                    DataGridTextColumn column = new()
+                    {
+                        Header = label,
+                        Binding = new Binding(label.Replace(' ', '_')),
+                        Width = 235
+                    };
+                    dataGrid.Columns.Add(column);
+                }
+                dataGrid.Width = ViewMenuMainWPF.MainWindow.Width;
+                return dataGrid;
+            }));
         }
         /// <summary>
         /// Processes to print game's record
@@ -97,9 +88,18 @@ namespace ViewWPF.Records
                 dataGridColumnsValues[2] = parRecordDictionary[keyValues[j]].LastDateTime.ToString();
                 for (int i = 0; i < _columnsName.Length; i++)
                     ((IDictionary<String, Object>)row)[_columnsName[i].Replace(' ', '_')] = dataGridColumnsValues[i];
-                dataGrid.Items.Add(row);
+                Application.Current.Dispatcher.Invoke(() => 
+                {
+                    dataGrid.Items.Add(row);
+                });
+                
             }
             DataGridIntoScrollViewer(dataGrid);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                ViewMenuMainWPF.MainWindow.Content = _dockPanel;
+            });
+            
         }
         /// <summary>
         /// Add the datagrid in the scrollview 
@@ -107,23 +107,25 @@ namespace ViewWPF.Records
         /// <param name="parDataGrid">The datagrid</param>
         private void DataGridIntoScrollViewer(DataGrid parDataGrid)
         {
-            ScrollViewer scrollViewer = new()
+            Application.Current.Dispatcher.Invoke(() => 
             {
-                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
-                HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
-                Content = parDataGrid
-            };
+                ScrollViewer scrollViewer = new()
+                {
+                    VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                    HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
+                    Content = parDataGrid
+                };
+                _gridMain = new Grid();
+                _gridMain.Children.Clear();
+                _gridMain.RowDefinitions.Clear();
+                _gridMain.ColumnDefinitions.Clear();
+                _gridMain.RowDefinitions.Add(new RowDefinition());
+                _gridMain.ColumnDefinitions.Add(new ColumnDefinition());
+                _gridMain.Children.Add(scrollViewer);
 
-            _gridMain = new Grid();
-            _gridMain.Children.Clear();
-            _gridMain.RowDefinitions.Clear();
-            _gridMain.ColumnDefinitions.Clear();
-            _gridMain.RowDefinitions.Add(new RowDefinition());
-            _gridMain.ColumnDefinitions.Add(new ColumnDefinition());
-            _gridMain.Children.Add(scrollViewer);
-
-            _dockPanel = new DockPanel();
-            _dockPanel.Children.Add(_gridMain);
+                _dockPanel = new DockPanel();
+                _dockPanel.Children.Add(_gridMain);
+            });
         }
     }
 }
