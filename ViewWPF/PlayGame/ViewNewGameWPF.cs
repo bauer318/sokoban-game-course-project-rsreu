@@ -10,14 +10,32 @@ using ViewWPF.MenuGraphics;
 
 namespace ViewWPF.PlayGame
 {
+    /// <summary>
+    /// Representes the new game's view
+    /// </summary>
     public partial class ViewNewGameWPF : ViewNewGameBase
     {
+        /// <summary>
+        /// Main dockpanel as main container's new game's view
+        /// </summary>
         private DockPanel _dockPanel;
+        /// <summary>
+        /// Main grid's new game's view
+        /// </summary>
         private Grid _gridMain;
+        /// <summary>
+        /// The resource dictionary's new game's view
+        /// </summary>
         private ResourceDictionary _resourceDictionary = Application.LoadComponent(
             new Uri("/ViewWPF;component/PlayGame/ResourceDictionaries/CellWPF.xaml",
                UriKind.RelativeOrAbsolute)) as ResourceDictionary;
+        /// <summary>
+        /// The sokoban's game
+        /// </summary>
         private GameWPF _game;
+        /// <summary>
+        /// Get or Set the sokoban's game
+        /// </summary>
         public GameWPF Game
         {
             get
@@ -31,24 +49,6 @@ namespace ViewWPF.PlayGame
             }
         }
 
-        public Grid GridMain
-        {
-            get
-            {
-                return _gridMain;
-            }
-            private set
-            {
-                _gridMain = value;
-            }
-        }
-        public DockPanel DockPanel
-        {
-            get
-            {
-                return _dockPanel;
-            }
-        }
         /// <summary>
         /// Try to load and start the first level of the game.
         /// </summary>
@@ -63,6 +63,9 @@ namespace ViewWPF.PlayGame
                 PrintMessage("Problem loading game. " + ex.Message);
             }
         }
+        /// <summary>
+        /// Draw the current sokoban's game level
+        /// </summary>
         private void DrawGameLevel()
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -123,7 +126,9 @@ namespace ViewWPF.PlayGame
                 _dockPanel.Children.Add(_gridMain);
             });
         }
-
+        /// <summary>
+        /// Processes to draw the sokoban's game level
+        /// </summary>
         public override void ProcessDrawGameLevel()
         {
             CommandManager.Clear();
@@ -139,11 +144,18 @@ namespace ViewWPF.PlayGame
             });
             
         }
+        /// <summary>
+        /// Set the application's resource dictionary
+        /// </summary>
+        /// <param name="parResourceDictionary">the application's resource dictionary</param>
         private void SetApplicationResourceDictionary(ResourceDictionary parResourceDictionary)
         {
             Application.Current.Resources.MergedDictionaries.Add(parResourceDictionary);
         }
-
+        /// <summary>
+        /// Print a message
+        /// </summary>
+        /// <param name="parMessage">The message to print</param>
         public override void PrintMessage(string parMessage)
         {
             MessageBox.Show(parMessage);

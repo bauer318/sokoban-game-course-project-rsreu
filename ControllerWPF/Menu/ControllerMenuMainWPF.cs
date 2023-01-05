@@ -9,9 +9,18 @@ using ViewWPF.Records;
 
 namespace ControllerWPF.Menu
 {
+    /// <summary>
+    /// Main menu's controller
+    /// </summary>
     public class ControllerMenuMainWPF : Controller.Menu.ControllerMenu
     {
+        /// <summary>
+        /// Main menu's view
+        /// </summary>
         private readonly ViewWPF.MenuGraphics.ViewMenuMainWPF _viewMenu = null;
+        /// <summary>
+        /// Default's contructor
+        /// </summary>
         public ControllerMenuMainWPF()
         {
             Menu = new Model.Menu.MenuMain();
@@ -47,11 +56,18 @@ namespace ControllerWPF.Menu
             }
 
         }
+        /// <summary>
+        /// Start Main menu to work with KeyDown 
+        /// </summary>
         public override void Start()
         {
             ViewMenuMainWPF.MainWindow.KeyDown += new KeyEventHandler(Controll_KeyDown);
         }
-
+        /// <summary>
+        /// Controlls KeyDown
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Controll_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)

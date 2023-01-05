@@ -14,6 +14,11 @@ namespace SokobanWPF
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// Occurs when the WPF's application startup
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             new ControllerMenuMainWPF().Start();

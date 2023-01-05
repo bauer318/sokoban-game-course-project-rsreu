@@ -8,21 +8,30 @@ using View.Menu;
 
 namespace ViewWPF.MenuGraphics
 {
+    /// <summary>
+    /// Representes the view's menu
+    /// </summary>
     public class ViewMenuWPF : View.Menu.ViewMenu, IMenu
     {
+        /// <summary>
+        /// Initializes the view's menu
+        /// </summary>
+        /// <param name="parSubMenuItem">The submenu's item</param>
         public ViewMenuWPF(Model.Menu.Menu parSubMenuItem) : base(parSubMenuItem)
         {
             Draw();
         }
+        /// <summary>
+        /// Draw the view's menu
+        /// </summary>
         public override void Draw()
         {
             throw new NotImplementedException();
         }
-
-        public void Init(FrameworkElement parControl)
-        {
-        }
-
+        /// <summary>
+        /// Set the menu's parent control
+        /// </summary>
+        /// <param name="parControl"></param>
         public void SetParentControl(FrameworkElement parControl)
         {
             View.Menu.ViewMenuItem[] menu = Menu;
@@ -31,7 +40,11 @@ namespace ViewWPF.MenuGraphics
                 ((IMenu)elViewMenuItem).SetParentControl(parControl);
             }
         }
-
+        /// <summary>
+        /// Create a menu's item
+        /// </summary>
+        /// <param name="parMenuItem">The menu's item</param>
+        /// <returns></returns>
         public override ViewMenuItem CreateItem(Model.Menu.MenuItem parMenuItem)
         {
             if (parMenuItem is Model.Menu.SubMenuItem)
@@ -40,7 +53,9 @@ namespace ViewWPF.MenuGraphics
                 return new ViewMenuItemWPF(parMenuItem);
             return null;
         }
-
+        /// <summary>
+        /// Occurs when need to redraw the menu
+        /// </summary>
         public override void NeedRedraw()
         {
             foreach (View.Menu.ViewMenuItem elViewMenuItem in Menu)

@@ -4,10 +4,22 @@ using View.Help;
 
 namespace ViewWPF.Help
 {
+    /// <summary>
+    /// The Help's view
+    /// </summary>
     public class ViewHelpWPF : ViewHelpBase
     {
+        /// <summary>
+        /// Dockpanel as main's help view container
+        /// </summary>
         private DockPanel _dockPanel;
+        /// <summary>
+        /// Grid as main's help view grid
+        /// </summary>
         private Grid _gridMain;
+        /// <summary>
+        /// Get the main's dockpanel
+        /// </summary>
         public DockPanel DockPanel
         {
             get
@@ -15,22 +27,18 @@ namespace ViewWPF.Help
                 return _dockPanel;
             }
         }
-
-        public Grid GridMain
-        {
-            get
-            {
-                return _gridMain;
-            }
-            private set
-            {
-                _gridMain = value;
-            }
-        }
+        /// <summary>
+        /// Print a message 
+        /// </summary>
+        /// <param name="parMessage">The message to print</param>
         public override void PrintMessage(string parMessage)
         {
             MessageBox.Show(parMessage);
         }
+        /// <summary>
+        /// Print the help's text
+        /// </summary>
+        /// <param name="parTextHelpArray"></param>
         public void PrintTextHelpGame(string[] parTextHelpArray)
         {
             TextBox textBox = new()

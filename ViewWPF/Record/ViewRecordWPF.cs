@@ -10,11 +10,26 @@ using ViewWPF.MenuGraphics;
 
 namespace ViewWPF.Records
 {
+    /// <summary>
+    /// Representes the record's view
+    /// </summary>
     public class ViewRecordWPF : ViewRecordBase
     {
+        /// <summary>
+        /// Main dockpanel as main container's record view
+        /// </summary>
         private DockPanel _dockPanel;
+        /// <summary>
+        /// The record grid columns's name
+        /// </summary>
         private string[] _columnsName;
+        /// <summary>
+        /// The main's grid
+        /// </summary>
         private Grid _gridMain;
+        /// <summary>
+        /// Get the dockpanel
+        /// </summary>
         public DockPanel DockPanel
         {
             get
@@ -22,10 +37,18 @@ namespace ViewWPF.Records
                 return _dockPanel;
             }
         }
+        /// <summary>
+        /// Print a message
+        /// </summary>
+        /// <param name="parMessage">The message to print</param>
         public override void PrintMessage(string parMessage)
         {
             MessageBox.Show(parMessage);
         }
+        /// <summary>
+        /// Creates the record's datagrid
+        /// </summary>
+        /// <returns>The record's datagrid with columns's name</returns>
         private DataGrid CreateRecordDataGrid()
         {
 
@@ -50,6 +73,10 @@ namespace ViewWPF.Records
             return dataGrid;
 
         }
+        /// <summary>
+        /// Processes to print game's record
+        /// </summary>
+        /// <param name="parRecordDictionary">The record's dictionary as a pair of level's number and record</param>
         public void ProcessPrintRecord(Dictionary<int, Record> parRecordDictionary)
         {
             DataGrid dataGrid = CreateRecordDataGrid();
@@ -74,6 +101,10 @@ namespace ViewWPF.Records
             }
             DataGridIntoScrollViewer(dataGrid);
         }
+        /// <summary>
+        /// Add the datagrid in the scrollview 
+        /// </summary>
+        /// <param name="parDataGrid">The datagrid</param>
         private void DataGridIntoScrollViewer(DataGrid parDataGrid)
         {
             ScrollViewer scrollViewer = new()

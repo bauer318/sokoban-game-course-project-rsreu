@@ -9,10 +9,22 @@ using System.Windows.Interop;
 
 namespace ViewWPF
 {
+    /// <summary>
+    /// The main window
+    /// </summary>
     public class MainWindow:Window
     {
+        /// <summary>
+        /// The main window's instance
+        /// </summary>
         private static MainWindow instance;
+        /// <summary>
+        /// The lock's object 
+        /// </summary>
         private static readonly object syncRoot = new();
+        /// <summary>
+        /// Initializes the main window
+        /// </summary>
         private MainWindow()
         {
             ShowActivated = true;
@@ -22,7 +34,10 @@ namespace ViewWPF
             WindowStyle = WindowStyle.None;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
-
+        /// <summary>
+        /// Get the Main window's instance - pattern singleton
+        /// </summary>
+        /// <returns></returns>
         public static MainWindow getInstance()
         {
             lock (syncRoot)

@@ -1,19 +1,32 @@
 ﻿using Model.PlayGame.Commands;
 using Model.PlayGame.Locations;
 using Model.PlayGame.NewGame;
-using System.Windows.Input;
-using View.PlayGame;
-using ViewWPF.PlayGame;
-using ViewWPF.MenuGraphics;
 using ModelWPF.PlayGame.NewGame;
 using System.Threading;
+using System.Windows.Input;
+using View.PlayGame;
+using ViewWPF.MenuGraphics;
+using ViewWPF.PlayGame;
 
 namespace Controller.PlayGame
 {
-    public class ControllerPlayGameWPF:ControllerPlayGame
+    /// <summary>
+    /// New game's controller
+    /// </summary>
+    public class ControllerPlayGameWPF : ControllerPlayGame
     {
+        /// <summary>
+        /// New game's view
+        /// </summary>
         private readonly ViewNewGameWPF _viewNewGameWPF = null;
+        /// <summary>
+        /// Representes the sokoban's game
+        /// </summary>
         private readonly GameWPF _game;
+        /// <summary>
+        /// Initializes the new game's controller
+        /// </summary>
+        /// <param name="parViewNewGameBase">New game's base view</param>
         public ControllerPlayGameWPF(ViewNewGameBase parViewNewGameBase) : base(parViewNewGameBase)
         {
             _viewNewGameWPF = parViewNewGameBase as ViewNewGameWPF;
@@ -23,16 +36,25 @@ namespace Controller.PlayGame
             thread.Start();
             AddKeyDownEventHandler();
         }
+        /// <summary>
+        /// Remove the KeyDown Controll from the main windows
+        /// </summary>
         private void RemoveKeyDownEventHandler()
         {
             ViewMenuMainWPF.MainWindow.KeyDown -= new KeyEventHandler(Controll_KeyDown);
         }
-
+        /// <summary>
+        /// Add the KeyDown Controll to the main windows
+        /// </summary>
         private void AddKeyDownEventHandler()
         {
             ViewMenuMainWPF.MainWindow.KeyDown += new KeyEventHandler(Controll_KeyDown);
         }
-        
+        /// <summary>
+        /// Controll the KeyDown
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Controll_KeyDown(object sender, KeyEventArgs e)
         {
             CommandBase command = null;
@@ -64,7 +86,7 @@ namespace Controller.PlayGame
                             if (Keyboard.Modifiers == ModifierKeys.Control)
                             {
                                 LevelPlayedUtils = new(false);
-                                ViewNewGameBase.FirstStartLevel = true; 
+                                ViewNewGameBase.FirstStartLevel = true;
                                 RemoveKeyDownEventHandler();
                                 ViewMenuMainWPF.BackToMainMenu();
                             }
@@ -72,7 +94,7 @@ namespace Controller.PlayGame
                         case Key.N:
                             if (Keyboard.Modifiers == ModifierKeys.Control)
                             {
-                                
+
                                 var nextLevel = _game.Level.LevelNumber + 1;
                                 if (LevelPlayedUtils.LevelPlayed.IsLevelPlayed(nextLevel))
                                 {
@@ -81,16 +103,16 @@ namespace Controller.PlayGame
                                 else
                                 {
                                     _viewNewGameWPF.PrintMessage(string.Format("The level {0} is not been played or the current level is the " +
-                                        "last game's level",nextLevel+1));
+                                        "last game's level", nextLevel + 1));
                                 }
                             }
                             break;
                         case Key.P:
                             if (Keyboard.Modifiers == ModifierKeys.Control)
                             {
-                                
+
                                 var previousLevel = _game.Level.LevelNumber - 1;
-                                if (previousLevel>=0)
+                                if (previousLevel >= 0)
                                 {
                                     ProcessPreviousLevel();
                                 }
@@ -118,7 +140,7 @@ namespace Controller.PlayGame
                             ViewMenuMainWPF.BackToMainMenu();
                             break;
                         case GameState.LevelCompleted:
-                            if(e.Key != Key.Escape)
+                            if (e.Key != Key.Escape)
                             {
                                 UpdateRecord(_game.Level.LevelNumber, _game.Level.Actor.MoveCount);
                                 if (RecordUtils.NewRecordHasBeenSet)
@@ -147,7 +169,7 @@ namespace Controller.PlayGame
         /// </summary>
         public override void ProcessNextLevel()
         {
-            
+
             _game.GotoNextLevel();
             ViewNewGameBase.FirstStartLevel = false;
             ViewNewGameBase.ProcessDrawGameLevel();
@@ -157,14 +179,10 @@ namespace Controller.PlayGame
         /// </summary>
         public override void ProcessPreviousLevel()
         {
-            
+
             _game.BackToPreviousLevel();
             ViewNewGameBase.FirstStartLevel = false;
             ViewNewGameBase.ProcessDrawGameLevel();
         }
-
-       
-        
-        
     }
 }
