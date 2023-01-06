@@ -63,6 +63,7 @@ namespace ControllerConsole.PlayGame
             {
                 ConsoleKeyInfo keyPressed = Console.ReadKey(true);
                 CommandBase command = null;
+                Direction direction = Direction.Up;
                 if (keyPressed.Key == ConsoleKey.Escape || _game.GameState == GameState.GameOver)
                 {
                     if (_game.GameState == GameState.GameOver)
@@ -101,21 +102,25 @@ namespace ControllerConsole.PlayGame
                         {
                             case ConsoleKey.UpArrow:
                                 command = new MoveCommand(_game.Level, Direction.Up);
+                                direction = Direction.Up;
                                 break;
                             case ConsoleKey.DownArrow:
                                 command = new MoveCommand(_game.Level, Direction.Down);
+                                direction = Direction.Down;
                                 break;
                             case ConsoleKey.LeftArrow:
                                 command = new MoveCommand(_game.Level, Direction.Left);
+                                direction = Direction.Left;
                                 break;
                             case ConsoleKey.RightArrow:
                                 command = new MoveCommand(_game.Level, Direction.Right);
+                                direction = Direction.Right;
                                 break;
                             case ConsoleKey.Z:
                                 if (keyPressed.Modifiers == ConsoleModifiers.Control)
                                 {
                                     ViewNewGameBase.CommandManager.Undo();
-                                    _viewNewGameConsole.Reedraw();
+                                    _viewNewGameConsole.ReedrawForUndo();
                                 }
                                 break;
                             case ConsoleKey.N:
@@ -175,6 +180,7 @@ namespace ControllerConsole.PlayGame
                 {
                     ViewNewGameBase.CommandManager.Execute(command);
                     _viewNewGameConsole.Reedraw();
+                    //_viewNewGameConsole.Reedraw(direction);
                 }
             }
         }

@@ -1,8 +1,9 @@
 ﻿using Model.PlayGame.Cells;
+using Model.PlayGame.Cells.Actors;
 using ModelConsole.PlayGame.NewGame;
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Threading.Tasks;
 using View.PlayGame;
 using ViewConsole.Menu;
 
@@ -17,6 +18,7 @@ namespace ViewConsole.PlayGame
         /// The menu's view
         /// </summary>
         private ViewMenuConsole _viewMenuConsole;
+        private object drawCellLock = new();
         /// <summary>
         /// The List of current level's view cell with location
         /// </summary>
@@ -77,76 +79,65 @@ namespace ViewConsole.PlayGame
         /// </summary>
         public void DrawGameLevel()
         {
+
             Console.Clear();
             _cellButtonLocations.Clear();
-            Console.BackgroundColor = ConsoleColor.Gray;
             var rowCount = _game.Level.RowCount;
             var colCount = _game.Level.ColumnCount;
             if (rowCount <= _viewMenuConsole.HEIGHT && colCount <= _viewMenuConsole.WIDTH)
             {
-                var pixelSize = Math.Min(_viewMenuConsole.HEIGHT, _viewMenuConsole.WIDTH) / Math.Max(rowCount, colCount);
-                var startLeft = ((_viewMenuConsole.WIDTH - (colCount * pixelSize)) / 2);
-                var startTop = ((_viewMenuConsole.HEIGHT - (rowCount * pixelSize)) / 2);
-                /* if ((rowCount - 1) * pixelSize + startLeft >= _viewMenuConsole.WIDTH)
-                 {
-                     startLeft -= 6;
-                     if (startLeft < 0)
-                     {
-                         startLeft = 0;
-                     }
-                 }
-                 if ((colCount - 1) * pixelSize + startTop >= _viewMenuConsole.HEIGHT)
-                 {
-                     startTop -= 6;
-                     if (startTop < 0)
-                     {
-                         startTop = 0;
-                     }
-                 }*/
-
-
-                /*for (var row = 0; row < rowCount; row++)
+                var pixelSize = 3;
+                var startLeft = (_viewMenuConsole.WIDTH - colCount * pixelSize) / 6;
+                var startTop = (_viewMenuConsole.HEIGHT - rowCount * pixelSize) / 6;
+                //var startLeft = 14;
+                //var startTop = 0;
+                for (var row = 0; row < rowCount; row++)
                 {
-                    startTop++;
-                    var left = startLeft;
+                    var top = startTop + row;
                     for (var col = 0; col < colCount; col++)
                     {
-                        left++;
-                        _cellButtonLocations.Add(new ViewCellLocation(left, startTop, row, col));
-                        Cell cell = _game.Level[row, col];
-                        //SetLeftTopConsoleCursor(startTop, left);
-                        //DrawCell(cell);
-                        DrawCell(cell, left, startTop);
+                        var left = startLeft + col;
+                        _cellButtonLocations.Add(new ViewCellLocation(row, col, top, left));
+                        DrawCell(_game.Level[row, col], left, top);
                     }
-                }*/
-                Thread t = new(() => 
-                {
-                    DrawCellUtils.Level = _game.Level;
-                    DrawCellUtils.InitLevelField(colCount, rowCount, startLeft, startTop, pixelSize);
-                    DrawCellUtils.Draw();
-                });
-                t.Start();
-               
+                }
             }
             else
             {
-                PrintMessage("Error!!!\n Incorrect row or column's level");
+                PrintMessage("Error!!!");
             }
+
 
         }
         /// <summary>
         /// Redraw the current game's level
         /// </summary>
-        public void Reedraw()
+        public void ReedrawForUndo()
         {
-            _cellButtonLocations.ForEach(c =>
+            Parallel.ForEach(_cellButtonLocations, c =>
             {
                 Cell cell = Game.Level[c.X, c.Y];
                 if (!cell.Name.Equals("Wall"))
                 {
-                    /*SetLeftTopConsoleCursor(c.YMap, c.XMap);
-                    DrawCell(cell);*/
-                    DrawCell(cell, c.XMap, c.YMap);
+                    DrawCell(cell, c.YMap, c.XMap);
+                }
+            });
+        }
+        public void Reedraw()
+        {
+            Actor actor = _game.Level.Actor;
+            var actorX = actor.Location.RowNumber;
+            var actorY = actor.Location.ColumnNumber;
+            Parallel.ForEach(_cellButtonLocations, c =>
+            {
+                Cell cell = Game.Level[c.X, c.Y];
+                if (!cell.Name.Equals("Wall"))
+                {
+                    if ((c.X <= actorX + 1 && c.X >= actorX - 1) && (c.Y <= actorY + 1 && c.Y >= actorY - 1))
+                    {
+                        DrawCell(cell, c.YMap, c.XMap);
+                    }
+
                 }
             });
         }
@@ -204,51 +195,56 @@ namespace ViewConsole.PlayGame
         }
         private void DrawCell(Cell parCell, int parX, int parY)
         {
-            CellContents cellContents = parCell.CellContents;
-            switch (parCell.Name)
+            lock (drawCellLock)
             {
-                case ("Wall"):
-                    DrawCellUtils.DrawWall(parX, parY);
-                    break;
-                case ("Floor"):
-                    if (cellContents != null)
-                    {
-                        switch (cellContents.Name)
+                CellContents cellContents = parCell.CellContents;
+                switch (parCell.Name)
+                {
+                    case ("Wall"):
+                        DrawCellUtils.DrawWall(parX, parY);
+                        break;
+                    case ("Floor"):
+                        if (cellContents != null)
                         {
-                            case ("Treasure"):
-                                DrawCellUtils.DrawTreasureOnFloor(parX, parY);
-                                break;
-                            case ("Actor"):
-                                DrawCellUtils.DrawActorOnFloor(parX, parY);
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        DrawCellUtils.DrawEmptyFloor(parX, parY);
-                    }
-                    break;
-                case ("Space"):
-                    DrawCellUtils.DrawSpace(parX, parY);
-                    break;
-                case ("Goal"):
-                    if (cellContents != null)
-                    {
-                        if (cellContents.Name.Equals("Treasure"))
-                        {
-                            DrawCellUtils.DrawTreasureOnGoal(parX, parY);
+                            switch (cellContents.Name)
+                            {
+                                case ("Treasure"):
+                                    DrawCellUtils.DrawTreasureOnFloor(parX, parY);
+                                    break;
+                                case ("Actor"):
+                                    DrawCellUtils.DrawActorOnFloor(parX, parY);
+                                    break;
+                            }
                         }
                         else
                         {
-                            DrawCellUtils.DrawActorOnFloor(parX, parY);
+                            DrawCellUtils.DrawEmptyFloor(parX, parY);
                         }
-                    }
-                    else
-                    {
-                        DrawCellUtils.DrawEmptyGoal(parX, parY);
-                    }
-                    break;
+                        break;
+                    case ("Space"):
+                        DrawCellUtils.DrawSpace(parX, parY);
+                        break;
+                    case ("Goal"):
+                        if (cellContents != null)
+                        {
+                            if (cellContents.Name.Equals("Treasure"))
+                            {
+                                DrawCellUtils.DrawTreasureOnGoal(parX, parY);
+                            }
+                            else
+                            {
+                                DrawCellUtils.DrawActorOnFloor(parX, parY);
+                            }
+                        }
+                        else
+                        {
+                            DrawCellUtils.DrawEmptyGoal(parX, parY);
+                        }
+                        break;
+                }
+
             }
+
         }
         /// <summary>
         /// Set the console cursor's left and top

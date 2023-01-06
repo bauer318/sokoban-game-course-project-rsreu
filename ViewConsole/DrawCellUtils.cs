@@ -1,9 +1,5 @@
-﻿using Model.PlayGame.Cells;
-using Model.PlayGame.Levels;
-using Model.PlayGame.Locations;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
+using static System.Console;
 
 namespace ViewConsole
 {
@@ -13,234 +9,322 @@ namespace ViewConsole
     public class DrawCellUtils
     {
         private static int pixelSize = 3;
-        private static List<Box> listBox = new List<Box>();
-        private static int threadNumber = 0;
-        public static Level Level;
+        private static ConsoleColor savevBackgroundColor;
+        private static ConsoleColor savedForegroundColor;
 
-        public static Box[,] InitLevelField(int parRowCount, int parColCount, int parLeft, int parTop, int parPixelSize)
+        private static void SaveColors()
         {
-            threadNumber = Math.Max(parRowCount, parColCount);
-            Box[,] playField = new Box[parRowCount, parColCount];
-            ConsoleColor color = ConsoleColor.Gray;
-            char symbol = '\u2588';
-            for (int i = 0; i < playField.GetLength(0); i++)
-            {
-                for (int j = 0; j < playField.GetLength(1); j++)
-                {
-                    Cell cell = Level[new Location(j, i)];
-                    string boxName = null;
-                    switch (cell.Name)
-                    {
-                        case ("Wall"):
-                            boxName = "Wall";
-                            color = ConsoleColor.Cyan;
-                            break;
-                        case ("Floor"):
-                            if(cell.CellContents != null)
-                            {
-                                switch (cell.CellContents.Name)
-                                {
-                                    case ("Treasure"):
-                                        boxName = "TreasureOnFloor";
-                                        color = ConsoleColor.Yellow;
-                                        symbol = '#';
-                                        break;
-                                    case ("Actor"):
-                                        boxName = "ActorOnFloor";
-                                        color = ConsoleColor.Blue;
-                                        symbol = '\u2592';
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                boxName = "EmptyFloor";
-                                color = ConsoleColor.Black;
-                            }
-                            break;
-                        case ("Space"):
-                            boxName = "Space";
-                            color = ConsoleColor.Gray;
-                            break;
-                        case ("Goal"):
-                            if(cell.CellContents != null)
-                            {
-                                if (cell.CellContents.Name.Equals("Treasure"))
-                                {
-                                    boxName = "TreasureOnGoal";
-                                    color = ConsoleColor.Red;
-                                    symbol = '\u2593';
-                                }
-                                else
-                                {
-                                    boxName = "ActorOnFloor";
-                                    color = ConsoleColor.Blue;
-                                    symbol = '\u2592';
-                                }
-                            }
-                            else
-                            {
-                                boxName = "EmptyGoal";
-                                color = ConsoleColor.Red;
-                                symbol = '\u2591';
-                            }
-                            break;
-                    }
-                    playField[i, j] = new Box(i * parPixelSize + parLeft, j * parPixelSize + parTop,color, i,j,boxName);
-                    playField[i, j].InitBox(symbol);
-                    listBox.Add(playField[i, j]);
-                }
-            }
-            return playField;
+            savevBackgroundColor = BackgroundColor;
+            savedForegroundColor = ForegroundColor;
         }
-        public static void Draw()
+        private static void PutColorsBack()
         {
-            foreach(Box b in listBox)
-            {
-                b.DrawBox();
-            }
-        }
-        /// <summary>
-        /// Draw a Wall
-        /// </summary>
-        public static void DrawWall()
-        {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            //Console.Write("█");
-            Console.Write('\u2588');
-            Console.ForegroundColor = ConsoleColor.Gray;
+            BackgroundColor = savevBackgroundColor;
+            ForegroundColor = savedForegroundColor;
         }
         public static void DrawWall(int parX, int parY)
         {
-            for (var i = 0; i < pixelSize; i++)
+            SaveColors();
+            for (int x = 0; x < pixelSize; x++)
             {
-                for (var j = 0; j < pixelSize; j++)
+                for (int y = 0; y < pixelSize; y++)
                 {
-                    Console.SetCursorPosition(parX + i, parY + j);
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
                     DrawWall();
                 }
             }
+            PutColorsBack();
         }
-        /// <summary>
-        /// Draw a enpty goal - a goal without treasure
-        /// </summary>
-        public static void DrawEmptyGoal()
+        public static void DrawTreasure(int parX, int parY)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            //Console.Write(".");
-            Console.Write('\u2588');
-            Console.BackgroundColor = ConsoleColor.Gray;
-            Console.ForegroundColor = ConsoleColor.Black;
+            SaveColors();
+            for (int x = 0; x < pixelSize; x++)
+            {
+                for (int y = 0; y < pixelSize; y++)
+                {
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    DrawTreasure();
+                }
+            }
+            PutColorsBack();
         }
         public static void DrawEmptyGoal(int parX, int parY)
         {
-            for (var i = 0; i < pixelSize; i++)
+            for (int x = 0; x < pixelSize; x++)
             {
-                for (var j = 0; j < pixelSize; j++)
+                for (int y = 0; y < pixelSize; y++)
                 {
-                    Console.SetCursorPosition(parX + i, parY + j);
-                    DrawEmptyGoal();
+                    SaveColors();
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    if (x == 1 && y == 1)
+                    {
+
+                        DrawEmptyGoal();
+                    }
+                    else
+                    {
+                        SetLimitColors(ConsoleColor.Red, ConsoleColor.White);
+                        if (x == 0 && y == 0)
+                        {
+                            DrawLeftTopLimit();
+                        }
+                        else if (x == 0 && y == 2)
+                        {
+                            DrawLeftDowLimit();
+                        }
+                        else if (x == 2 && y == 0)
+                        {
+                            DrawRightTopLimit();
+
+                        }
+                        else if (x == 2 && y == 2)
+                        {
+                            DrawRightDownLimit();
+                        }
+                        else
+                        {
+                            DrawSpace();
+                        }
+
+                    }
+                    PutColorsBack();
+
                 }
             }
-        }
-        /// <summary>
-        /// Draw a Treasure on Goal
-        /// </summary>
-        public static void DrawTreasureOnGoal()
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("#");
-            Console.BackgroundColor = ConsoleColor.Gray;
         }
         public static void DrawTreasureOnGoal(int parX, int parY)
         {
-            for (var i = 0; i < pixelSize; i++)
+            for (int x = 0; x < pixelSize; x++)
             {
-                for (var j = 0; j < pixelSize; j++)
+                for (int y = 0; y < pixelSize; y++)
                 {
-                    Console.SetCursorPosition(parX + i, parY + j);
-                    DrawTreasureOnGoal();
+                    SaveColors();
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    if (x == 1 && y == 1)
+                    {
+
+                        DrawTreasureOnFloor();
+                    }
+                    else
+                    {
+                        SetLimitColors(ConsoleColor.DarkRed, ConsoleColor.DarkGray);
+                        if (x == 0 && y == 0)
+                        {
+                            DrawLeftTopLimit();
+                        }
+                        else if (x == 0 && y == 2)
+                        {
+                            DrawLeftDowLimit();
+                        }
+                        else if (x == 2 && y == 0)
+                        {
+                            DrawRightTopLimit();
+
+                        }
+                        else if (x == 2 && y == 2)
+                        {
+                            DrawRightDownLimit();
+                        }
+                        else
+                        {
+                            PutColorsBack();
+                            DrawSpace();
+                        }
+
+                    }
+                    PutColorsBack();
+
                 }
             }
-        }
-        /// <summary>
-        /// Draw a empty floor - where the actor can move
-        /// </summary>
-        public static void DrawEmptyFloor()
-        {
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write(".");
         }
         public static void DrawEmptyFloor(int parX, int parY)
         {
-            for (var i = 0; i < pixelSize; i++)
+            SaveColors();
+            for (int x = 0; x < pixelSize; x++)
             {
-                for (var j = 0; j < pixelSize; j++)
+                for (int y = 0; y < pixelSize; y++)
                 {
-                    Console.SetCursorPosition(parX + i, parY + j);
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
                     DrawEmptyFloor();
                 }
             }
-        }
-        /// <summary>
-        /// Draw a Treasure on floor - initial's position
-        /// </summary>
-        public static void DrawTreasureOnFloor()
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("#");
-            Console.BackgroundColor = ConsoleColor.Gray;
-            Console.ForegroundColor = ConsoleColor.Black;
+            PutColorsBack();
         }
         public static void DrawTreasureOnFloor(int parX, int parY)
         {
-            for (var i = 0; i < pixelSize; i++)
+            for (int x = 0; x < pixelSize; x++)
             {
-                for (var j = 0; j < pixelSize; j++)
+                for (int y = 0; y < pixelSize; y++)
                 {
-                    Console.SetCursorPosition(parX + i, parY + j);
-                    DrawTreasureOnFloor();
+                    SaveColors();
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    if (x == 1 && y == 1)
+                    {
+
+                        DrawTreasureOnFloor();
+                    }
+                    else
+                    {
+                        SetLimitColors(ConsoleColor.White, ConsoleColor.Black);
+                        if (x == 0 && y == 0)
+                        {
+                            DrawLeftTopLimit();
+                        }
+                        else if (x == 0 && y == 2)
+                        {
+                            DrawLeftDowLimit();
+                        }
+                        else if (x == 2 && y == 0)
+                        {
+                            DrawRightTopLimit();
+                            
+                        }else if(x==2 && y == 2)
+                        {
+                            DrawRightDownLimit();
+                        }
+                        else
+                        {
+                            PutColorsBack();
+                            DrawSpace();
+                        }
+                        
+                    }
+                    PutColorsBack();
+
                 }
             }
-        }
-        /// <summary>
-        /// Draw an actor on floor
-        /// </summary>
-        public static void DrawActorOnFloor()
-        {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("@");
-            Console.ForegroundColor = ConsoleColor.Blue;
         }
         public static void DrawActorOnFloor(int parX, int parY)
         {
-            for (var i = 0; i < pixelSize; i++)
+            for (int x = 0; x < pixelSize; x++)
             {
-                for (var j = 0; j < pixelSize; j++)
+                for (int y = 0; y < pixelSize; y++)
                 {
-                    Console.SetCursorPosition(parX + i, parY + j);
-                    DrawActorOnFloor();
+                    SaveColors();
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    if (x == 1 && y == 1)
+                    {
+
+                        DrawActorOnFloor();
+                    }
+                    else
+                    {
+                        SetLimitColors(ConsoleColor.Green, ConsoleColor.White);
+                        if (x == 0 && y == 0)
+                        {
+                            DrawLeftTopLimit();
+                        }
+                        else if (x == 0 && y == 2)
+                        {
+                            DrawLeftDowLimit();
+                        }
+                        else if (x == 2 && y == 0)
+                        {
+                            DrawRightTopLimit();
+
+                        }
+                        else if (x == 2 && y == 2)
+                        {
+                            DrawRightDownLimit();
+                        }
+                        else
+                        {
+                            DrawSpace();
+                        }
+
+                    }
+                    PutColorsBack();
+
                 }
             }
-        }
-        /// <summary>
-        /// Draw the space
-        /// </summary>
-        public static void DrawSpace()
-        {
-            Console.BackgroundColor = ConsoleColor.Gray;
-            Console.Write(" ");
         }
         public static void DrawSpace(int parX, int parY)
         {
-            for (var i = 0; i < pixelSize; i++)
+            SaveColors();
+            for (int x = 0; x < pixelSize; x++)
             {
-                for (var j = 0; j < pixelSize; j++)
+                for (int y = 0; y < pixelSize; y++)
                 {
-                    Console.SetCursorPosition(parX + i, parY + j);
+                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
                     DrawSpace();
+
                 }
             }
+            PutColorsBack();
+        }
+        public static void DrawWall()
+        {
+            ForegroundColor = ConsoleColor.DarkCyan;
+            Write('█');
+            ForegroundColor = ConsoleColor.Black;
+        }
+        public static void DrawTreasure()
+        {
+            ForegroundColor = ConsoleColor.Yellow;
+            Write("█");
+            ForegroundColor = ConsoleColor.Black;
+        }
+        public static void DrawEmptyGoal()
+        {
+            ForegroundColor = ConsoleColor.Red;
+            Write("*");
+            BackgroundColor = ConsoleColor.Black;
+            ForegroundColor = ConsoleColor.White;
+        }
+        public static void DrawTreasureOnGoal()
+        {
+            ForegroundColor = ConsoleColor.Red;
+            Write("█");
+            BackgroundColor = ConsoleColor.Black;
+        }
+        public static void DrawEmptyFloor()
+        {
+            ForegroundColor = ConsoleColor.White;
+            Write(".");
+        }
+        public static void DrawTreasureOnFloor()
+        {
+            ForegroundColor = ConsoleColor.Yellow;
+            Write("#");
+            BackgroundColor = ConsoleColor.Black;
+            ForegroundColor = ConsoleColor.Yellow;
+        }
+        public static void DrawActorOnFloor()
+        {
+            ForegroundColor = ConsoleColor.White;
+            Write("@");
+            ForegroundColor = ConsoleColor.Black;
+        }
+        public static void DrawSpace()
+        {
+            BackgroundColor = ConsoleColor.Gray;
+            Write(" ");
+        }
+        private static void DrawSpace(ConsoleColor parBackgroundColor)
+        {
+            BackgroundColor = parBackgroundColor;
+            Write(" ");
+        }
+        public static void DrawLeftTopLimit()
+        {
+            Write("┌");
+        }
+        public static void DrawLeftDowLimit()
+        {
+            Write("└");
+        }
+        public static void DrawRightTopLimit()
+        {
+            Write("┐");
+        }
+        public static void DrawRightDownLimit()
+        {
+            Write("┘");
+        }
+        private static void SetLimitColors(ConsoleColor parBackgroundColor, ConsoleColor parForegroundColor)
+        {
+            ForegroundColor = parForegroundColor;
+            BackgroundColor = parBackgroundColor;
         }
 
     }

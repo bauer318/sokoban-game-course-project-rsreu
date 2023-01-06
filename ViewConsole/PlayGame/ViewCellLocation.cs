@@ -34,7 +34,7 @@ namespace ViewConsole.PlayGame
         /// <param name="parYMap">the console cursor's top</param>
         /// <param name="parX">the cell's row number</param>
         /// <param name="parY">the cell's column number</param>
-        public ViewCellLocation(int parXMap, int parYMap, int parX, int parY)
+        public ViewCellLocation(int parX, int parY,int parXMap, int parYMap)
         {
             XMap = parXMap;
             YMap = parYMap;
