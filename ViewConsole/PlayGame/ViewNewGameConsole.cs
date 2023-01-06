@@ -157,7 +157,7 @@ namespace ViewConsole.PlayGame
                 switch (parCell.Name)
                 {
                     case ("Wall"):
-                        DrawCellUtils.DrawWall(parX, parY);
+                        DrawUtils.DrawWall(parX, parY);
                         break;
                     case ("Floor"):
                         if (cellContents != null)
@@ -165,36 +165,36 @@ namespace ViewConsole.PlayGame
                             switch (cellContents.Name)
                             {
                                 case ("Treasure"):
-                                    DrawCellUtils.DrawTreasureOnFloor(parX, parY);
+                                    DrawUtils.DrawTreasureOnFloor(parX, parY);
                                     break;
                                 case ("Actor"):
-                                    DrawCellUtils.DrawActorOnFloor(parX, parY);
+                                    DrawUtils.DrawActorOnFloor(parX, parY);
                                     break;
                             }
                         }
                         else
                         {
-                            DrawCellUtils.DrawEmptyFloor(parX, parY);
+                            DrawUtils.DrawEmptyFloor(parX, parY);
                         }
                         break;
                     case ("Space"):
-                        DrawCellUtils.DrawSpace(parX, parY);
+                        DrawUtils.DrawSpace(parX, parY);
                         break;
                     case ("Goal"):
                         if (cellContents != null)
                         {
                             if (cellContents.Name.Equals("Treasure"))
                             {
-                                DrawCellUtils.DrawTreasureOnGoal(parX, parY);
+                                DrawUtils.DrawTreasureOnGoal(parX, parY);
                             }
                             else
                             {
-                                DrawCellUtils.DrawActorOnFloor(parX, parY);
+                                DrawUtils.DrawActorOnFloor(parX, parY);
                             }
                         }
                         else
                         {
-                            DrawCellUtils.DrawEmptyGoal(parX, parY);
+                            DrawUtils.DrawEmptyGoal(parX, parY);
                         }
                         break;
                 }

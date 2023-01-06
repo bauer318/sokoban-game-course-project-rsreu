@@ -52,21 +52,24 @@ namespace ViewConsole.Help
             {
                 foreach(char c in s)
                 {
+                    DrawUtils.SaveColors();
                     if (c.Equals('0'))
                     {
-                        DrawCellUtils.DrawWall();
+                        
+                        DrawUtils.DrawWall();
+                        
                     }
                     else if (c.Equals('#'))
                     {
-                        DrawCellUtils.DrawTreasureOnFloor();
+                        DrawUtils.DrawTreasureOnFloor();
                     }
                     else if (c.Equals('.'))
                     {
-                        DrawCellUtils.DrawEmptyGoal();
+                        DrawUtils.DrawEmptyGoal();
                     }
                     else if (c.Equals('@'))
                     {
-                        DrawCellUtils.DrawActorOnFloor();
+                        DrawUtils.DrawActorOnFloor();
                     }
                     else
                     {
@@ -74,6 +77,7 @@ namespace ViewConsole.Help
                         Console.Write(c);
                     }
                     Console.ForegroundColor = ConsoleColor.White;
+                    DrawUtils.PutColorsBack();
                 }
                 Console.WriteLine();
             }

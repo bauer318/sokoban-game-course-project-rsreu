@@ -4,9 +4,9 @@ using static System.Console;
 namespace ViewConsole
 {
     /// <summary>
-    /// Provides for drawing the level's cells
+    /// Provides for drawing
     /// </summary>
-    public class DrawCellUtils
+    public class DrawUtils
     {
         private static int _pixelSize = 3;
         private static ConsoleColor _savevBackgroundColor;

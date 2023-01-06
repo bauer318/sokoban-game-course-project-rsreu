@@ -69,7 +69,7 @@ namespace ViewConsole.Records
         /// <param name="parRecordDictionary">The record's dictionary as a pair of level's number and record</param>
         public void ProcessPrintRecord(Dictionary<int, Record> parRecordDictionary)
         {
-
+            DrawUtils.SaveColors();
             int[] keyValues = new int[parRecordDictionary.Count];
             var count = 0;
             foreach (KeyValuePair<int, Record> entry in parRecordDictionary)
@@ -87,6 +87,7 @@ namespace ViewConsole.Records
                 Console.CursorLeft = 35;
                 Console.Write(parRecordDictionary[keyValues[j]].LastDateTime.ToString() + "\n");
             }
+            DrawUtils.PutColorsBack();
 
         }
     }
