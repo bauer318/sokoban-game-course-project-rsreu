@@ -43,7 +43,7 @@ namespace ViewConsole.Menu
             Console.Clear();
             Console.CursorLeft = (WIDTH - gameName.Length-4)/2;
             Console.CursorTop = HEIGHT/3;
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.Write(gameName);
             Console.ForegroundColor = ConsoleColor.White;
             foreach(View.Menu.ViewMenuItem elViewMenuItem in Menu)

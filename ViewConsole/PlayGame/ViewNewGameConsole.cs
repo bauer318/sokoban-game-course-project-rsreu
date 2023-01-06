@@ -86,6 +86,7 @@ namespace ViewConsole.PlayGame
             var colCount = _game.Level.ColumnCount;
             if (rowCount <= _viewMenuConsole.HEIGHT && colCount <= _viewMenuConsole.WIDTH)
             {
+                DrawUtils.PixelSize = 3;
                 if (DrawUtils.PixelSize * rowCount > _viewMenuConsole.HEIGHT ||
                     DrawUtils.PixelSize * colCount > _viewMenuConsole.WIDTH)
                 {
