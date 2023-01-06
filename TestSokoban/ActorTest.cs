@@ -92,7 +92,7 @@ namespace TestSokoban
         {
             _isLevelCompleted = false;
             _commandManager = new CommandManager();
-            string LevelDirectory = @"..\..\..\..\Levels\";
+            string LevelDirectory = @"..\..\..\..\TestLevel\";
             Game game = new Game();
             _level = new Level(game, 0);
             _level.LevelCompleted += Level_LevelCompleted;
