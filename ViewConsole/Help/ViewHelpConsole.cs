@@ -53,6 +53,7 @@ namespace ViewConsole.Help
                 foreach(char c in s)
                 {
                     DrawUtils.SaveColors();
+                    Console.ForegroundColor = ConsoleColor.Black;
                     if (c.Equals('0'))
                     {
                         
@@ -73,7 +74,6 @@ namespace ViewConsole.Help
                     }
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(c);
                     }
                     Console.ForegroundColor = ConsoleColor.White;

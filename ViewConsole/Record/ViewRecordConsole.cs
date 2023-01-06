@@ -70,6 +70,7 @@ namespace ViewConsole.Records
         public void ProcessPrintRecord(Dictionary<int, Record> parRecordDictionary)
         {
             DrawUtils.SaveColors();
+            Console.ForegroundColor = ConsoleColor.Black;
             int[] keyValues = new int[parRecordDictionary.Count];
             var count = 0;
             foreach (KeyValuePair<int, Record> entry in parRecordDictionary)
