@@ -18,7 +18,7 @@ namespace ViewConsole.PlayGame
         /// The menu's view
         /// </summary>
         private ViewMenuConsole _viewMenuConsole;
-        private object drawCellLock = new();
+        private object _drawCellLock = new();
         /// <summary>
         /// The List of current level's view cell with location
         /// </summary>
@@ -89,8 +89,7 @@ namespace ViewConsole.PlayGame
                 var pixelSize = 3;
                 var startLeft = (_viewMenuConsole.WIDTH - colCount * pixelSize) / 6;
                 var startTop = (_viewMenuConsole.HEIGHT - rowCount * pixelSize) / 6;
-                //var startLeft = 14;
-                //var startTop = 0;
+                
                 for (var row = 0; row < rowCount; row++)
                 {
                     var top = startTop + row;
@@ -104,7 +103,7 @@ namespace ViewConsole.PlayGame
             }
             else
             {
-                PrintMessage("Error!!!");
+                PrintMessage("Error!!! Level's dimension must be less or equal Console's Window dimension");
             }
 
 
@@ -123,6 +122,9 @@ namespace ViewConsole.PlayGame
                 }
             });
         }
+        /// <summary>
+        /// Redraw the actor's cell and those who arround him
+        /// </summary>
         public void Reedraw()
         {
             Actor actor = _game.Level.Actor;
@@ -142,60 +144,14 @@ namespace ViewConsole.PlayGame
             });
         }
         /// <summary>
-        /// Draw a level's cell
+        /// Draw the level's cell
         /// </summary>
-        /// <param name="parCell">The level's cell to draw</param>
-        private void DrawCell(Cell parCell)
-        {
-            CellContents cellContents = parCell.CellContents;
-            switch (parCell.Name)
-            {
-                case ("Wall"):
-                    DrawCellUtils.DrawWall();
-                    break;
-                case ("Floor"):
-                    if (cellContents != null)
-                    {
-                        switch (cellContents.Name)
-                        {
-                            case ("Treasure"):
-                                DrawCellUtils.DrawTreasureOnFloor();
-                                break;
-                            case ("Actor"):
-                                DrawCellUtils.DrawActorOnFloor();
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        DrawCellUtils.DrawEmptyFloor();
-                    }
-                    break;
-                case ("Space"):
-                    DrawCellUtils.DrawSpace();
-                    break;
-                case ("Goal"):
-                    if (cellContents != null)
-                    {
-                        if (cellContents.Name.Equals("Treasure"))
-                        {
-                            DrawCellUtils.DrawTreasureOnGoal();
-                        }
-                        else
-                        {
-                            DrawCellUtils.DrawActorOnFloor();
-                        }
-                    }
-                    else
-                    {
-                        DrawCellUtils.DrawEmptyGoal();
-                    }
-                    break;
-            }
-        }
+        /// <param name="parCell">The level's cell to be drawn</param>
+        /// <param name="parX">The x coordinate as the cursor's top</param>
+        /// <param name="parY">The y coordinate as the cursor's left</param>
         private void DrawCell(Cell parCell, int parX, int parY)
         {
-            lock (drawCellLock)
+            lock (_drawCellLock)
             {
                 CellContents cellContents = parCell.CellContents;
                 switch (parCell.Name)
@@ -246,16 +202,7 @@ namespace ViewConsole.PlayGame
             }
 
         }
-        /// <summary>
-        /// Set the console cursor's left and top
-        /// </summary>
-        /// <param name="parRow">The row's number as the console cursor's top</param>
-        /// <param name="parCol">The column's number as the console cursor's left</param>
-        public void SetLeftTopConsoleCursor(int parRow, int parCol)
-        {
-            Console.CursorLeft = parCol;
-            Console.CursorTop = parRow;
-        }
+        
         /// <summary>
         /// Back to main's menu
         /// </summary>

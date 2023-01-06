@@ -8,54 +8,57 @@ namespace ViewConsole
     /// </summary>
     public class DrawCellUtils
     {
-        private static int pixelSize = 3;
-        private static ConsoleColor savevBackgroundColor;
-        private static ConsoleColor savedForegroundColor;
-
-        private static void SaveColors()
+        private static int _pixelSize = 3;
+        private static ConsoleColor _savevBackgroundColor;
+        private static ConsoleColor _savedForegroundColor;
+        /// <summary>
+        /// Saves the current Console's colors
+        /// Background and Foreground
+        /// </summary>
+        public static void SaveColors()
         {
-            savevBackgroundColor = BackgroundColor;
-            savedForegroundColor = ForegroundColor;
+            _savevBackgroundColor = BackgroundColor;
+            _savedForegroundColor = ForegroundColor;
         }
-        private static void PutColorsBack()
+        /// <summary>
+        /// Put back the console's saved colors
+        /// </summary>
+        public static void PutColorsBack()
         {
-            BackgroundColor = savevBackgroundColor;
-            ForegroundColor = savedForegroundColor;
+            BackgroundColor = _savevBackgroundColor;
+            ForegroundColor = _savedForegroundColor;
         }
+        /// <summary>
+        /// Draw a Wall
+        /// </summary>
+        /// <param name="parX">The x coordinate</param>
+        /// <param name="parY">The y coordinate</param>
         public static void DrawWall(int parX, int parY)
         {
             SaveColors();
-            for (int x = 0; x < pixelSize; x++)
+            for (int x = 0; x < _pixelSize; x++)
             {
-                for (int y = 0; y < pixelSize; y++)
+                for (int y = 0; y < _pixelSize; y++)
                 {
-                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
                     DrawWall();
                 }
             }
             PutColorsBack();
         }
-        public static void DrawTreasure(int parX, int parY)
-        {
-            SaveColors();
-            for (int x = 0; x < pixelSize; x++)
-            {
-                for (int y = 0; y < pixelSize; y++)
-                {
-                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
-                    DrawTreasure();
-                }
-            }
-            PutColorsBack();
-        }
+        /// <summary>
+        /// Draw an empty goal
+        /// </summary>
+        /// <param name="parX">The x coordinate</param>
+        /// <param name="parY">The y coordinate</param>
         public static void DrawEmptyGoal(int parX, int parY)
         {
-            for (int x = 0; x < pixelSize; x++)
+            for (int x = 0; x < _pixelSize; x++)
             {
-                for (int y = 0; y < pixelSize; y++)
+                for (int y = 0; y < _pixelSize; y++)
                 {
                     SaveColors();
-                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
                     if (x == 1 && y == 1)
                     {
 
@@ -92,14 +95,19 @@ namespace ViewConsole
                 }
             }
         }
+        /// <summary>
+        /// Draw a Treasure on the goal
+        /// </summary>
+        /// <param name="parX">The x coordinate</param>
+        /// <param name="parY">The y coordinate</param>
         public static void DrawTreasureOnGoal(int parX, int parY)
         {
-            for (int x = 0; x < pixelSize; x++)
+            for (int x = 0; x < _pixelSize; x++)
             {
-                for (int y = 0; y < pixelSize; y++)
+                for (int y = 0; y < _pixelSize; y++)
                 {
                     SaveColors();
-                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
                     if (x == 1 && y == 1)
                     {
 
@@ -137,27 +145,37 @@ namespace ViewConsole
                 }
             }
         }
+        /// <summary>
+        /// Draw an empty floor - actor's road
+        /// </summary>
+        /// <param name="parX">The x coordinate</param>
+        /// <param name="parY">The y coordinate</param>
         public static void DrawEmptyFloor(int parX, int parY)
         {
             SaveColors();
-            for (int x = 0; x < pixelSize; x++)
+            for (int x = 0; x < _pixelSize; x++)
             {
-                for (int y = 0; y < pixelSize; y++)
+                for (int y = 0; y < _pixelSize; y++)
                 {
-                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
                     DrawEmptyFloor();
                 }
             }
             PutColorsBack();
         }
+        /// <summary>
+        /// Draw a Treasure on floor
+        /// </summary>
+        /// <param name="parX">The x coordinate</param>
+        /// <param name="parY">The y coordinate</param>
         public static void DrawTreasureOnFloor(int parX, int parY)
         {
-            for (int x = 0; x < pixelSize; x++)
+            for (int x = 0; x < _pixelSize; x++)
             {
-                for (int y = 0; y < pixelSize; y++)
+                for (int y = 0; y < _pixelSize; y++)
                 {
                     SaveColors();
-                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
                     if (x == 1 && y == 1)
                     {
 
@@ -194,14 +212,19 @@ namespace ViewConsole
                 }
             }
         }
+        /// <summary>
+        /// Draw the actor on floor
+        /// </summary>
+        /// <param name="parX">The x coordinate</param>
+        /// <param name="parY">The y coordinate</param>
         public static void DrawActorOnFloor(int parX, int parY)
         {
-            for (int x = 0; x < pixelSize; x++)
+            for (int x = 0; x < _pixelSize; x++)
             {
-                for (int y = 0; y < pixelSize; y++)
+                for (int y = 0; y < _pixelSize; y++)
                 {
                     SaveColors();
-                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
                     if (x == 1 && y == 1)
                     {
 
@@ -238,32 +261,37 @@ namespace ViewConsole
                 }
             }
         }
+        /// <summary>
+        /// Draw the space
+        /// </summary>
+        /// <param name="parX">The x coordinate</param>
+        /// <param name="parY">The y coordinate</param>
         public static void DrawSpace(int parX, int parY)
         {
             SaveColors();
-            for (int x = 0; x < pixelSize; x++)
+            for (int x = 0; x < _pixelSize; x++)
             {
-                for (int y = 0; y < pixelSize; y++)
+                for (int y = 0; y < _pixelSize; y++)
                 {
-                    SetCursorPosition(parX * pixelSize + x, parY * pixelSize + y);
+                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
                     DrawSpace();
 
                 }
             }
             PutColorsBack();
         }
+        /// <summary>
+        /// Draw a Wall
+        /// </summary>
         public static void DrawWall()
         {
             ForegroundColor = ConsoleColor.DarkCyan;
             Write('█');
             ForegroundColor = ConsoleColor.Black;
         }
-        public static void DrawTreasure()
-        {
-            ForegroundColor = ConsoleColor.Yellow;
-            Write("█");
-            ForegroundColor = ConsoleColor.Black;
-        }
+        /// <summary>
+        /// Draw an empty goal
+        /// </summary>
         public static void DrawEmptyGoal()
         {
             ForegroundColor = ConsoleColor.Red;
@@ -271,17 +299,17 @@ namespace ViewConsole
             BackgroundColor = ConsoleColor.Black;
             ForegroundColor = ConsoleColor.White;
         }
-        public static void DrawTreasureOnGoal()
-        {
-            ForegroundColor = ConsoleColor.Red;
-            Write("█");
-            BackgroundColor = ConsoleColor.Black;
-        }
+        /// <summary>
+        /// Draw empty floor
+        /// </summary>
         public static void DrawEmptyFloor()
         {
             ForegroundColor = ConsoleColor.White;
             Write(".");
         }
+        /// <summary>
+        /// Draw a treasure on floor
+        /// </summary>
         public static void DrawTreasureOnFloor()
         {
             ForegroundColor = ConsoleColor.Yellow;
@@ -289,38 +317,56 @@ namespace ViewConsole
             BackgroundColor = ConsoleColor.Black;
             ForegroundColor = ConsoleColor.Yellow;
         }
+        /// <summary>
+        /// Draw the actor on floor
+        /// </summary>
         public static void DrawActorOnFloor()
         {
             ForegroundColor = ConsoleColor.White;
             Write("@");
             ForegroundColor = ConsoleColor.Black;
         }
+        /// <summary>
+        /// Draw the space
+        /// </summary>
         public static void DrawSpace()
         {
             BackgroundColor = ConsoleColor.Gray;
             Write(" ");
         }
-        private static void DrawSpace(ConsoleColor parBackgroundColor)
-        {
-            BackgroundColor = parBackgroundColor;
-            Write(" ");
-        }
+        /// <summary>
+        /// Draw the left top limit as a corner
+        /// </summary>
         public static void DrawLeftTopLimit()
         {
             Write("┌");
         }
+        /// <summary>
+        /// Draw the left down limit as a corner
+        /// </summary>
         public static void DrawLeftDowLimit()
         {
             Write("└");
         }
+        /// <summary>
+        /// Draw the right top limit as a corner
+        /// </summary>
         public static void DrawRightTopLimit()
         {
             Write("┐");
         }
+        /// <summary>
+        /// Draw the right down limit as corner
+        /// </summary>
         public static void DrawRightDownLimit()
         {
             Write("┘");
         }
+        /// <summary>
+        /// Set the limit's color
+        /// </summary>
+        /// <param name="parBackgroundColor">The limit's background color</param>
+        /// <param name="parForegroundColor">The limit's foreground color</param>
         private static void SetLimitColors(ConsoleColor parBackgroundColor, ConsoleColor parForegroundColor)
         {
             ForegroundColor = parForegroundColor;
