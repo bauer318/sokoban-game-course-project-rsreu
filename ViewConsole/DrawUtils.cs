@@ -8,7 +8,7 @@ namespace ViewConsole
     /// </summary>
     public class DrawUtils
     {
-        private static int _pixelSize = 3;
+        public static int PixelSize = 3;
         private static ConsoleColor _savevBackgroundColor;
         private static ConsoleColor _savedForegroundColor;
         /// <summary>
@@ -36,11 +36,11 @@ namespace ViewConsole
         public static void DrawWall(int parX, int parY)
         {
             SaveColors();
-            for (int x = 0; x < _pixelSize; x++)
+            for (int x = 0; x < PixelSize; x++)
             {
-                for (int y = 0; y < _pixelSize; y++)
+                for (int y = 0; y < PixelSize; y++)
                 {
-                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
+                    SetCursorPosition(parX * PixelSize + x, parY * PixelSize + y);
                     DrawWall();
                 }
             }
@@ -53,12 +53,12 @@ namespace ViewConsole
         /// <param name="parY">The y coordinate</param>
         public static void DrawEmptyGoal(int parX, int parY)
         {
-            for (int x = 0; x < _pixelSize; x++)
+            for (int x = 0; x < PixelSize; x++)
             {
-                for (int y = 0; y < _pixelSize; y++)
+                for (int y = 0; y < PixelSize; y++)
                 {
                     SaveColors();
-                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
+                    SetCursorPosition(parX * PixelSize + x, parY * PixelSize + y);
                     if (x == 1 && y == 1)
                     {
 
@@ -102,12 +102,12 @@ namespace ViewConsole
         /// <param name="parY">The y coordinate</param>
         public static void DrawTreasureOnGoal(int parX, int parY)
         {
-            for (int x = 0; x < _pixelSize; x++)
+            for (int x = 0; x < PixelSize; x++)
             {
-                for (int y = 0; y < _pixelSize; y++)
+                for (int y = 0; y < PixelSize; y++)
                 {
                     SaveColors();
-                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
+                    SetCursorPosition(parX * PixelSize + x, parY * PixelSize + y);
                     if (x == 1 && y == 1)
                     {
 
@@ -153,11 +153,11 @@ namespace ViewConsole
         public static void DrawEmptyFloor(int parX, int parY)
         {
             SaveColors();
-            for (int x = 0; x < _pixelSize; x++)
+            for (int x = 0; x < PixelSize; x++)
             {
-                for (int y = 0; y < _pixelSize; y++)
+                for (int y = 0; y < PixelSize; y++)
                 {
-                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
+                    SetCursorPosition(parX * PixelSize + x, parY * PixelSize + y);
                     DrawEmptyFloor();
                 }
             }
@@ -170,12 +170,12 @@ namespace ViewConsole
         /// <param name="parY">The y coordinate</param>
         public static void DrawTreasureOnFloor(int parX, int parY)
         {
-            for (int x = 0; x < _pixelSize; x++)
+            for (int x = 0; x < PixelSize; x++)
             {
-                for (int y = 0; y < _pixelSize; y++)
+                for (int y = 0; y < PixelSize; y++)
                 {
                     SaveColors();
-                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
+                    SetCursorPosition(parX * PixelSize + x, parY * PixelSize + y);
                     if (x == 1 && y == 1)
                     {
 
@@ -219,12 +219,12 @@ namespace ViewConsole
         /// <param name="parY">The y coordinate</param>
         public static void DrawActorOnFloor(int parX, int parY)
         {
-            for (int x = 0; x < _pixelSize; x++)
+            for (int x = 0; x < PixelSize; x++)
             {
-                for (int y = 0; y < _pixelSize; y++)
+                for (int y = 0; y < PixelSize; y++)
                 {
                     SaveColors();
-                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
+                    SetCursorPosition(parX * PixelSize + x, parY * PixelSize + y);
                     if (x == 1 && y == 1)
                     {
 
@@ -269,11 +269,11 @@ namespace ViewConsole
         public static void DrawSpace(int parX, int parY)
         {
             SaveColors();
-            for (int x = 0; x < _pixelSize; x++)
+            for (int x = 0; x < PixelSize; x++)
             {
-                for (int y = 0; y < _pixelSize; y++)
+                for (int y = 0; y < PixelSize; y++)
                 {
-                    SetCursorPosition(parX * _pixelSize + x, parY * _pixelSize + y);
+                    SetCursorPosition(parX * PixelSize + x, parY * PixelSize + y);
                     DrawSpace();
 
                 }

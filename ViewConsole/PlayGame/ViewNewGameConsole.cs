@@ -86,9 +86,22 @@ namespace ViewConsole.PlayGame
             var colCount = _game.Level.ColumnCount;
             if (rowCount <= _viewMenuConsole.HEIGHT && colCount <= _viewMenuConsole.WIDTH)
             {
-                var pixelSize = 3;
-                var startLeft = (_viewMenuConsole.WIDTH - colCount * pixelSize) / 6;
-                var startTop = (_viewMenuConsole.HEIGHT - rowCount * pixelSize) / 6;
+                if (DrawUtils.PixelSize * rowCount > _viewMenuConsole.HEIGHT ||
+                    DrawUtils.PixelSize * colCount > _viewMenuConsole.WIDTH)
+                {
+                    DrawUtils.PixelSize = 1;
+                }
+                
+                var startLeft = (_viewMenuConsole.WIDTH - colCount * DrawUtils.PixelSize) / 6;
+                var startTop = (_viewMenuConsole.HEIGHT - rowCount * DrawUtils.PixelSize) / 6;
+                if (startLeft < 0)
+                {
+                    startLeft = 0;
+                }
+                if(startTop < 0)
+                {
+                    startTop = 0;
+                }
                 
                 for (var row = 0; row < rowCount; row++)
                 {
