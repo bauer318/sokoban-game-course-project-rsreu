@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControllerWPF", "Controller
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewWPF", "ViewWPF\ViewWPF.csproj", "{3AEED659-8A64-4F62-BEBE-4F590B9E1D7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SokobanWPF", "SokobanWPF\SokobanWPF.csproj", "{ABE0D99F-9F5A-47E2-B38E-AFDF734C6BC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SokobanWPF", "SokobanWPF\SokobanWPF.csproj", "{ABE0D99F-9F5A-47E2-B38E-AFDF734C6BC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelWPF", "ModelWPF\ModelWPF.csproj", "{CCBDC90F-7A52-4A10-B8D3-5DC7C4DCE4A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelWPF", "ModelWPF\ModelWPF.csproj", "{CCBDC90F-7A52-4A10-B8D3-5DC7C4DCE4A3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{29C465C8-A74F-4FF4-A329-0762DF0A1409}"
 EndProject
@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewConsole", "ViewConsole\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelConsole", "ModelConsole\ModelConsole.csproj", "{50BA1D42-56EC-4F3D-9FE6-C5B17D208050}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SokobanConsole", "SokobanConsole\SokobanConsole.csproj", "{F150C2AB-1AA7-46DA-A81D-C7BDAE76C291}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SokobanConsole", "SokobanConsole\SokobanConsole.csproj", "{F150C2AB-1AA7-46DA-A81D-C7BDAE76C291}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +65,22 @@ Global
 		{CCBDC90F-7A52-4A10-B8D3-5DC7C4DCE4A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCBDC90F-7A52-4A10-B8D3-5DC7C4DCE4A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCBDC90F-7A52-4A10-B8D3-5DC7C4DCE4A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F95B68A5-4989-45DC-9E21-FB3230B40BB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F95B68A5-4989-45DC-9E21-FB3230B40BB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F95B68A5-4989-45DC-9E21-FB3230B40BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F95B68A5-4989-45DC-9E21-FB3230B40BB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B065DDF-78EB-43E9-9C86-DFD8C26A8FC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B065DDF-78EB-43E9-9C86-DFD8C26A8FC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B065DDF-78EB-43E9-9C86-DFD8C26A8FC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B065DDF-78EB-43E9-9C86-DFD8C26A8FC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50BA1D42-56EC-4F3D-9FE6-C5B17D208050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50BA1D42-56EC-4F3D-9FE6-C5B17D208050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50BA1D42-56EC-4F3D-9FE6-C5B17D208050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50BA1D42-56EC-4F3D-9FE6-C5B17D208050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F150C2AB-1AA7-46DA-A81D-C7BDAE76C291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F150C2AB-1AA7-46DA-A81D-C7BDAE76C291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F150C2AB-1AA7-46DA-A81D-C7BDAE76C291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F150C2AB-1AA7-46DA-A81D-C7BDAE76C291}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
