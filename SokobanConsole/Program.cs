@@ -7,6 +7,10 @@ namespace SokobanConsole
     /// </summary>
     class Program
     {
+        /// <summary>
+        /// Console's game main method
+        /// </summary>
+        /// <param name="args"></param>
         [SupportedOSPlatform("windows")]
         static void Main(string[] args)
         {

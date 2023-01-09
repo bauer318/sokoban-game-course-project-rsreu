@@ -71,7 +71,6 @@ namespace ControllerConsole.PlayGame
                         if (RecordUtils.NewRecordHasBeenSet)
                         {
                             ViewNewGameBase.PrintMessage("New Record has been set");
-                            Thread.Sleep(1000);
                         }
                         LevelPlayedUtils.UpdateLevelPlayed(_game.Level.LevelNumber);
 
@@ -115,7 +114,7 @@ namespace ControllerConsole.PlayGame
                                 if (keyPressed.Modifiers == ConsoleModifiers.Control)
                                 {
                                     ViewNewGameBase.CommandManager.Undo();
-                                    _viewNewGameConsole.ReedrawForUndo();
+                                    _viewNewGameConsole.Reedraw();
                                 }
                                 break;
                             case ConsoleKey.N:
