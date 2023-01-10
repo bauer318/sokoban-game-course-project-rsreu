@@ -135,19 +135,19 @@ namespace Model.PlayGame.Locations
 		/// Determines whether the specified object 
 		/// is equal to the current location
 		/// </summary>
-		/// <param name="parObject">The sprecified object 
+		/// <param name="obj">The sprecified object 
 		/// to compare with the current location
 		/// <returns>
 		/// true if the specified object
 		/// is equal to the current location; otherwise, false.
 		/// </returns>
-		public override bool Equals(object parObject)
+		public override bool Equals(object obj)
 		{
-			if (parObject == null)
+			if (obj == null)
 			{
 				return false;
 			}
-            if (parObject is not Location location)
+            if (obj is not Location location)
             {
                 return false;
             }
