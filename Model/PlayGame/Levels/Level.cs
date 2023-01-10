@@ -109,7 +109,7 @@ namespace Model.PlayGame.Levels
 				return _cells != null && _cells.Length > 0 ? _cells[0].Length : 0;
 			}
 		}
-
+		
 		/// <summary>
 		/// Gets the level number.
 		/// </summary>
@@ -145,11 +145,11 @@ namespace Model.PlayGame.Levels
 		/// Level's contructor
 		/// </summary>
 		/// <param name="parGame">The game that this level is located</param>
-		/// <param name="levelNumber">The level number</param>
+		/// <param name="parLevelNumber">The level number</param>
 		public Level(Game parGame, int parLevelNumber)
 		{
-			Game = parGame;
-			LevelNumber = parLevelNumber;
+			_game = parGame;
+			_levelNumber = parLevelNumber;
 		}
 		#region LevelCompleted event
 
@@ -173,12 +173,12 @@ namespace Model.PlayGame.Levels
 		/// <summary>
 		/// Raises the LevelCompleted event.
 		/// </summary>
-		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void OnLevelCompleted(EventArgs e)
+		/// <param name="parEvent">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		protected void OnLevelCompleted(EventArgs parEvent)
 		{
 			if (_levelCompleted != null)
 			{
-				_levelCompleted(this, e);
+				_levelCompleted(this, parEvent);
 
 			}
 		}
@@ -187,8 +187,8 @@ namespace Model.PlayGame.Levels
 		/// Loads the level data from the specified map stream.
 		/// </summary>
 		/// <param name="parMapStream">The map stream to load the level.</param>
-		public void Load(TextReader parMapStream)
-		{
+		public  void Load(TextReader parMapStream)
+        {
 			if (parMapStream == null)
 			{
 				throw new ArgumentNullException("mapStream");
@@ -221,10 +221,10 @@ namespace Model.PlayGame.Levels
 
 			int columnNumber = 0;
 
-			foreach (char c in parRowText)
+			foreach (char elChar in parRowText)
 			{
 				Location location = new(parRowNumber, columnNumber++);
-				switch (c)
+				switch (elChar)
 				{
 					case '#': /* Wall. */
 						row.Add(new WallCell(location, this));
@@ -256,20 +256,22 @@ namespace Model.PlayGame.Levels
 						row.Add(new SpaceCell(location, this));
 						break;
 					default:
-						throw new FormatException("Invalid Levels symbol found: " + c);
+						throw new FormatException("Invalid Levels symbol found: " + elChar);
 				}
 			}
 			return row;
 		}
+
 		/// <summary>
-		/// Occurs when the Goal's cell change and whether the level is Completed
+		///  Occurs when the Goal's cell change and whether the level is Completed
 		/// </summary>
-		///<param name = "e" > The < see cref="System.EventArgs"/> instance containing the event data.</param>
+		/// <param name="sender">The sender's object</param>
+		/// <param name="e">The < see cref="System.EventArgs"/> instance containing the event data</param>
 		private void GoalCell_CompletedGoalChanged(object sender, EventArgs e)
 		{
-			foreach (GoalCell goal in _goals)
+			foreach (GoalCell elGoal in _goals)
 			{
-				if (!goal.HasTreasure)
+				if (!elGoal.HasTreasure)
 				{
 					return;
 				}
@@ -281,17 +283,17 @@ namespace Model.PlayGame.Levels
 		/// Tests whether the specified location is within 
 		/// the Levels grid.
 		/// </summary>
-		/// <param name="location">The location to test
+		/// <param name="parLocation">The location to test
 		/// whether it is within the level grid.</param>
 		/// <returns><code>true</code> if the location
 		/// is within the <see cref="LevelBase"/>; 
 		/// <code>false</code> otherwise.</returns>
-		public bool InBounds(Location location)
-		{
-			return (location.RowNumber >= 0
-				&& location.RowNumber < RowCount
-				&& location.ColumnNumber >= 0
-				&& location.ColumnNumber < ColumnCount);
+		public bool InBounds(Location parLocation)
+        {
+			return (parLocation.RowNumber >= 0
+				&& parLocation.RowNumber < RowCount
+				&& parLocation.ColumnNumber >= 0
+				&& parLocation.ColumnNumber < ColumnCount);
 		}
 
 	}

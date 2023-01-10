@@ -70,7 +70,7 @@ namespace Model.CommonWork
         /// <summary>
         /// Write the Level played's  binary file
         /// </summary>
-        /// <param name="parRecordManager">Level payed</param>
+        /// <param name="parLevelPlayed">Level payed</param>
         public void WriteLevelsPlayedBinaryFile(LevelPlayed parLevelPlayed)
         {
             if (Directory.Exists(DIRECTORY_LEVEL_PLAYED_FILE))
@@ -141,9 +141,9 @@ namespace Model.CommonWork
 #pragma warning restore SYSLIB0011 // Type or member is obsolete
                     return levelPlayed;
                 }
-                catch (SerializationException e)
+                catch (SerializationException ex)
                 {
-                    throw new SokobanException(e.Message);
+                    throw new SokobanException(ex.Message);
                 }
                 finally
                 {

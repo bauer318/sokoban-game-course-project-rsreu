@@ -13,13 +13,41 @@ namespace Model.GameRecord
     public class Record
     {
         /// <summary>
+        /// The move count made by the actor
+        /// </summary>
+        private int _moveCount;
+        /// <summary>
+        /// The last date annd time updated this record
+        /// </summary>
+        private DateTime _lasteDateTime;
+        /// <summary>
         /// Get or Set the move count made by the actor
         /// </summary>
-        public int MoveCount { get; set; }
+        public int MoveCount 
+        { 
+            get 
+            {
+                return _moveCount;
+            } 
+            set 
+            {
+                _moveCount = value;
+            } 
+        }
         /// <summary>
-        /// The last date and time updated this record
+        /// Get or Set the last date and time updated this record
         /// </summary>
-        public DateTime LastDateTime { get; set; }
+        public DateTime LastDateTime 
+        {
+            get
+            {
+                return _lasteDateTime;
+            }
+            set
+            {
+                _lasteDateTime = value;
+            }
+        }
         /// <summary>
         /// Initializes a new record
         /// </summary>
@@ -27,8 +55,8 @@ namespace Model.GameRecord
         /// <param name="parDateTime">the last date and time updated this record</param>
         public Record(int parMoveCount, DateTime parDateTime)
         {
-            MoveCount = parMoveCount;
-            LastDateTime = parDateTime;
+            _moveCount = parMoveCount;
+            _lasteDateTime = parDateTime;
         }
     }
 }
