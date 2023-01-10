@@ -173,12 +173,12 @@ namespace Model.PlayGame.Levels
 		/// <summary>
 		/// Raises the LevelCompleted event.
 		/// </summary>
-		/// <param name="parEvent">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void OnLevelCompleted(EventArgs parEvent)
+		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		protected void OnLevelCompleted(EventArgs e)
 		{
 			if (_levelCompleted != null)
 			{
-				_levelCompleted(this, parEvent);
+				_levelCompleted(this, e);
 
 			}
 		}

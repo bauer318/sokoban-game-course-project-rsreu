@@ -108,9 +108,9 @@ namespace Model.CommonWork
 #pragma warning restore SYSLIB0011 // Type or member is obsolete
                     return new RecordManager(dictionaryRecord);
                 }
-                catch (SerializationException e)
+                catch (SerializationException ex)
                 {
-                    throw new SokobanException(e.Message);
+                    throw new SokobanException(ex.Message);
                 }
                 finally
                 {
@@ -152,7 +152,7 @@ namespace Model.CommonWork
             }
             else
             {
-                throw new SokobanException("record's file doesn't existe");
+                throw new SokobanException("level's played file doesn't existe");
             }
         }
 
