@@ -69,20 +69,15 @@ namespace Model.PlayGame.Locations
 		/// <returns></returns>
 		public Location GetAdjacentLocation(Direction parDirection)
 		{
-			switch (parDirection)
-			{
-				case Direction.Up:
-					return new Location(_rowNumber - 1, _columnNumber);
-				case Direction.Down:
-					return new Location(_rowNumber + 1, _columnNumber);
-				case Direction.Left:
-					return new Location(_rowNumber, _columnNumber - 1);
-				case Direction.Right:
-					return new Location(_rowNumber, _columnNumber + 1);
-				default:
-					throw new SokobanException("Unkown direction. " + parDirection.ToString());
-			}
-		}
+            return parDirection switch
+            {
+                Direction.Up => new Location(_rowNumber - 1, _columnNumber),
+                Direction.Down => new Location(_rowNumber + 1, _columnNumber),
+                Direction.Left => new Location(_rowNumber, _columnNumber - 1),
+                Direction.Right => new Location(_rowNumber, _columnNumber + 1),
+                _ => throw new SokobanException("Unkown direction. " + parDirection.ToString()),
+            };
+        }
 
 		/// <summary>
 		/// Determines whether the specified location is adjacent to this instance.
@@ -137,35 +132,34 @@ namespace Model.PlayGame.Locations
 		}
 
 		/// <summary>
-		/// Determines whether the specified <see cref="T:System.Object"/> 
-		/// is equal to the current <see cref="T:Location"/>.
+		/// Determines whether the specified object 
+		/// is equal to the current location
 		/// </summary>
-		/// <param name="parObject">The <see cref="T:System.Object"/> 
-		/// to compare with the current <see cref="T:Location"/>.</param>
+		/// <param name="obj">The sprecified object 
+		/// to compare with the current location
 		/// <returns>
-		/// true if the specified <see cref="T:System.Object"/> 
-		/// is equal to the current <see cref="T:Location"/>; otherwise, false.
+		/// true if the specified object
+		/// is equal to the current location; otherwise, false.
 		/// </returns>
-		public override bool Equals(object parObject)
+		public override bool Equals(object obj)
 		{
-			if (parObject == null)
+			if (obj == null)
 			{
 				return false;
 			}
-			Location location = parObject as Location;
-			if (location == null)
-			{
-				return false;
-			}
-			return location.RowNumber == _rowNumber && location.ColumnNumber == _columnNumber;
+            if (obj is not Location location)
+            {
+                return false;
+            }
+            return location.RowNumber == _rowNumber && location.ColumnNumber == _columnNumber;
 		}
 
 		/// <summary>
 		/// Serves as a hash function for a particular type.
 		/// </summary>
 		/// <returns>
-		/// A hash code for the current <see cref="T:Location"/>.
-		/// The XOR of the <see cref="RowNumber"/> and <see cref="ColumnNumber"/>.
+		/// A hash code for the current location
+		/// The XOR of the row number and column number.
 		/// </returns>
 		public override int GetHashCode()
 		{
