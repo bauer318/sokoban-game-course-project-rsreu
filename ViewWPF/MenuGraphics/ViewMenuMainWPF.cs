@@ -54,7 +54,7 @@ namespace ViewWPF.MenuGraphics
         /// </summary>
         public void Init()
         {
-            MainWindow = MainWindow.getInstance();
+            MainWindow = MainWindow.GetInstance();
 
             _mainStackPanel = new StackPanel();
             _mainStackPanel.VerticalAlignment = VerticalAlignment.Center;

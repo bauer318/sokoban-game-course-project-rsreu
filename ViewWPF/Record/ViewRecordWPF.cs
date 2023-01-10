@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -27,7 +28,13 @@ namespace ViewWPF.Records
         /// The main's grid
         /// </summary>
         private Grid _gridMain;
-        
+
+        private DataGrid _datagrid;
+
+        public ViewRecordWPF()
+        {
+            CreateRecordDataGrid();
+        }
         /// <summary>
         /// Print a message
         /// </summary>
@@ -40,11 +47,11 @@ namespace ViewWPF.Records
         /// Creates the record's datagrid
         /// </summary>
         /// <returns>The record's datagrid with columns's name</returns>
-        private DataGrid CreateRecordDataGrid()
+        private void CreateRecordDataGrid()
         {
-            return Application.Current.Dispatcher.Invoke(new Func<DataGrid>( () => 
+            Application.Current.Dispatcher.Invoke(() => 
             {
-                DataGrid dataGrid = new()
+                _datagrid = new()
                 {
                     Margin = new Thickness(0, 20, 0, 0)
                 };
@@ -58,11 +65,10 @@ namespace ViewWPF.Records
                         Binding = new Binding(label.Replace(' ', '_')),
                         Width = 235
                     };
-                    dataGrid.Columns.Add(column);
+                    _datagrid.Columns.Add(column);
                 }
-                dataGrid.Width = ViewMenuMainWPF.MainWindow.Width;
-                return dataGrid;
-            }));
+                _datagrid.Width = ViewMenuMainWPF.MainWindow.Width;
+            });
         }
         /// <summary>
         /// Processes to print game's record
@@ -70,7 +76,6 @@ namespace ViewWPF.Records
         /// <param name="parRecordDictionary">The record's dictionary as a pair of level's number and record</param>
         public void ProcessPrintRecord(Dictionary<int, Record> parRecordDictionary)
         {
-            DataGrid dataGrid = CreateRecordDataGrid();
             int[] keyValues = new int[parRecordDictionary.Count];
             var count = 0;
             foreach (KeyValuePair<int, Record> entry in parRecordDictionary)
@@ -78,7 +83,10 @@ namespace ViewWPF.Records
                 keyValues[count] = entry.Key;
                 count++;
             }
-
+            ParallelOptions options = new()
+            {
+                MaxDegreeOfParallelism = 3
+            };
             for (var j = 0; j < parRecordDictionary.Count; j++)
             {
                 dynamic row = new ExpandoObject();
@@ -86,15 +94,17 @@ namespace ViewWPF.Records
                 dataGridColumnsValues[0] = (keyValues[j]+1).ToString();
                 dataGridColumnsValues[1] = parRecordDictionary[keyValues[j]].MoveCount.ToString();
                 dataGridColumnsValues[2] = parRecordDictionary[keyValues[j]].LastDateTime.ToString();
-                for (int i = 0; i < _columnsName.Length; i++)
-                    ((IDictionary<String, Object>)row)[_columnsName[i].Replace(' ', '_')] = dataGridColumnsValues[i];
+                Parallel.ForEach(_columnsName, options, (line, state, index) => 
+                {
+                    ((IDictionary<String, Object>)row)[line.Replace(' ', '_')] = dataGridColumnsValues[index];
+                });   
                 Application.Current.Dispatcher.Invoke(() => 
                 {
-                    dataGrid.Items.Add(row);
+                    _datagrid.Items.Add(row);
                 });
                 
             }
-            DataGridIntoScrollViewer(dataGrid);
+            DataGridIntoScrollViewer();
             Application.Current.Dispatcher.Invoke(() =>
             {
                 ViewMenuMainWPF.MainWindow.Content = _dockPanel;
@@ -105,7 +115,7 @@ namespace ViewWPF.Records
         /// Add the datagrid in the scrollview 
         /// </summary>
         /// <param name="parDataGrid">The datagrid</param>
-        private void DataGridIntoScrollViewer(DataGrid parDataGrid)
+        private void DataGridIntoScrollViewer()
         {
             Application.Current.Dispatcher.Invoke(() => 
             {
@@ -113,7 +123,7 @@ namespace ViewWPF.Records
                 {
                     VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                     HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
-                    Content = parDataGrid
+                    Content = _datagrid
                 };
                 _gridMain = new Grid();
                 _gridMain.Children.Clear();
