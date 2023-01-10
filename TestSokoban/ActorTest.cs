@@ -479,9 +479,9 @@ namespace TestSokoban
         /// <summary>
         /// Occurs when this level is successfully completed
         /// </summary>
-        /// <param name="parSender">The object's sender</param>
-        /// <param name="parEvent">The event sended</param>
-        private void Level_LevelCompleted(object parSender, EventArgs parEvent)
+        /// <param name="sender">The object's sender</param>
+        /// <param name="e">The event sended</param>
+        private void Level_LevelCompleted(object sender, EventArgs e)
         {
             _isLevelCompleted = true;
         }
