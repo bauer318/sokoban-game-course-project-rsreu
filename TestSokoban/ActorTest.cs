@@ -132,7 +132,6 @@ namespace TestSokoban
 
             //Actor location after the move to the left direction
             MoveTo(RIGHT, 2); // Locations 1 2, 1 3 
-            //MoveTo(RIGHT); // Location 1,3
             MoveTo(LEFT);
             Location expectedActorLocationAfterLeftMove = new(1, 2);
             Location actualActorLocationAfterLeftMove = _level.Actor.Location;
@@ -184,11 +183,6 @@ namespace TestSokoban
 
             //Actor location after the move to the right direction
             MoveTo(RIGHT, 6); //Location 1 2, 1 , 1 4, 1 5, 1 6, 1 7
-            /* MoveTo(RIGHT); //Location 1 3
-             MoveTo(RIGHT); //Location 1 4
-             MoveTo(RIGHT); //Location 1 5
-             MoveTo(RIGHT); //Location 1 6
-             MoveTo(RIGHT); //Location 1 7*/
             MoveTo(RIGHT); //he can't move because there is a wall , so the Location does not change 
             Location expectedActorLocationAfterRightMove = new Location(1, 7);
             Location actualActorLocationAfterRightMove = _level.Actor.Location;
@@ -280,8 +274,6 @@ namespace TestSokoban
 
             //Actor attemps to move the treasure
             MoveTo(RIGHT, 3); //Location 1 2, 1 3, 1 4
-            /* MoveTo(RIGHT); //Location 1 3
-             MoveTo(RIGHT); //Location 1 4*/
             MoveTo(DOWN);  //Location 2 4
             /*he can't move because there is a treasure right in front of the one that the actor wants to move.*/
             MoveTo(RIGHT);
@@ -302,7 +294,6 @@ namespace TestSokoban
             Location actualActorLocation = _level.Actor.Location;
 
             MoveTo(RIGHT, 2); //Location 1 2, 1 3
-                              // MoveTo(RIGHT); //Location 1 3
             MoveTo(DOWN); //Location 2 3
             _commandManager.Undo(); //Location 1 3
             _commandManager.Undo(); //Location 1 3 because the actor can only undo his last move, and not all these previous moves
@@ -488,9 +479,9 @@ namespace TestSokoban
         /// <summary>
         /// Occurs when this level is successfully completed
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Level_LevelCompleted(object sender, EventArgs e)
+        /// <param name="parSender">The object's sender</param>
+        /// <param name="parEvent">The event sended</param>
+        private void Level_LevelCompleted(object parSender, EventArgs parEvent)
         {
             _isLevelCompleted = true;
         }
