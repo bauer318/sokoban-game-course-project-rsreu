@@ -28,11 +28,11 @@ namespace Model.CommonWork
         /// <summary>
         /// Reads the help file
         /// </summary>
-        /// <param name="parIsConsoleGame">Indicates if it is the console version</param>
+        /// <param name="parIsConsoleApp">Indicates if it is the console version</param>
         /// <returns>Text array of the Help's file</returns>
-        public string[] ReadHelpFile(bool parIsConsoleGame)
+        public string[] ReadHelpFile(bool parIsConsoleApp)
         {
-            var filename = parIsConsoleGame == true ? "console_help" : "wpf_help";
+            var filename = parIsConsoleApp == true ? "console_help" : "wpf_help";
             var file = string.Format(@"{0}{1}.skbn", DIRECTORY_HELP_FILE, filename);
             if (File.Exists(file))
             {

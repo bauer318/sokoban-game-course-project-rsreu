@@ -109,7 +109,7 @@ namespace Model.PlayGame.Levels
 				return _cells != null && _cells.Length > 0 ? _cells[0].Length : 0;
 			}
 		}
-
+		
 		/// <summary>
 		/// Gets the level number.
 		/// </summary>
@@ -173,12 +173,12 @@ namespace Model.PlayGame.Levels
 		/// <summary>
 		/// Raises the LevelCompleted event.
 		/// </summary>
-		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void OnLevelCompleted(EventArgs e)
+		/// <param name="parEvent">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		protected void OnLevelCompleted(EventArgs parEvent)
 		{
 			if (_levelCompleted != null)
 			{
-				_levelCompleted(this, e);
+				_levelCompleted(this, parEvent);
 
 			}
 		}
@@ -187,8 +187,8 @@ namespace Model.PlayGame.Levels
 		/// Loads the level data from the specified map stream.
 		/// </summary>
 		/// <param name="parMapStream">The map stream to load the level.</param>
-		public void Load(TextReader parMapStream)
-		{
+		public  void Load(TextReader parMapStream)
+        {
 			if (parMapStream == null)
 			{
 				throw new ArgumentNullException("mapStream");
@@ -264,8 +264,8 @@ namespace Model.PlayGame.Levels
 		/// <summary>
 		/// Occurs when the Goal's cell change and whether the level is Completed
 		/// </summary>
-		///<param name = "e" > The < see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void GoalCell_CompletedGoalChanged(object sender, EventArgs e)
+		///<param name = "parEvent" > The < see cref="System.EventArgs"/> instance containing the event data.</param>
+		private void GoalCell_CompletedGoalChanged(object parSender, EventArgs parEvent)
 		{
 			foreach (GoalCell goal in _goals)
 			{
@@ -281,17 +281,17 @@ namespace Model.PlayGame.Levels
 		/// Tests whether the specified location is within 
 		/// the Levels grid.
 		/// </summary>
-		/// <param name="location">The location to test
+		/// <param name="parLocation">The location to test
 		/// whether it is within the level grid.</param>
 		/// <returns><code>true</code> if the location
 		/// is within the <see cref="LevelBase"/>; 
 		/// <code>false</code> otherwise.</returns>
-		public bool InBounds(Location location)
-		{
-			return (location.RowNumber >= 0
-				&& location.RowNumber < RowCount
-				&& location.ColumnNumber >= 0
-				&& location.ColumnNumber < ColumnCount);
+		public bool InBounds(Location parLocation)
+        {
+			return (parLocation.RowNumber >= 0
+				&& parLocation.RowNumber < RowCount
+				&& parLocation.ColumnNumber >= 0
+				&& parLocation.ColumnNumber < ColumnCount);
 		}
 
 	}

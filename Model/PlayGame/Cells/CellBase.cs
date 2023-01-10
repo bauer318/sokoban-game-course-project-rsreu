@@ -53,18 +53,18 @@ namespace Model.PlayGame.Cells
 		/// <summary>
 		/// Raises the PropertyChanged event.
 		/// </summary>
-		/// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> 
+		/// <param name="parEvent">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> 
 		/// instance containing the event data.</param>
-		public void OnPropertyChanged(PropertyChangedEventArgs e)
+		public void OnPropertyChanged(PropertyChangedEventArgs parEvent)
 		{
-            PropertyChanged?.Invoke(this, e);
+            PropertyChanged?.Invoke(this, parEvent);
         }
 
 		/// <summary>
 		/// Raises the PropertyChanged event.
 		/// </summary>
-		/// <param name="property">The name of the property that changed.</param>
-		public void OnPropertyChanged(string property)
+		/// <param name="parProperty">The name of the property that changed.</param>
+		public void OnPropertyChanged(string parProperty)
 		{
 			/* We use the SynchronizationContext _context
 			 to ensure that we don't cause an InvalidOperationException
@@ -72,13 +72,13 @@ namespace Model.PlayGame.Cells
 			 in the main UI thread. */
 			if (_context == null)
 			{
-				OnPropertyChanged(new PropertyChangedEventArgs(property));
+				OnPropertyChanged(new PropertyChangedEventArgs(parProperty));
 			}
 			else
 			{
 				_context.Send(delegate
 				{
-					OnPropertyChanged(new PropertyChangedEventArgs(property));
+					OnPropertyChanged(new PropertyChangedEventArgs(parProperty));
 				}, null);
 			}
 		}

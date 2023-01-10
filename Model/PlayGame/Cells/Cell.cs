@@ -78,12 +78,12 @@ namespace Model.PlayGame.Cells
         /// <summary>
         /// Initializes a new instance of the Cell class.
         /// </summary>
-        /// <param name="name">The name of the cell.</param>
-        /// <param name="location">The location of the cell. <seealso cref="Location"/></param>
-        /// <param name="level">The level where the cell is located. <seealso cref="Level"/></param>
-        public Cell(string name, Location location, Level level) : base(name, location)
+        /// <param name="parName">The name of the cell.</param>
+        /// <param name="parLocation">The location of the cell. <seealso cref="Location"/></param>
+        /// <param name="parLevel">The level where the cell is located. <seealso cref="Level"/></param>
+        public Cell(string parName, Location parLocation, Level parLevel) : base(parName, parLocation)
         {
-            Level = level;
+            Level = parLevel;
         }
 
         /// <summary>
