@@ -17,9 +17,9 @@ namespace SokobanWPF
         /// <summary>
         /// Occurs when the WPF's application startup
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Application_Startup(object sender, StartupEventArgs e)
+        /// <param name="parSender">The sender's object</param>
+        /// <param name="parEvent">The event sended</param>
+        private void Application_Startup(object parSender, StartupEventArgs parEvent)
         {
             new ControllerMenuMainWPF().Start();
         }

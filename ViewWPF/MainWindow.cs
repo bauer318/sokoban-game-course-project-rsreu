@@ -17,7 +17,7 @@ namespace ViewWPF
         /// <summary>
         /// The main window's instance
         /// </summary>
-        private static MainWindow instance;
+        private static MainWindow _instance;
         /// <summary>
         /// The lock's object 
         /// </summary>
@@ -37,17 +37,17 @@ namespace ViewWPF
         /// <summary>
         /// Get the Main window's instance - pattern singleton
         /// </summary>
-        /// <returns></returns>
-        public static MainWindow getInstance()
+        /// <returns>The instance of the main's window</returns>
+        public static MainWindow GetInstance()
         {
             lock (syncRoot)
             {
-                if (instance == null)
+                if (_instance == null)
                 {
-                    instance = new MainWindow();
+                    _instance = new MainWindow();
                 }
             }
-            return instance;
+            return _instance;
         }
     }
 }
