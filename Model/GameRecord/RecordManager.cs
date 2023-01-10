@@ -12,23 +12,9 @@ namespace Model.GameRecord
     public class RecordManager
     {
         /// <summary>
-        /// The record's dictionaryby level number
-        /// </summary>
-        private Dictionary<int, Record> _recordsDictionary;
-        /// <summary>
         /// Get or Set the record's dictionary by level number
         /// </summary>
-        public Dictionary<int, Record> RecordsDictionary 
-        {
-            get
-            {
-                return _recordsDictionary;
-            }
-            set
-            {
-                _recordsDictionary = value;
-            }
-        }
+        public Dictionary<int, Record> RecordsDictionary { get; set; }
         /// <summary>
         /// Initialize the record manager
         /// </summary>
