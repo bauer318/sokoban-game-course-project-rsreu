@@ -1,10 +1,4 @@
-﻿using Model.CommonWork;
-using Model.GameRecord;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Model.GameRecord;
 
 namespace Controller
 {
@@ -16,13 +10,28 @@ namespace Controller
         /// <summary>
         /// Provides for working with record's file
         /// </summary>
-        public RecordUtils RecordUtils { get; private set; }
+        private RecordUtils _recordUtils;
+        /// <summary>
+        /// Get or Set the record's utils
+        /// </summary>
+        public RecordUtils RecordUtils
+        {
+            get 
+            { 
+                return _recordUtils;
+            }
+            private set 
+            { 
+                _recordUtils = value;
+            }
+        }
+
         /// <summary>
         /// Default constructor
         /// </summary>
         public ControllerNewGameRecordBase()
         {
-            RecordUtils = new RecordUtils(true);
+            _recordUtils = new RecordUtils(true);
         }
         
     }

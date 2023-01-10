@@ -53,11 +53,11 @@ namespace Model.PlayGame.Cells
 		/// <summary>
 		/// Raises the PropertyChanged event.
 		/// </summary>
-		/// <param name="parEvent">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> 
+		/// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> 
 		/// instance containing the event data.</param>
-		public void OnPropertyChanged(PropertyChangedEventArgs parEvent)
+		public void OnPropertyChanged(PropertyChangedEventArgs e)
 		{
-            PropertyChanged?.Invoke(this, parEvent);
+            PropertyChanged?.Invoke(this, e);
         }
 
 		/// <summary>

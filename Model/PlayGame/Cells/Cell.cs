@@ -83,7 +83,7 @@ namespace Model.PlayGame.Cells
         /// <param name="parLevel">The level where the cell is located. <seealso cref="Level"/></param>
         public Cell(string parName, Location parLocation, Level parLevel) : base(parName, parLocation)
         {
-            Level = parLevel;
+            _level = parLevel;
         }
 
         /// <summary>

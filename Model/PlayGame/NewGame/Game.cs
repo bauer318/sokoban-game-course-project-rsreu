@@ -16,6 +16,10 @@ namespace Model.PlayGame.NewGame
 	public class Game
 	{
 		/// <summary>
+		/// The level's folder directory
+		/// </summary>
+		private const string LEVEL_DIRECTORY = @"..\..\..\..\Levels\";
+		/// <summary>
 		/// The last played level's number
 		/// </summary>
 		private int _lastPlayedLevelNumber;
@@ -38,7 +42,6 @@ namespace Model.PlayGame.NewGame
 		/// /// <summary>
 		/// The levels'folder directory
 		/// </summary>
-		public const string LevelDirectory = @"..\..\..\..\Levels\";
 		public Level Level
 		{
 			get
@@ -50,7 +53,7 @@ namespace Model.PlayGame.NewGame
 				_level = value;
 			}
 		}
-
+	
 		/// <summary>
 		/// Gets the number of levels available
 		/// to be played in a game.
@@ -96,8 +99,8 @@ namespace Model.PlayGame.NewGame
 		/// Start the current level
 		/// </summary>
 		public void StartLevel()
-		{
-			GameState = GameState.Running;
+        {
+			_gameState = GameState.Running;
 		}
 
 		/// <summary>
@@ -105,8 +108,8 @@ namespace Model.PlayGame.NewGame
 		/// </summary>
 		public void Start()
 		{
-			string[] files = Directory.GetFiles(LevelDirectory, "*.skbn");
-			LevelCount = files.Length;
+			string[] files = Directory.GetFiles(LEVEL_DIRECTORY, "*.skbn");
+			_levelCount = files.Length;
 			LoadLevel(_lastPlayedLevelNumber);
 		}
 		/// <summary>
@@ -115,8 +118,8 @@ namespace Model.PlayGame.NewGame
 		/// <param name="parLevelNumber">The level's number</param>
 		/// <returns></returns>
 		public string GetFileNameByLevelNumber(int parLevelNumber)
-		{
-			return string.Format(@"{0}Level{1:000}.skbn", LevelDirectory, parLevelNumber);
+        {
+			return string.Format(@"{0}Level{1:000}.skbn", LEVEL_DIRECTORY, parLevelNumber);
 		}
 
 		/// <summary>
@@ -124,30 +127,30 @@ namespace Model.PlayGame.NewGame
 		/// from the beginning.
 		/// </summary>
 		public void RestartLevel()
-		{
-			LoadLevel(Level != null ? Level.LevelNumber : 0);
+        {
+			LoadLevel(_level != null ? _level.LevelNumber : 0);
 		}
 		/// <summary>
 		/// Loads the level specified with the specified level number.
 		/// </summary>
 		/// <param name="parLevelNumber">The level number of the level to load.</param>
 		public void LoadLevel(int parLevelNumber)
-		{
+        {
 			GameState = GameState.Loading;
 
 			if (Level != null)
 			{
 				/* Detach the level completed event. */
-				Level.LevelCompleted -= new EventHandler(Level_LevelCompleted);
+				_level.LevelCompleted -= new EventHandler(Level_LevelCompleted);
 			}
 
-			Level = new Level(this, parLevelNumber);
-			Level.LevelCompleted += new EventHandler(Level_LevelCompleted);
+			_level = new Level(this, parLevelNumber);
+			_level.LevelCompleted += new EventHandler(Level_LevelCompleted);
 
 			string fileName = GetFileNameByLevelNumber(parLevelNumber);
 			using (StreamReader reader = File.OpenText(fileName))
 			{
-				Level.Load(reader);
+				_level.Load(reader);
 			}
 			StartLevel();
 
@@ -164,48 +167,48 @@ namespace Model.PlayGame.NewGame
 		/// is within the Level>; 
 		/// <code>false</code> otherwise.</returns>
 		public bool InBounds(Location parLocation)
-		{
+        {
 			return Level.InBounds(parLocation);
 		}
 		/// <summary>
 		/// Occurs when the current level is completed succefuly
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">The sender's object</param>
+		/// <param name="e">The event sended</param>
 		public void Level_LevelCompleted(object sender, EventArgs e)
-		{
-			if (Level.LevelNumber < LevelCount - 1)
+        {
+			if (_level.LevelNumber < _levelCount - 1)
 			{
-				GameState = GameState.LevelCompleted;
+				_gameState = GameState.LevelCompleted;
 			}
 			else
 			{
 				/* Do finished game stuff. */
-				GameState = GameState.GameOver;
+				_gameState = GameState.GameOver;
 			}
 		}
 
 		/// <summary>
 		/// Attempts to go to the next level.
 		/// </summary>
-		public void GotoNextLevel()
-		{
+		public  void GotoNextLevel()
+        {
 
-			if (Level.LevelNumber < LevelCount)
+			if (_level.LevelNumber < _levelCount)
 			{
-				LoadLevel(Level.LevelNumber + 1);
+				LoadLevel(_level.LevelNumber + 1);
 			}
 		}
 		/// <summary>
 		/// Attemps to back to the previous level
 		/// </summary>
 		public void BackToPreviousLevel()
-		{
-			if (Level.LevelNumber > 0)
-			{
+        {
+			if(_level.LevelNumber > 0)
+            {
 				LoadLevel(Level.LevelNumber - 1);
-			}
-		}
-
+            }
+        }
+		
 	}
 }

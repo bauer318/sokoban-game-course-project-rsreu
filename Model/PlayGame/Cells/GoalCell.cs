@@ -114,12 +114,12 @@ namespace Model.PlayGame.Cells
 		/// <summary>
 		/// Raises the CompletedGoalChanged event.
 		/// </summary>
-		/// <param name="parEvent">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void OnCompletedGoalChanged(EventArgs parEvent)
+		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		protected void OnCompletedGoalChanged(EventArgs e)
 		{
 			if (_completedGoalChanged != null)
 			{
-				_completedGoalChanged(this, parEvent);
+				_completedGoalChanged(this, e);
 			}
 		}
 		#endregion
