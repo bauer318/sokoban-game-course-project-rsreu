@@ -16,13 +16,27 @@ namespace Controller.Records
         /// <summary>
         /// The base view for a record
         /// </summary>
-        public ViewRecordBase ViewRecordBase;
+        private ViewRecordBase _viewRecordBase;
+        /// <summary>
+        /// The base view for a record
+        /// </summary>
+        public ViewRecordBase ViewRecordBase
+        {
+            get
+            {
+                return _viewRecordBase;
+            }
+            set
+            {
+                _viewRecordBase = value;
+            }
+        }
         /// <summary>
         /// Default constructor
         /// </summary>
         public ControllerRecordBase(ViewRecordBase parViewRecordBase) : base()
         {
-            ViewRecordBase = parViewRecordBase;
+            _viewRecordBase = parViewRecordBase;
         }
         /// <summary>
         /// Get the Game's record dictionary

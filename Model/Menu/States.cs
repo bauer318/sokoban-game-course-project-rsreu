@@ -11,8 +11,17 @@ namespace Model.Menu
     /// </summary>
     public enum States:int
     {
-        Normal, //0
-        Focused, //1
-        Selected //2
+        /// <summary>
+        /// The normal state 
+        /// </summary>
+        Normal,
+        /// <summary>
+        /// When the menu's item is focused
+        /// </summary>
+        Focused,
+        /// <summary>
+        /// When the menu's item is selected
+        /// </summary>
+        Selected
     }
 }

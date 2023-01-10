@@ -16,7 +16,7 @@ namespace View.PlayGame
         /// <summary>
         /// Provides for execution and undoing a command
         /// </summary>
-        public CommandManager CommandManager = new CommandManager();
+        public CommandManager CommandManager = new();
         /// <summary>
         /// Indicates whether it is the first level, first time to selected the new game menu
         /// </summary>
