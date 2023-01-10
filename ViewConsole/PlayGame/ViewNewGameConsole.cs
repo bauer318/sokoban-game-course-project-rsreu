@@ -1,8 +1,8 @@
 ﻿using Model.PlayGame.Cells;
-using Model.PlayGame.Cells.Actors;
 using ModelConsole.PlayGame.NewGame;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using View.PlayGame;
 using ViewConsole.Menu;
@@ -18,7 +18,11 @@ namespace ViewConsole.PlayGame
         /// The menu's view
         /// </summary>
         private ViewMenuConsole _viewMenuConsole;
-        private object _drawCellLock = new();
+
+        /// <summary>
+        /// The pixel's size
+        /// </summary>
+        private int _pixelSize;
         /// <summary>
         /// The List of current level's view cell with location
         /// </summary>
@@ -69,10 +73,11 @@ namespace ViewConsole.PlayGame
         public override void PrintMessage(string parMessage)
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.CursorLeft = Console.WindowWidth / 4;
             Console.CursorTop = Console.WindowHeight / 2;
             Console.Write(parMessage);
+            Thread.Sleep(3000);
         }
         /// <summary>
         /// Draw the current sokoban's game level
@@ -86,32 +91,33 @@ namespace ViewConsole.PlayGame
             var colCount = _game.Level.ColumnCount;
             if (rowCount <= _viewMenuConsole.HEIGHT && colCount <= _viewMenuConsole.WIDTH)
             {
-                DrawUtils.PixelSize = 3;
-                if (DrawUtils.PixelSize * rowCount > _viewMenuConsole.HEIGHT ||
-                    DrawUtils.PixelSize * colCount > _viewMenuConsole.WIDTH)
+
+                _pixelSize = 3;
+                if (_pixelSize * rowCount > _viewMenuConsole.HEIGHT ||
+                    _pixelSize * colCount > _viewMenuConsole.WIDTH)
                 {
-                    DrawUtils.PixelSize = 1;
+                    PrintMessage("The game's level may not be displayed on your screen because the dimensions are small");
                 }
-                
-                var startLeft = (_viewMenuConsole.WIDTH - colCount * DrawUtils.PixelSize) / 6;
-                var startTop = (_viewMenuConsole.HEIGHT - rowCount * DrawUtils.PixelSize) / 6;
-                if (startLeft < 0)
+                else
                 {
-                    startLeft = 0;
-                }
-                if(startTop < 0)
-                {
-                    startTop = 0;
-                }
-                
-                for (var row = 0; row < rowCount; row++)
-                {
-                    var top = startTop + row;
-                    for (var col = 0; col < colCount; col++)
+                    var startLeft = (_viewMenuConsole.WIDTH - colCount * _pixelSize) / 2;
+                    var startTop = (_viewMenuConsole.HEIGHT - rowCount * _pixelSize) / 2;
+                    if (startLeft < 0)
                     {
-                        var left = startLeft + col;
-                        _cellButtonLocations.Add(new ViewCellLocation(row, col, top, left));
-                        DrawCell(_game.Level[row, col], left, top);
+                        startLeft = 0;
+                    }
+                    if (startTop < 0)
+                    {
+                        startTop = 0;
+                    }
+
+                    for (var row = 0; row < rowCount; row++)
+                    {
+                        for (var col = 0; col < colCount; col++)
+                        {
+                            _cellButtonLocations.Add(new ViewCellLocation(row, col, col * _pixelSize + startLeft, row * _pixelSize + startTop));
+                            DrawCell(_game.Level[row, col], col * _pixelSize + startLeft, row * _pixelSize + startTop);
+                        }
                     }
                 }
             }
@@ -125,38 +131,18 @@ namespace ViewConsole.PlayGame
         /// <summary>
         /// Redraw the current game's level
         /// </summary>
-        public void ReedrawForUndo()
-        {
-            Parallel.ForEach(_cellButtonLocations, c =>
-            {
-                Cell cell = Game.Level[c.X, c.Y];
-                if (!cell.Name.Equals("Wall"))
-                {
-                    DrawCell(cell, c.YMap, c.XMap);
-                }
-            });
-        }
-        /// <summary>
-        /// Redraw the actor's cell and those who arround him
-        /// </summary>
         public void Reedraw()
         {
-            Actor actor = _game.Level.Actor;
-            var actorX = actor.Location.RowNumber;
-            var actorY = actor.Location.ColumnNumber;
             Parallel.ForEach(_cellButtonLocations, c =>
             {
                 Cell cell = Game.Level[c.X, c.Y];
                 if (!cell.Name.Equals("Wall"))
                 {
-                    if ((c.X <= actorX + 1 && c.X >= actorX - 1) && (c.Y <= actorY + 1 && c.Y >= actorY - 1))
-                    {
-                        DrawCell(cell, c.YMap, c.XMap);
-                    }
-
+                    DrawCell(cell, c.XMap, c.YMap);
                 }
             });
         }
+
         /// <summary>
         /// Draw the level's cell
         /// </summary>
@@ -165,58 +151,77 @@ namespace ViewConsole.PlayGame
         /// <param name="parY">The y coordinate as the cursor's left</param>
         private void DrawCell(Cell parCell, int parX, int parY)
         {
-            lock (_drawCellLock)
+            ConsoleFastOutput consoleFastOutput = ConsoleOutput.GetInstance().GetConsoleFastOutput();
+            CellContents cellContents = parCell.CellContents;
+            switch (parCell.Name)
             {
-                CellContents cellContents = parCell.CellContents;
-                switch (parCell.Name)
-                {
-                    case ("Wall"):
-                        DrawUtils.DrawWall(parX, parY);
-                        break;
-                    case ("Floor"):
-                        if (cellContents != null)
+                case ("Wall"):
+                    consoleFastOutput.DrawWall(
+                        Convert.ToInt16(parX),
+                        Convert.ToInt16(parY),
+                        Convert.ToInt16(_pixelSize));
+                    break;
+                case ("Floor"):
+                    if (cellContents != null)
+                    {
+                        switch (cellContents.Name)
                         {
-                            switch (cellContents.Name)
-                            {
-                                case ("Treasure"):
-                                    DrawUtils.DrawTreasureOnFloor(parX, parY);
-                                    break;
-                                case ("Actor"):
-                                    DrawUtils.DrawActorOnFloor(parX, parY);
-                                    break;
-                            }
+                            case ("Treasure"):
+                                consoleFastOutput.DrawTreasureOnFloor(
+                                    Convert.ToInt16(parX),
+                                    Convert.ToInt16(parY),
+                                    Convert.ToInt16(_pixelSize));
+                                break;
+                            case ("Actor"):
+                                consoleFastOutput.DrawActorOnFloor(
+                                    Convert.ToInt16(parX),
+                                    Convert.ToInt16(parY),
+                                    Convert.ToInt16(_pixelSize)); break;
+                        }
+                    }
+                    else
+                    {
+                        consoleFastOutput.DrawEmptyFloor(
+                                    Convert.ToInt16(parX),
+                                    Convert.ToInt16(parY),
+                                    Convert.ToInt16(_pixelSize));
+                    }
+                    break;
+                case ("Space"):
+                    consoleFastOutput.DrawSpace(
+                                    Convert.ToInt16(parX),
+                                    Convert.ToInt16(parY),
+                                    Convert.ToInt16(_pixelSize));
+                    break;
+                case ("Goal"):
+                    if (cellContents != null)
+                    {
+                        if (cellContents.Name.Equals("Treasure"))
+                        {
+                            consoleFastOutput.DrawTreasureOnGoal(
+                                    Convert.ToInt16(parX),
+                                    Convert.ToInt16(parY),
+                                    Convert.ToInt16(_pixelSize));
                         }
                         else
                         {
-                            DrawUtils.DrawEmptyFloor(parX, parY);
+                            consoleFastOutput.DrawActorOnFloor(
+                                    Convert.ToInt16(parX),
+                                    Convert.ToInt16(parY),
+                                    Convert.ToInt16(_pixelSize));
                         }
-                        break;
-                    case ("Space"):
-                        DrawUtils.DrawSpace(parX, parY);
-                        break;
-                    case ("Goal"):
-                        if (cellContents != null)
-                        {
-                            if (cellContents.Name.Equals("Treasure"))
-                            {
-                                DrawUtils.DrawTreasureOnGoal(parX, parY);
-                            }
-                            else
-                            {
-                                DrawUtils.DrawActorOnFloor(parX, parY);
-                            }
-                        }
-                        else
-                        {
-                            DrawUtils.DrawEmptyGoal(parX, parY);
-                        }
-                        break;
-                }
-
+                    }
+                    else
+                    {
+                        consoleFastOutput.DrawEmptyGoalOnFloor(
+                                    Convert.ToInt16(parX),
+                                    Convert.ToInt16(parY),
+                                    Convert.ToInt16(_pixelSize));
+                    }
+                    break;
             }
-
         }
-        
+
         /// <summary>
         /// Back to main's menu
         /// </summary>
