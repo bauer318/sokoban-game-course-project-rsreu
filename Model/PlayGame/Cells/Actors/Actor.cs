@@ -40,7 +40,8 @@ namespace Model.PlayGame.Cells.Actors
 			{
 				_moveCount = value;
 				if (_moveCount < 0)
-				{   /* Just in case. */
+				{   
+					//Just in case :)
 					_moveCount = 0;
 				}
 			}
@@ -50,7 +51,7 @@ namespace Model.PlayGame.Cells.Actors
 		/// Initializes a new instance of the <see cref="Actor"/> class.
 		/// </summary>
 		/// <param name="parLocation">The location.</param>
-		/// <param name="parLevel">The level.</param>
+		/// <param name="parLevel">The level</param>
 		public Actor(Location parLocation, Level parLevel)
 			: base("Actor", parLocation, parLevel)
 		{

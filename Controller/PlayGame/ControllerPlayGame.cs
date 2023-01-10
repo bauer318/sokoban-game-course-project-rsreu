@@ -1,13 +1,4 @@
-﻿using Model.PlayGame.Commands;
-using Model.PlayGame.Levels;
-using Model.PlayGame.LevelsPlayed;
-using Model.PlayGame.Locations;
-using Model.PlayGame.NewGame;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Model.PlayGame.LevelsPlayed;
 using View.PlayGame;
 
 namespace Controller.PlayGame
@@ -20,19 +11,47 @@ namespace Controller.PlayGame
         /// <summary>
         /// The base view for a new game
         /// </summary>
-        public ViewNewGameBase ViewNewGameBase;
+        private ViewNewGameBase _viewNewGameBase;
         /// <summary>
-        /// Provides for working with level's played file
+        /// Provides for working with the level's played file
         /// </summary>
-        public LevelPlayedUtils LevelPlayedUtils { get; set; }
+        private LevelPlayedUtils _levelPlayedUtils;
+        /// <summary>
+        /// Get or Set the base view for a new game
+        /// </summary>
+        public ViewNewGameBase ViewNewGameBase
+        {
+            get
+            {
+                return _viewNewGameBase;
+            }
+            private set
+            {
+                _viewNewGameBase = value;
+            }
+        }
+        /// <summary>
+        /// Get or Set the level's played utils
+        /// </summary>
+        public LevelPlayedUtils LevelPlayedUtils
+        {
+            get
+            {
+                return _levelPlayedUtils;
+            }
+            set
+            {
+                _levelPlayedUtils = value;
+            }
+        }
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="parViewNewGameBase">The base view for a new game</param>
         public ControllerPlayGame(ViewNewGameBase parViewNewGameBase) : base()
         {
-            ViewNewGameBase = parViewNewGameBase;
-            LevelPlayedUtils = new LevelPlayedUtils(true);
+            _viewNewGameBase = parViewNewGameBase;
+            _levelPlayedUtils = new LevelPlayedUtils(true);
         }
         /// <summary>
         /// Update a record after that a level has been completed succefuly

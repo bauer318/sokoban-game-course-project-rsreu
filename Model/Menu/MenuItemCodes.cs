@@ -11,9 +11,21 @@ namespace Model.Menu
     /// </summary>
     public enum MenuItemCodes:int
     {
-        New,// 0 The new game menu
-        Help, //1 The help menu
-        Exit, //2 The exit menu
-        Record//3 //The record menu
+        /// <summary>
+        /// The new game menu
+        /// </summary>
+        New,
+        /// <summary>
+        /// The help menu
+        /// </summary>
+        Help,
+        /// <summary>
+        /// The exit menu
+        /// </summary>
+        Exit,
+        /// <summary>
+        /// The record menu
+        /// </summary>
+        Record
     }
 }

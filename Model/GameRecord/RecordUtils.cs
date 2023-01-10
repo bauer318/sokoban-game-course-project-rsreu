@@ -12,15 +12,31 @@ namespace Model.GameRecord
         /// <summary>
         /// Indicates whether a new record has been set
         /// </summary>
-        public bool NewRecordHasBeenSet { get; private set; } = false;
+        private bool _newRecordHasBeenSet = false;
         /// <summary>
         /// The Record manager
         /// </summary>
         private RecordManager _recordManager;
+
         /// <summary>
         /// Provides for write and read the files
         /// </summary>
-        private OutputInputFileWriterReader _fileWriterReader = new OutputInputFileWriterReader();
+        private OutputInputFileWriterReader _fileWriterReader = new();
+        /// <summary>
+        /// Get or Set the <seealso cref="_newRecordHasBeenSet"/>
+        /// </summary>
+        public bool NewRecordHasBeenSet 
+        {
+            get
+            {
+                return _newRecordHasBeenSet;
+            }
+            private set
+            {
+                _newRecordHasBeenSet = value;
+            }
+        }
+        
         /// <summary>
         /// Get or Set the Record manager
         /// </summary>
@@ -54,7 +70,7 @@ namespace Model.GameRecord
         /// <param name="parMoveCount">The Actor move count</param>
         public void UpdateRecord(int parLevelNumber, int parMoveCount)
         {
-            NewRecordHasBeenSet = false;
+            _newRecordHasBeenSet = false;
             Dictionary<int, Record> dictionary = _recordManager.RecordsDictionary;
             if (dictionary.ContainsKey(parLevelNumber))
             {
@@ -64,14 +80,14 @@ namespace Model.GameRecord
                     dictionary[parLevelNumber].MoveCount = parMoveCount;
                     dictionary[parLevelNumber].LastDateTime = DateTime.Now;
                     _fileWriterReader.WriteRecordBinaryFile(new RecordManager(dictionary));
-                    NewRecordHasBeenSet = true;
+                    _newRecordHasBeenSet = true;
                 }
             }
             else
             {
                 dictionary.Add(parLevelNumber, new Record(parMoveCount, DateTime.Now));
                 _fileWriterReader.WriteRecordBinaryFile(new RecordManager(dictionary));
-                NewRecordHasBeenSet = true;
+                _newRecordHasBeenSet = true;
             }
 
         }
