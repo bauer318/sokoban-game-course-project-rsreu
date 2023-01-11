@@ -21,7 +21,7 @@ namespace ViewWPF
         /// <summary>
         /// The lock's object 
         /// </summary>
-        private static readonly object syncRoot = new();
+        private static readonly object _lock = new();
         /// <summary>
         /// Initializes the main window
         /// </summary>
@@ -40,7 +40,7 @@ namespace ViewWPF
         /// <returns>The instance of the main's window</returns>
         public static MainWindow GetInstance()
         {
-            lock (syncRoot)
+            lock (_lock)
             {
                 if (_instance == null)
                 {

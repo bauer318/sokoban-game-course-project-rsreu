@@ -49,9 +49,9 @@ namespace ViewWPF.Help
                 VerticalScrollBarVisibility = ScrollBarVisibility.Auto
             };
 
-            foreach (string s in parTextHelpArray)
+            foreach (string elString in parTextHelpArray)
             {
-                textBox.Text += s + "\n";
+                textBox.Text += elString + "\n";
 
             }
             _gridMain = new Grid();

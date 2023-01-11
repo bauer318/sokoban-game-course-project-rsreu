@@ -53,16 +53,16 @@ namespace Controller.PlayGame
         /// <summary>
         /// Controll the KeyDown
         /// </summary>
-        /// <param name="parSender">The sender's object</param>
-        /// <param name="parEvent">The event sended</param>
-        private void Controll_KeyDown(object parSender, KeyEventArgs parEvent)
+        /// <param name="sender">The sender's object</param>
+        /// <param name="e">The event sended</param>
+        private void Controll_KeyDown(object sender, KeyEventArgs e)
         {
             CommandBase command = null;
             if (_game != null)
             {
                 if (_game.GameState == GameState.Running)
                 {
-                    switch (parEvent.Key)
+                    switch (e.Key)
                     {
                         case Key.Up:
                             command = new MoveCommand(_game.Level, Direction.Up);
@@ -140,7 +140,7 @@ namespace Controller.PlayGame
                             ViewMenuMainWPF.BackToMainMenu();
                             break;
                         case GameState.LevelCompleted:
-                            if (parEvent.Key != Key.Escape)
+                            if (e.Key != Key.Escape)
                             {
                                 UpdateRecord(_game.Level.LevelNumber, _game.Level.Actor.MoveCount);
                                 if (RecordUtils.NewRecordHasBeenSet)
@@ -153,7 +153,7 @@ namespace Controller.PlayGame
                             break;
                     }
                 }
-                if (parEvent.Key == Key.Escape)
+                if (e.Key == Key.Escape)
                 {
                     ViewNewGameBase.FirstStartLevel = true;
                     RemoveKeyDownEventHandler();
