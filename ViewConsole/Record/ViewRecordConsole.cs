@@ -73,9 +73,9 @@ namespace ViewConsole.Records
             Console.ForegroundColor = ConsoleColor.Black;
             int[] keyValues = new int[parRecordDictionary.Count];
             var count = 0;
-            foreach (KeyValuePair<int, Record> entry in parRecordDictionary)
+            foreach (KeyValuePair<int, Record> elRecord in parRecordDictionary)
             {
-                keyValues[count] = entry.Key;
+                keyValues[count] = elRecord.Key;
                 count++;
             }
 

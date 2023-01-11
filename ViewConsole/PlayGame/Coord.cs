@@ -12,22 +12,22 @@ namespace ViewConsole.PlayGame
     public struct Coord
     {
         /// <summary>
-        /// Get or Set The X coordinate
+        /// The x coordinate
         /// </summary>
-        public short X { get; set; }
+        public short x;
         /// <summary>
-        /// Get or Set the Y coordinate
+        /// The y coordinate
         /// </summary>
-        public short Y { get; set; }
+        public short y;
         /// <summary>
         /// Initializes a coord's struct
         /// </summary>
-        /// <param name="parX">The X coordinate</param>
-        /// <param name="parY">The Y coordiante</param>
+        /// <param name="parX">The x coordinate</param>
+        /// <param name="parY">The y coordiante</param>
         public Coord(short parX, short parY)
         {
-            this.X = parX;
-            this.Y = parY;
+            this.x = parX;
+            this.y = parY;
         }
     }
 }

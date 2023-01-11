@@ -133,12 +133,12 @@ namespace ViewConsole.PlayGame
         /// </summary>
         public void Reedraw()
         {
-            Parallel.ForEach(_cellButtonLocations, c =>
+            Parallel.ForEach(_cellButtonLocations, elCellButton =>
             {
-                Cell cell = Game.Level[c.X, c.Y];
+                Cell cell = Game.Level[elCellButton.X, elCellButton.Y];
                 if (!cell.Name.Equals("Wall"))
                 {
-                    DrawCell(cell, c.XMap, c.YMap);
+                    DrawCell(cell, elCellButton.XMap, elCellButton.YMap);
                 }
             });
         }
