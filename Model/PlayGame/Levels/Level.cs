@@ -145,11 +145,11 @@ namespace Model.PlayGame.Levels
 		/// Level's contructor
 		/// </summary>
 		/// <param name="parGame">The game that this level is located</param>
-		/// <param name="levelNumber">The level number</param>
+		/// <param name="parLevelNumber">The level number</param>
 		public Level(Game parGame, int parLevelNumber)
 		{
-			Game = parGame;
-			LevelNumber = parLevelNumber;
+			_game = parGame;
+			_levelNumber = parLevelNumber;
 		}
 		#region LevelCompleted event
 
@@ -221,10 +221,10 @@ namespace Model.PlayGame.Levels
 
 			int columnNumber = 0;
 
-			foreach (char c in parRowText)
+			foreach (char elChar in parRowText)
 			{
 				Location location = new(parRowNumber, columnNumber++);
-				switch (c)
+				switch (elChar)
 				{
 					case '#': /* Wall. */
 						row.Add(new WallCell(location, this));
@@ -256,20 +256,22 @@ namespace Model.PlayGame.Levels
 						row.Add(new SpaceCell(location, this));
 						break;
 					default:
-						throw new FormatException("Invalid Levels symbol found: " + c);
+						throw new FormatException("Invalid Levels symbol found: " + elChar);
 				}
 			}
 			return row;
 		}
+
 		/// <summary>
-		/// Occurs when the Goal's cell change and whether the level is Completed
+		///  Occurs when the Goal's cell change and whether the level is Completed
 		/// </summary>
-		///<param name = "parEvent" > The < see cref="System.EventArgs"/> instance containing the event data.</param>
-		private void GoalCell_CompletedGoalChanged(object parSender, EventArgs parEvent)
+		/// <param name="sender">The sender's object</param>
+		/// <param name="e">The < see cref="System.EventArgs"/> instance containing the event data</param>
+		private void GoalCell_CompletedGoalChanged(object sender, EventArgs e)
 		{
-			foreach (GoalCell goal in _goals)
+			foreach (GoalCell elGoal in _goals)
 			{
-				if (!goal.HasTreasure)
+				if (!elGoal.HasTreasure)
 				{
 					return;
 				}

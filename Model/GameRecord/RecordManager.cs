@@ -14,7 +14,7 @@ namespace Model.GameRecord
         /// <summary>
         /// Get or Set the record's dictionary by level number
         /// </summary>
-        public  Dictionary<int,Record> RecordsDictionary { get; set; }
+        public Dictionary<int, Record> RecordsDictionary { get; set; }
         /// <summary>
         /// Initialize the record manager
         /// </summary>
