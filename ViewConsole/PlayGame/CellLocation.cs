@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ViewConsole.PlayGame
 {
     /// <summary>
     /// Represent a Cell's view with location for working with console layout
     /// </summary>
-    public class ViewCellLocation
+    public class CellLocation
     {
         /// <summary>
         /// Get or Set the console cursor's left
         /// </summary>
-        public int XMap { get; set; } 
+        public int XMap { get; set; }
         /// <summary>
         /// Get or Set the console cursor's top
         /// </summary>
@@ -34,12 +30,17 @@ namespace ViewConsole.PlayGame
         /// <param name="parYMap">the console cursor's top</param>
         /// <param name="parX">the cell's row number</param>
         /// <param name="parY">the cell's column number</param>
-        public ViewCellLocation(int parX, int parY,int parXMap, int parYMap)
+        public CellLocation(int parX, int parY, int parXMap, int parYMap)
         {
             XMap = parXMap;
             YMap = parYMap;
             X = parX;
             Y = parY;
+        }
+
+        public static CellLocation GetCellLocationByCoordinate(int parX, int parY, List<CellLocation> parCellLocationList)
+        {
+            return parCellLocationList.Find(elCellLocation => elCellLocation.X == parX && elCellLocation.Y == parY);
         }
 
     }
