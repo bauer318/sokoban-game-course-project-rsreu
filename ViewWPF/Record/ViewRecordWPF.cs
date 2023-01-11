@@ -58,13 +58,13 @@ namespace ViewWPF.Records
                 }
                 
                 textBox.Text = String.Format("{0,10}", "Уровень");
-                textBox.Text += String.Format("{0,80}", "Количество шагов");
-                textBox.Text += String.Format("{0,80}", "Дата и время\n\n");
+                textBox.Text += String.Format("{0,75}", "Количество шагов");
+                textBox.Text += String.Format("{0,75}", "Дата и время\n\n");
                 for (var j=0; j<parRecordDictionary.Count; j++)
                 {
                     textBox.Text += String.Format("{0,10}",(keyValues[j] + 1).ToString());
-                    textBox.Text += String.Format("{0,85}",parRecordDictionary[keyValues[j]].MoveCount.ToString());
-                    textBox.Text += String.Format("{0,95}",parRecordDictionary[keyValues[j]].LastDateTime.ToString() + "\n\n");
+                    textBox.Text += String.Format("{0,80}",parRecordDictionary[keyValues[j]].MoveCount.ToString());
+                    textBox.Text += String.Format("{0,90}",parRecordDictionary[keyValues[j]].LastDateTime.ToString() + "\n\n");
                 }
                 _gridMain = new Grid();
                 _gridMain.Children.Clear();
