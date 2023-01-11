@@ -16,25 +16,25 @@ namespace ViewConsole.PlayGame
         /// <summary>
         /// The x-coordinate of the upper left corner of the rectangle
         /// </summary>
-        public short Left { get; private set; }
+        public short left;
         /// <summary>
         /// The y-coordinate of the upper left corner of the rectangle
         /// </summary>
-        public short Top { get; private set; }
+        public short top;
         /// <summary>
         /// The x-coordinate of the lower right corner of the rectangle
         /// </summary>
-        public short Right { get; private set; }
+        public short right;
         /// <summary>
         /// The y-coordinate of the lower right corner of the rectangle
         /// </summary>
-        public short Bottom { get; private set; }
+        public short bottom;
         /// <summary>
         /// Get the rectangle located on the defined possition
         /// </summary>
-        /// <param name="parLeft">The left's possition</param>
+        /// <param name="parLeft">The x-coordinate of the upper left corner of the rectangle</param>
         /// <param name="parTop">The rigth's possition</param>
-        /// <param name="parPixelSize">The pixel's size</param>
+        /// <param name="parPixelSize">The y-coordinate of the upper left corner of the rectangle</param>
         /// <returns></returns>
         public static SmallRect GetRect(short parLeft, short parTop, short parPixelSize)
         {
@@ -42,10 +42,10 @@ namespace ViewConsole.PlayGame
             int bottom = parTop + parPixelSize;
             return new SmallRect()
             {
-                Left = parLeft,
-                Top = parTop,
-                Right = Convert.ToInt16(right),
-                Bottom = Convert.ToInt16(bottom)
+                left = parLeft,
+                top = parTop,
+                right = Convert.ToInt16(right),
+                bottom = Convert.ToInt16(bottom)
             };
         }
     }

@@ -17,10 +17,10 @@ namespace ViewConsole.PlayGame
         /// <summary>
         /// The unicode's char
         /// </summary>
-        [FieldOffset(0)] public char UnicodeChar;
+        [FieldOffset(0)] public char unicodeChar;
         /// <summary>
         /// The ascii's char
         /// </summary>
-        [FieldOffset(0)] public byte AsciiChar;
+        [FieldOffset(0)] public byte asciiChar;
     }
 }

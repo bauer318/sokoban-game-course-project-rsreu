@@ -114,7 +114,6 @@ namespace ControllerConsole.PlayGame
                                 if (keyPressed.Modifiers == ConsoleModifiers.Control)
                                 {
                                     ViewNewGameBase.CommandManager.Undo();
-                                    _viewNewGameConsole.Reedraw();
                                 }
                                 break;
                             case ConsoleKey.N:
@@ -172,8 +171,7 @@ namespace ControllerConsole.PlayGame
                 }
                 if (command != null)
                 {
-                    ViewNewGameBase.CommandManager.Execute(command);
-                    _viewNewGameConsole.Reedraw();
+                    ViewNewGameBase.CommandManager.Execute(command); 
                 }
             }
         }

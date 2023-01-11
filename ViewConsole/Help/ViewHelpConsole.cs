@@ -48,33 +48,33 @@ namespace ViewConsole.Help
         public void PrintHelpText(string[] parArrayHelpText)
         {
             Console.Clear();
-            foreach(string s in parArrayHelpText)
+            foreach(string elString in parArrayHelpText)
             {
-                foreach(char c in s)
+                foreach(char elChar in elString)
                 {
                     DrawUtils.SaveColors();
                     Console.ForegroundColor = ConsoleColor.Black;
-                    if (c.Equals('0'))
+                    if (elChar.Equals('0'))
                     {
                         
                         DrawUtils.DrawWall();
                         
                     }
-                    else if (c.Equals('#'))
+                    else if (elChar.Equals('#'))
                     {
                         DrawUtils.DrawTreasureOnFloor();
                     }
-                    else if (c.Equals('.'))
+                    else if (elChar.Equals('.'))
                     {
                         DrawUtils.DrawEmptyGoal();
                     }
-                    else if (c.Equals('@'))
+                    else if (elChar.Equals('@'))
                     {
                         DrawUtils.DrawActorOnFloor();
                     }
                     else
                     {
-                        Console.Write(c);
+                        Console.Write(elChar);
                     }
                     Console.ForegroundColor = ConsoleColor.White;
                     DrawUtils.PutColorsBack();

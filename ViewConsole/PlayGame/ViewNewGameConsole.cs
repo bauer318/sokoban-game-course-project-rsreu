@@ -26,7 +26,7 @@ namespace ViewConsole.PlayGame
         /// <summary>
         /// The List of current level's view cell with location
         /// </summary>
-        private List<ViewCellLocation> _cellButtonLocations = new List<ViewCellLocation>();
+        private List<CellLocation> _cellLocations = new List<CellLocation>();
         /// <summary>
         /// The sokoban's game
         /// </summary>
@@ -86,7 +86,7 @@ namespace ViewConsole.PlayGame
         {
 
             Console.Clear();
-            _cellButtonLocations.Clear();
+            _cellLocations.Clear();
             var rowCount = _game.Level.RowCount;
             var colCount = _game.Level.ColumnCount;
             if (rowCount <= _viewMenuConsole.HEIGHT && colCount <= _viewMenuConsole.WIDTH)
@@ -115,8 +115,10 @@ namespace ViewConsole.PlayGame
                     {
                         for (var col = 0; col < colCount; col++)
                         {
-                            _cellButtonLocations.Add(new ViewCellLocation(row, col, col * _pixelSize + startLeft, row * _pixelSize + startTop));
-                            DrawCell(_game.Level[row, col], col * _pixelSize + startLeft, row * _pixelSize + startTop);
+                            _cellLocations.Add(new CellLocation(row, col, col * _pixelSize + startLeft, row * _pixelSize + startTop));
+                            Cell cell = _game.Level[row, col];
+                            cell.NeedRedrawCell += Cell_NeedRedrawCell;
+                            DrawCell(cell, col * _pixelSize + startLeft, row * _pixelSize + startTop);
                         }
                     }
                 }
@@ -129,18 +131,16 @@ namespace ViewConsole.PlayGame
 
         }
         /// <summary>
-        /// Redraw the current game's level
+        /// Redraw a cell
         /// </summary>
-        public void Reedraw()
+        /// <param name="parCell">The cell to redraw</param>
+        private void Cell_NeedRedrawCell(Cell parCell)
         {
-            Parallel.ForEach(_cellButtonLocations, c =>
-            {
-                Cell cell = Game.Level[c.X, c.Y];
-                if (!cell.Name.Equals("Wall"))
-                {
-                    DrawCell(cell, c.XMap, c.YMap);
-                }
-            });
+            CellLocation cellLocation = CellLocation.GetCellLocationByCoordinate(
+                parCell.Location.RowNumber,
+                parCell.Location.ColumnNumber,
+                _cellLocations);
+            DrawCell(parCell, cellLocation.XMap, cellLocation.YMap);
         }
 
         /// <summary>
