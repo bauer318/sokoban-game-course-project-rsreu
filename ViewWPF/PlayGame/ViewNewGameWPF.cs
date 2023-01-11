@@ -2,6 +2,8 @@
 using Model.PlayGame.Commands;
 using ModelWPF.PlayGame.NewGame;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -33,6 +35,11 @@ namespace ViewWPF.PlayGame
         /// The sokoban's game
         /// </summary>
         private GameWPF _game;
+        /// <summary>
+        /// The list of ButtonLocation
+        /// </summary>
+        private List<ButtonLocation> _buttonList;
+       
         /// <summary>
         /// Get or Set the sokoban's game
         /// </summary>
@@ -70,6 +77,7 @@ namespace ViewWPF.PlayGame
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
+                _buttonList = new();
                 Viewbox viewbox = new()
                 {
                     Stretch = Stretch.Uniform
@@ -103,14 +111,16 @@ namespace ViewWPF.PlayGame
 
                     for (var column = 0; column < columnCount; column++)
                     {
-                        Button button = new()
+                        ButtonLocation button = new(row, column)
                         {
                             Focusable = false,
                             Padding = new Thickness(0, 0, 0, 0)
                         };
                         Cell cell = _game.Level[row, column];
+                        cell.NeedRedrawCell += Cell_NeedRedrawCell;
                         button.DataContext = cell;
                         button.Style = (Style)Application.Current.FindResource("Cell");
+                        _buttonList.Add(button);
                         Grid.SetRow(button, row);
                         Grid.SetColumn(button, column);
                         gridGame.Children.Add(button);
@@ -127,6 +137,20 @@ namespace ViewWPF.PlayGame
             });
         }
         /// <summary>
+        /// Redraw the cell
+        /// </summary>
+        /// <param name="parCell">The cell to redraw</param>
+        private void Cell_NeedRedrawCell(Cell parCell)
+        {
+            ButtonLocation button = ButtonLocation.GetButtonLocationByCoord(
+                parCell.Location.RowNumber,
+                parCell.Location.ColumnNumber,
+                _buttonList);
+            button.Style = null;
+            button.Style = (Style)Application.Current.FindResource("Cell");
+        }
+
+        /// <summary>
         /// Processes to draw the sokoban's game level
         /// </summary>
         public override void ProcessDrawGameLevel()
@@ -138,11 +162,11 @@ namespace ViewWPF.PlayGame
                 SetApplicationResourceDictionary(_resourceDictionary);
             }
             DrawGameLevel();
-            Application.Current.Dispatcher.Invoke(() => 
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 ViewMenuMainWPF.MainWindow.Content = _dockPanel;
             });
-            
+
         }
         /// <summary>
         /// Set the application's resource dictionary
