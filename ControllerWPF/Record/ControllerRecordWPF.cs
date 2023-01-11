@@ -26,7 +26,7 @@ namespace ControllerWPF.Records
             _viewRecordWPF = parViewRecordBase as ViewRecordWPF;
             Thread t = new(() =>
             {
-                _viewRecordWPF.ProcessPrintRecord(GetRecordDictionary());
+                _viewRecordWPF.PrintRecordText(GetRecordDictionary()); 
             });
             t.Name = "Thread record's view";
             t.Start();

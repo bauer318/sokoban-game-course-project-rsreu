@@ -21,20 +21,10 @@ namespace ViewWPF.Records
         /// </summary>
         private DockPanel _dockPanel;
         /// <summary>
-        /// The record grid columns's name
-        /// </summary>
-        private string[] _columnsName;
-        /// <summary>
         /// The main's grid
         /// </summary>
         private Grid _gridMain;
 
-        private DataGrid _datagrid;
-
-        public ViewRecordWPF()
-        {
-            CreateRecordDataGrid();
-        }
         /// <summary>
         /// Print a message
         /// </summary>
@@ -43,99 +33,53 @@ namespace ViewWPF.Records
         {
             MessageBox.Show(parMessage);
         }
-        /// <summary>
-        /// Creates the record's datagrid
-        /// </summary>
-        /// <returns>The record's datagrid with columns's name</returns>
-        private void CreateRecordDataGrid()
-        {
-            Application.Current.Dispatcher.Invoke(() => 
-            {
-                _datagrid = new()
-                {
-                    Margin = new Thickness(0, 20, 0, 0)
-                };
-                _columnsName = new string[] { "Уровень", "Количество шагов", "Дата и время" };
 
-                foreach (string label in _columnsName)
-                {
-                    DataGridTextColumn column = new()
-                    {
-                        Header = label,
-                        Binding = new Binding(label.Replace(' ', '_')),
-                        Width = 235
-                    };
-                    _datagrid.Columns.Add(column);
-                }
-                _datagrid.Width = ViewMenuMainWPF.MainWindow.Width;
-            });
-        }
         /// <summary>
-        /// Processes to print game's record
+        /// Print game's record text
         /// </summary>
-        /// <param name="parRecordDictionary">The record's dictionary as a pair of level's number and record</param>
-        public void ProcessPrintRecord(Dictionary<int, Record> parRecordDictionary)
+        /// <param name="parTextHelpArray"></param>
+        public void PrintRecordText(Dictionary<int, Record> parRecordDictionary)
         {
-            int[] keyValues = new int[parRecordDictionary.Count];
-            var count = 0;
-            foreach (KeyValuePair<int, Record> entry in parRecordDictionary)
-            {
-                keyValues[count] = entry.Key;
-                count++;
-            }
-            ParallelOptions options = new()
-            {
-                MaxDegreeOfParallelism = 3
-            };
-            for (var j = 0; j < parRecordDictionary.Count; j++)
-            {
-                dynamic row = new ExpandoObject();
-                string[] dataGridColumnsValues = new string[3];
-                dataGridColumnsValues[0] = (keyValues[j]+1).ToString();
-                dataGridColumnsValues[1] = parRecordDictionary[keyValues[j]].MoveCount.ToString();
-                dataGridColumnsValues[2] = parRecordDictionary[keyValues[j]].LastDateTime.ToString();
-                Parallel.ForEach(_columnsName, options, (line, state, index) => 
-                {
-                    ((IDictionary<String, Object>)row)[line.Replace(' ', '_')] = dataGridColumnsValues[index];
-                });   
-                Application.Current.Dispatcher.Invoke(() => 
-                {
-                    _datagrid.Items.Add(row);
-                });
-                
-            }
-            DataGridIntoScrollViewer();
             Application.Current.Dispatcher.Invoke(() =>
             {
-                ViewMenuMainWPF.MainWindow.Content = _dockPanel;
-            });
-            
-        }
-        /// <summary>
-        /// Add the datagrid in the scrollview 
-        /// </summary>
-        /// <param name="parDataGrid">The datagrid</param>
-        private void DataGridIntoScrollViewer()
-        {
-            Application.Current.Dispatcher.Invoke(() => 
-            {
-                ScrollViewer scrollViewer = new()
+                TextBox textBox = new()
                 {
-                    VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
-                    HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
-                    Content = _datagrid
+                    Margin = new Thickness(10, 20, 10, 0),
+                    TextWrapping = TextWrapping.Wrap,
+                    AcceptsReturn = true,
+                    VerticalScrollBarVisibility = ScrollBarVisibility.Auto
                 };
+                int[] keyValues = new int[parRecordDictionary.Count];
+                var count = 0;
+                foreach (KeyValuePair<int, Record> elRecordDictionr in parRecordDictionary)
+                {
+                    keyValues[count] = elRecordDictionr.Key;
+                    count++;
+                }
+                
+                textBox.Text = String.Format("{0,10}", "Уровень");
+                textBox.Text += String.Format("{0,80}", "Количество шагов");
+                textBox.Text += String.Format("{0,80}", "Дата и время\n\n");
+                for (var j=0; j<parRecordDictionary.Count; j++)
+                {
+                    textBox.Text += String.Format("{0,10}",(keyValues[j] + 1).ToString());
+                    textBox.Text += String.Format("{0,85}",parRecordDictionary[keyValues[j]].MoveCount.ToString());
+                    textBox.Text += String.Format("{0,95}",parRecordDictionary[keyValues[j]].LastDateTime.ToString() + "\n\n");
+                }
                 _gridMain = new Grid();
                 _gridMain.Children.Clear();
                 _gridMain.RowDefinitions.Clear();
                 _gridMain.ColumnDefinitions.Clear();
                 _gridMain.RowDefinitions.Add(new RowDefinition());
                 _gridMain.ColumnDefinitions.Add(new ColumnDefinition());
-                _gridMain.Children.Add(scrollViewer);
+                _gridMain.Children.Add(textBox);
 
                 _dockPanel = new DockPanel();
                 _dockPanel.Children.Add(_gridMain);
+                ViewMenuMainWPF.MainWindow.Content = _dockPanel;
             });
+            
+
         }
     }
 }
