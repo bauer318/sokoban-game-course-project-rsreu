@@ -1,17 +1,12 @@
 ﻿using Model.PlayGame.Levels;
 using Model.PlayGame.Locations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.PlayGame.Cells
 {
     /// <summary>
     /// Base implementation class for all Cells
     /// </summary>
-    public class Cell:CellBase
+    public class Cell : CellBase
     {
         /// <summary>
         /// The level where this cell is located
@@ -21,6 +16,15 @@ namespace Model.PlayGame.Cells
         /// The cell contents
         /// </summary>
         private CellContents _cellContents;
+        /// <summary>
+        /// delegate for the NeedRedrawCell's method
+        /// </summary>
+        /// <param name="parCell"></param>
+        public delegate void dNeedRedrawCell(Cell parCell);
+        /// <summary>
+        /// Occurs when need to redraw this cell
+        /// </summary>
+        public event dNeedRedrawCell NeedRedrawCell = null;
         /// <summary>
         /// Gets or sets the level where this cell is located.
         /// </summary>
@@ -63,7 +67,7 @@ namespace Model.PlayGame.Cells
         public virtual void RemoveContents()
         {
             _cellContents = null;
-            OnPropertyChanged("CellContents");
+            NeedRedrawCell?.Invoke(this);
         }
 
         /// <summary>
@@ -116,7 +120,7 @@ namespace Model.PlayGame.Cells
             {
                 parContents.Cell.RemoveContents();
                 ChangeCellContents(parContents);
-                OnPropertyChanged("CellContents");
+                NeedRedrawCell?.Invoke(this);
                 return true;
             }
             return false;

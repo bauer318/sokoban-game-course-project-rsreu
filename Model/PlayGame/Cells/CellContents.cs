@@ -48,8 +48,6 @@ namespace Model.PlayGame.Cells
 			set
 			{
 				Location = value.Location;
-				OnPropertyChanged("Cell");
-				OnPropertyChanged("Location");
 			}
 		}
 
